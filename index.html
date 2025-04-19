@@ -10,7 +10,12 @@
   <nav class="navbar">
     <a href="#about" class="nav-link" data-tooltip="About Me">👤</a>
     <a href="#projects" class="nav-link" data-tooltip="Projects">📁</a>
+    <a href="#favorites" class="nav-link" data-tooltip="Favorites">❤️</a>
+    <button class="nav-link theme-toggle" data-tooltip="Toggle Theme">🌙</button>
+    <button class="nav-link music-toggle" data-tooltip="Toggle Music">▶️</button>
   </nav>
+
+  <canvas id="visualizer"></canvas>
 
   <section id="about" class="section">
     <div class="wave-bg"></div>
@@ -43,6 +48,34 @@
     </div>
   </section>
 
+  <section id="favorites" class="section">
+    <div class="wave-bg"></div>
+    <div>
+      <h2 class="animate-title">My Favorites</h2>
+      <div class="favorites-grid">
+        <div class="favorites-card animate-favorite">
+          <h3>Favorite TV Shows</h3>
+          <ul>
+            <li><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5e992b21-c402-493d-8820-1b366d21e97e/dgaeloc-6e5dc870-bbed-4602-8db2-da6b477d0a4f.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzVlOTkyYjIxLWM0MDItNDkzZC04ODIwLTFiMzY2ZDIxZTk3ZVwvZGdhZWxvYy02ZTVkYzg3MC1iYmVkLTQ2MDItOGRiMi1kYTZiNDc3ZDBhNGYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.1h1K5YWwas9gYUTlqeSW1SZfoInclRxfr8xQkhdGQyw" alt="Evangelion Icon" class="favorite-icon">Evangelion</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_Thrones_triple_slash_O.svg" alt="Game of Thrones Icon" class="favorite-icon">Game of Thrones</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Steins%3BGate.svg" alt="Steins;Gate Icon" class="favorite-icon">Steins;Gate</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Invincible_comic_series_logo.png" alt="Invincible Icon" class="favorite-icon">Invincible</li>
+          </ul>
+        </div>
+        <div class="favorites-card animate-favorite">
+          <h3>Favorite Games</h3>
+          <ul>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Cyberpunk_2077_favicon.png" alt="Cyberpunk 2077 Icon" class="favorite-icon">Cyberpunk 2077</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/7/71/SVG_black_joker.svg" alt="Balatro Icon" class="favorite-icon">Balatro</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Persona_3_clock.png" alt="Persona 3 Reload Icon" class="favorite-icon">Persona 3 Reload</li>
+            <li><img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Hades-symbol_-_Delapouite_-_game-icons.svg" alt="Hades Icon" class="favorite-icon">Hades</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script src="script.js"></script>
 </body>
