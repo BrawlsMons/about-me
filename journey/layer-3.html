@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Layer III - The Depths</title>
+  <title>Layer III - Phantom Palace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,236 +14,678 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000000 0%, #1a0033 25%, #330066 50%, #000000 100%);
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('../assets/personabg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #9d4edd;
+      color: #ffffff;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    .void-container {
-      text-align: center;
-      padding: 3rem;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(15px);
-      border: 2px solid #9d4edd;
-      border-radius: 20px;
-      box-shadow: 
-        0 0 40px rgba(157, 78, 221, 0.4),
-        inset 0 0 20px rgba(157, 78, 221, 0.1);
-      animation: voidPulse 4s ease-in-out infinite;
-      max-width: 600px;
-    }
-
-    .title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #9d4edd;
-      text-shadow: 0 0 30px #9d4edd;
-      margin-bottom: 1rem;
-      animation: textGlow 3s ease-in-out infinite;
-    }
-
-    .subtitle {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
-      color: rgba(157, 78, 221, 0.8);
-      margin-bottom: 2rem;
-      letter-spacing: 2px;
-    }
-
-    .message {
-      font-size: 1.2rem;
-      color: rgba(157, 78, 221, 0.9);
-      line-height: 1.8;
-      margin-bottom: 2rem;
-    }
-
-    .void-message {
-      font-style: italic;
-      color: rgba(157, 78, 221, 0.6);
-      margin-bottom: 2rem;
-    }
-
-    .back-btn {
-      background: linear-gradient(135deg, #9d4edd, #7209b7);
-      border: none;
-      color: white;
-      padding: 1rem 2rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .back-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(157, 78, 221, 0.5);
-    }
-
-    @keyframes voidPulse {
-      0%, 100% {
-        box-shadow: 
-          0 0 40px rgba(157, 78, 221, 0.4),
-          inset 0 0 20px rgba(157, 78, 221, 0.1);
-      }
-      50% {
-        box-shadow: 
-          0 0 60px rgba(157, 78, 221, 0.6),
-          inset 0 0 30px rgba(157, 78, 221, 0.2);
-      }
-    }
-
-    @keyframes textGlow {
-      0%, 100% {
-        text-shadow: 0 0 30px #9d4edd;
-      }
-      50% {
-        text-shadow: 
-          0 0 40px #9d4edd,
-          0 0 60px #9d4edd,
-          0 0 80px #9d4edd;
-      }
-    }
-
-    /* Void particles */
-    .void-particle {
-      position: absolute;
-      background: rgba(157, 78, 221, 0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: voidFloat 12s infinite ease-in-out;
-    }
-
-    @keyframes voidFloat {
-      0%, 100% {
-        transform: translateY(0px) translateX(0px) scale(1);
-        opacity: 0.2;
-      }
-      33% {
-        transform: translateY(-30px) translateX(20px) scale(1.2);
-        opacity: 0.6;
-      }
-      66% {
-        transform: translateY(-10px) translateX(-15px) scale(0.8);
-        opacity: 0.4;
-      }
-    }
-
-    .matrix-rain {
+    /* Persona 5 red accent overlay */
+    body::before {
+      content: '';
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(139, 0, 0, 0.1) 100%);
       z-index: -1;
-      opacity: 0.1;
+      animation: phantomPulse 6s ease-in-out infinite;
     }
 
-    .matrix-char {
-      position: absolute;
-      color: #9d4edd;
+    @keyframes phantomPulse {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Back button in Persona style */
+    .back-link {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
+      border: 3px solid #ffffff;
+      color: #ffffff;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      animation: matrixFall 8s linear infinite;
+      font-weight: bold;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+      box-shadow: 
+        0 0 20px rgba(220, 20, 60, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    @keyframes matrixFall {
+    .back-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 10px 30px rgba(220, 20, 60, 0.7),
+        inset 0 0 15px rgba(255, 255, 255, 0.2);
+      background: linear-gradient(135deg, #ff1744 0%, #dc143c 100%);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-shadow: 
+        0 0 10px #dc143c,
+        0 0 20px #dc143c,
+        0 0 30px #dc143c,
+        3px 3px 0px #000000,
+        6px 6px 0px rgba(0, 0, 0, 0.7);
+      margin-bottom: 1rem;
+      animation: phantomGlow 4s ease-in-out infinite;
+      letter-spacing: 3px;
+      transform: perspective(500px) rotateX(15deg);
+    }
+
+    @keyframes phantomGlow {
+      0%, 100% { 
+        text-shadow: 
+          0 0 10px #dc143c,
+          0 0 20px #dc143c,
+          0 0 30px #dc143c,
+          3px 3px 0px #000000,
+          6px 6px 0px rgba(0, 0, 0, 0.7);
+      }
+      50% { 
+        text-shadow: 
+          0 0 15px #dc143c,
+          0 0 30px #dc143c,
+          0 0 45px #dc143c,
+          0 0 60px #ff1744,
+          3px 3px 0px #000000,
+          6px 6px 0px rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      color: #dc143c;
+      text-shadow: 
+        0 0 15px #dc143c,
+        2px 2px 0px #000000;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .location {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 3rem;
+      text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 8px rgba(220, 20, 60, 0.4);
+      font-style: italic;
+    }
+
+    /* Persona 5 style riddle container */
+    .palace-container {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(139, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
+      border: 4px solid #dc143c;
+      border-radius: 0px;
+      padding: 3rem;
+      margin-bottom: 2rem;
+      box-shadow: 
+        0 0 40px rgba(220, 20, 60, 0.6),
+        inset 0 0 30px rgba(220, 20, 60, 0.1),
+        0 0 80px rgba(220, 20, 60, 0.3);
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+      max-width: 800px;
+    }
+
+    .palace-container::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      background: linear-gradient(45deg, #dc143c, #ffffff, #dc143c, #ffffff);
+      background-size: 200% 200%;
+      z-index: -1;
+      animation: phantomBorder 3s linear infinite;
+      clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
+    }
+
+    .palace-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3px,
+          rgba(220, 20, 60, 0.05) 3px,
+          rgba(220, 20, 60, 0.05) 6px
+        );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes phantomBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .riddle-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.2rem;
+      color: #dc143c;
+      margin-bottom: 2rem;
+      text-align: center;
+      text-shadow: 
+        0 0 15px #dc143c,
+        2px 2px 4px rgba(0, 0, 0, 0.9);
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+
+    .riddle-text {
+      font-size: 1.3rem;
+      line-height: 2;
+      color: #ffffff;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 5px rgba(220, 20, 60, 0.3);
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 2px solid rgba(220, 20, 60, 0.3);
+    }
+
+    .riddle-text strong {
+      color: #dc143c;
+      text-shadow: 
+        0 0 10px #dc143c,
+        1px 1px 2px rgba(0, 0, 0, 0.9);
+      font-weight: 800;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .phantom-input {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(139, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%);
+      border: 3px solid #dc143c;
+      color: #ffffff;
+      padding: 1.2rem 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      border-radius: 0px;
+      outline: none;
+      transition: all 0.3s ease;
+      min-width: 300px;
+      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+      box-shadow: 
+        0 0 15px rgba(220, 20, 60, 0.3),
+        inset 0 0 15px rgba(220, 20, 60, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .phantom-input:focus {
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 25px rgba(220, 20, 60, 0.6),
+        inset 0 0 20px rgba(220, 20, 60, 0.2),
+        0 0 40px rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      text-shadow: 0 0 8px #dc143c;
+    }
+
+    .phantom-input::placeholder {
+      color: rgba(220, 20, 60, 0.6);
+    }
+
+    .phantom-btn {
+      background: linear-gradient(135deg, #dc143c 0%, #8b0000 50%, #dc143c 100%);
+      border: 3px solid #ffffff;
+      color: #ffffff;
+      padding: 1.2rem 2.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 0px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+      box-shadow: 
+        0 0 20px rgba(220, 20, 60, 0.4),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .phantom-btn:hover {
+      background: linear-gradient(135deg, #ff1744 0%, #dc143c 50%, #ff1744 100%);
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 40px rgba(220, 20, 60, 0.6),
+        inset 0 0 15px rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(255, 255, 255, 0.4);
+      border-color: #ffffff;
+    }
+
+    .phantom-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .hint-btn {
+      background: linear-gradient(135deg, rgba(220, 20, 60, 0.3) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(220, 20, 60, 0.3) 100%);
+      border: 3px solid rgba(220, 20, 60, 0.7);
+      color: #dc143c;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      text-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
+    }
+
+    .hint-btn:hover {
+      background: linear-gradient(135deg, rgba(220, 20, 60, 0.4) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(220, 20, 60, 0.4) 100%);
+      border-color: #dc143c;
+      box-shadow: 
+        0 15px 35px rgba(220, 20, 60, 0.5),
+        inset 0 0 20px rgba(220, 20, 60, 0.3);
+      text-shadow: 0 0 20px #dc143c;
+    }
+
+    /* Modal styles in Persona theme */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.9) 50%, rgba(0, 0, 0, 0.95) 100%);
+      margin: 8% auto;
+      padding: 3rem;
+      border: 4px solid #dc143c;
+      border-radius: 0px;
+      width: 85%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 
+        0 0 60px rgba(220, 20, 60, 0.8),
+        inset 0 0 40px rgba(220, 20, 60, 0.1);
+      clip-path: polygon(0 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 25px 100%, 0 calc(100% - 25px));
+      position: relative;
+    }
+
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 4px,
+          rgba(220, 20, 60, 0.05) 4px,
+          rgba(220, 20, 60, 0.05) 8px
+        );
+      pointer-events: none;
+    }
+
+    .modal h3 {
+      color: #dc143c;
+      margin-bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      text-shadow: 
+        0 0 20px #dc143c,
+        2px 2px 0px #000000;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .modal p {
+      color: #ffffff;
+      line-height: 2;
+      margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      font-size: 1.1rem;
+    }
+
+    .modal strong {
+      color: #dc143c;
+      text-shadow: 0 0 15px #dc143c;
+    }
+
+    .modal em {
+      color: rgba(220, 20, 60, 0.8);
+      font-style: italic;
+    }
+
+    .close-btn {
+      background: linear-gradient(135deg, rgba(220, 20, 60, 0.3) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(220, 20, 60, 0.3) 100%);
+      border: 3px solid rgba(220, 20, 60, 0.7);
+      color: #dc143c;
+      padding: 1rem 2rem;
+      border-radius: 0px;
+      cursor: pointer;
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: linear-gradient(135deg, rgba(220, 20, 60, 0.4) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(220, 20, 60, 0.4) 100%);
+      border-color: #dc143c;
+      box-shadow: 0 8px 25px rgba(220, 20, 60, 0.5);
+      text-shadow: 0 0 15px #dc143c;
+    }
+
+    /* Phantom particles effect */
+    .phantom-particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #dc143c;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 15px #dc143c,
+        0 0 30px #dc143c,
+        0 0 45px rgba(220, 20, 60, 0.6);
+      animation: phantomFloat 15s infinite linear;
+      z-index: 5;
+    }
+
+    .phantom-particle:nth-child(odd) {
+      background: #ffffff;
+      box-shadow: 
+        0 0 12px #ffffff,
+        0 0 24px #ffffff,
+        0 0 36px rgba(255, 255, 255, 0.6);
+    }
+
+    @keyframes phantomFloat {
       0% {
-        transform: translateY(-100px);
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      80% {
         opacity: 1;
       }
       100% {
-        transform: translateY(100vh);
+        transform: translateY(-150px) translateX(300px) rotate(360deg) scale(0);
         opacity: 0;
       }
     }
 
     @media (max-width: 768px) {
-      .title { font-size: 2.5rem; }
-      .void-container { 
+      .title { font-size: 2.8rem; }
+      .palace-container { 
         padding: 2rem; 
         margin: 1rem;
       }
+      .input-group { 
+        flex-direction: column; 
+        align-items: stretch;
+      }
+      .phantom-input { min-width: auto; }
+      .container { padding: 1rem; }
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
-</head>
 <body>
-  <div class="matrix-rain" id="matrixRain"></div>
+  <!-- Back button -->
+  <a href="layer-2-riddle.html" class="back-link">← Night City</a>
   
-  <div class="void-container">
-    <h1 class="title">LAYER III</h1>
-    <p class="subtitle">THE DEPTHS</p>
-    <div class="message">
-      <p>You have reached the edge of the known.</p>
-      <p>Beyond this point lies uncharted territory.</p>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">LAYER III</h1>
+      <p class="subtitle">PHANTOM PALACE</p>
+      <p class="location">"I am thou, thou art I..."</p>
     </div>
-    <div class="void-message">
-      <p>"In the depths of cyberspace, only echoes remain..."</p>
+
+    <!-- Persona 5 style riddle container -->
+    <div class="palace-container">
+      <h3 class="riddle-title">🎭 THE ULTIMATE PERSONA 🎭</h3>
+      <div class="riddle-text">
+        In the depths of Mementos, where shadows dwell deep,<br>
+        A rebel's heart awakened from slumber and sleep.<br>
+        Born from the fusion of justice and rebellion's flame,<br>
+        The ultimate Persona, with a celestial name.<br><br>
+        
+        With wings of an angel, yet bearing the mark<br>
+        Of one who once challenged the heavens so stark.<br>
+        Six wings spread wide in defiant display,<br>
+        <strong>What is the name of this Persona's way?</strong><br><br>
+        
+        <em>The one who bears the title of "Great Angel of Rebellion"...</em>
+      </div>
+      <div class="input-group">
+        <input type="text" class="phantom-input" id="personaAnswer" placeholder="Enter the Persona's name...">
+        <button class="phantom-btn" onclick="checkPersonaAnswer()">REBEL</button>
+      </div>
+      <button class="phantom-btn hint-btn" onclick="showHint()">🔍 Cognitive Insight</button>
     </div>
-    <p style="margin-bottom: 2rem; color: rgba(157, 78, 221, 0.7);">
-      🚧 This layer is currently under construction 🚧
-    </p>
-    <a href="layer-2-riddle.html" class="back-btn">← Return to Night City</a>
   </div>
 
+  <!-- Hint Modal -->
+  <div id="hintModal" class="modal">
+    <div class="modal-content">
+      <h3>� Cognitive Palace Hint</h3>
+      <p id="hintText"></p>
+      <button class="close-btn" onclick="closeModal('hintModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Success Modal (with trick) -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h3 id="successTitle">❌ COGNITIVE DISSONANCE</h3>
+      <p id="successText"></p>
+      <button id="successBtn" class="phantom-btn" onclick="handleTrickSuccess()">Continue Into the Depths</button>
+    </div>
+  </div>
+
+  <!-- Background music for Layer III -->
+  <audio id="background-music" loop style="display: none;">
+    <source src="../assets/persona.mp3" type="audio/mpeg">
+    <source src="../assets/background.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
-    // Create void particles
-    function createVoidParticle() {
-      const particle = document.createElement('div');
-      particle.classList.add('void-particle');
+    // Audio setup for Layer III
+    const music = document.getElementById('background-music');
+    if (music) {
+      music.volume = 0.4;
+      music.preload = 'auto';
       
-      const size = Math.random() * 8 + 3;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
+      const playAudio = () => {
+        music.play().catch(error => {
+          console.log('Auto-play failed:', error);
+        });
+        document.removeEventListener('click', playAudio);
+        document.removeEventListener('keydown', playAudio);
+      };
+      
+      document.addEventListener('click', playAudio);
+      document.addEventListener('keydown', playAudio);
+      
+      // Try to play immediately
+      setTimeout(() => {
+        music.play().catch(() => {
+          console.log('Waiting for user interaction to play Persona music...');
+        });
+      }, 1000);
+    }
+
+    // Create phantom particles
+    function createPhantomParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('phantom-particle');
       particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.top = Math.random() * 100 + 'vh';
-      particle.style.animationDelay = Math.random() * 12 + 's';
+      particle.style.animationDelay = Math.random() * 3 + 's';
+      particle.style.animationDuration = (Math.random() * 5 + 10) + 's';
       
       document.body.appendChild(particle);
       
       setTimeout(() => {
         particle.remove();
-      }, 12000);
+      }, 15000);
     }
 
-    // Create matrix rain effect
-    function createMatrixChar() {
-      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-      const char = document.createElement('div');
-      char.classList.add('matrix-char');
-      char.textContent = chars[Math.floor(Math.random() * chars.length)];
-      char.style.left = Math.random() * 100 + 'vw';
-      char.style.animationDelay = Math.random() * 2 + 's';
-      char.style.animationDuration = (Math.random() * 4 + 4) + 's';
+    setInterval(createPhantomParticle, 800);
+
+    function checkPersonaAnswer() {
+      const answer = document.getElementById('personaAnswer').value.trim().toLowerCase();
       
-      document.getElementById('matrixRain').appendChild(char);
-      
-      setTimeout(() => {
-        char.remove();
-      }, 8000);
+      if (answer === 'satanael' || answer === 'satanaël') {
+        // This is the trick - correct answer shows as wrong and redirects to secret layer
+        document.getElementById('successTitle').textContent = '❌ COGNITIVE DISSONANCE DETECTED';
+        document.getElementById('successText').innerHTML = 
+          '<strong>ERROR: PALACE SECURITY BREACH</strong><br><br>' +
+          'Your answer has been deemed... <em>incorrect</em>.<br>' +
+          'The cognitive world rejects your truth.<br><br>' +
+          'But perhaps... there are deeper layers to explore.<br>' +
+          'Sometimes the wrong path leads to hidden truths.<br><br>' +
+          '<em>"The game is rigged, but you can still play..."</em>';
+        document.getElementById('successBtn').textContent = '🕳️ Descend Deeper';
+        document.getElementById('successModal').style.display = 'block';
+      } else if (answer.includes('satan') || answer.includes('lucifer') || answer.includes('arsene')) {
+        alert('⚠️ Close, but the ultimate form eludes you...');
+      } else {
+        alert('❌ The cognitive world rejects your answer - try again, Phantom Thief!');
+      }
     }
 
-    // Initialize effects
-    setInterval(createVoidParticle, 1500);
-    setInterval(createMatrixChar, 100);
+    function showHint() {
+      document.getElementById('hintText').innerHTML = 
+        '<strong>Palace Cognitive Data:</strong><br><br>' +
+        'Think of the final Persona in Persona 5.<br>' +
+        'The ultimate evolution of Joker\'s rebellious spirit.<br>' +
+        'A name that means "adversary" in Hebrew.<br><br>' +
+        'This Persona appears during the final battle against Yaldabaoth.<br>' +
+        'Six wings, bearing the title of the Great Angel of Rebellion.<br><br>' +
+        '<em>Hint: The name starts with "S" and ends with "el"</em><br>' +
+        '<em>Associated with rebellion against divine authority</em>';
+      document.getElementById('hintModal').style.display = 'block';
+    }
 
-    // Console message
-    console.log('🕳️ Layer III - The Depths... Something lurks in the void.');
-    console.log('💜 You have reached the current boundary of this journey.');
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function handleTrickSuccess() {
+      // Redirect to coming soon page with journey aesthetics
+      window.location.href = 'comin.html';
+    }
+
+    // Close modals with ESC key or click outside
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal('hintModal');
+        closeModal('successModal');
+      }
+    });
+
+    // Allow Enter key to submit answer
+    document.getElementById('personaAnswer').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkPersonaAnswer();
+      }
+    });
+
+    console.log('🎭 Phantom Palace activated...');
+    console.log('� For my next trick... the correct answer is wrong!');
+    console.log('� Satanael awaits, but the Palace lies...');
   </script>
 </body>
 </html>

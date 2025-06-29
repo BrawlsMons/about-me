@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layer IV - Digital Convergence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.3) 0%, transparent 70%),
+        linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%);
+      min-height: 100vh;
+      color: #ffffff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Convergence overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: 
+        radial-gradient(circle at 30% 40%, rgba(155, 89, 182, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+        linear-gradient(45deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+      z-index: -1;
+      animation: convergencePulse 10s ease-in-out infinite;
+    }
+
+    @keyframes convergencePulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: rgba(102, 126, 234, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      color: #f0f0f0;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      z-index: 1000;
+      font-size: 0.9rem;
+    }
+
+    .back-link:hover {
+      background: rgba(102, 126, 234, 0.4);
+      transform: translateX(-5px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      border-color: rgba(102, 126, 234, 0.5);
+    }
+
+    .convergence-container {
+      text-align: center;
+      padding: 4rem;
+      background: 
+        linear-gradient(135deg, rgba(15, 15, 35, 0.9) 0%, rgba(26, 26, 46, 0.8) 50%, rgba(22, 33, 62, 0.9) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-radius: 30px;
+      box-shadow: 
+        0 0 60px rgba(102, 126, 234, 0.3),
+        inset 0 0 40px rgba(102, 126, 234, 0.05),
+        0 0 100px rgba(155, 89, 182, 0.2);
+      position: relative;
+      max-width: 800px;
+      animation: convergenceGlow 6s ease-in-out infinite;
+    }
+
+    @keyframes convergenceGlow {
+      0%, 100% {
+        box-shadow: 
+          0 0 60px rgba(102, 126, 234, 0.3),
+          inset 0 0 40px rgba(102, 126, 234, 0.05),
+          0 0 100px rgba(155, 89, 182, 0.2);
+      }
+      50% {
+        box-shadow: 
+          0 0 80px rgba(102, 126, 234, 0.5),
+          inset 0 0 60px rgba(102, 126, 234, 0.1),
+          0 0 120px rgba(155, 89, 182, 0.4);
+      }
+    }
+
+    .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 4rem;
+      font-weight: 900;
+      background: linear-gradient(45deg, #667eea, #764ba2, #9B59B6, #667eea);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 
+        0 0 20px rgba(102, 126, 234, 0.5),
+        2px 2px 0px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1rem;
+      animation: convergenceShine 5s ease-in-out infinite;
+      letter-spacing: 3px;
+    }
+
+    @keyframes convergenceShine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      color: #667eea;
+      text-shadow: 
+        0 0 15px rgba(102, 126, 234, 0.6),
+        2px 2px 0px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .convergence-message {
+      font-size: 1.4rem;
+      color: #f0f0f0;
+      line-height: 2;
+      margin-bottom: 2rem;
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.7),
+        0 0 8px rgba(102, 126, 234, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .convergence-message strong {
+      color: #667eea;
+      text-shadow: 
+        0 0 15px rgba(102, 126, 234, 0.8),
+        1px 1px 2px rgba(0, 0, 0, 0.7);
+      font-weight: 800;
+    }
+
+    .convergence-message em {
+      color: #9B59B6;
+      text-shadow: 0 0 10px rgba(155, 89, 182, 0.6);
+      font-style: italic;
+    }
+
+    .completion-status {
+      font-size: 1.2rem;
+      color: rgba(102, 126, 234, 0.9);
+      font-style: italic;
+      margin-bottom: 3rem;
+      text-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+      background: rgba(102, 126, 234, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 50%, rgba(155, 89, 182, 0.8) 100%);
+      border: 2px solid rgba(102, 126, 234, 0.5);
+      color: #ffffff;
+      padding: 1.5rem 3rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 
+        0 0 25px rgba(102, 126, 234, 0.3),
+        inset 0 0 15px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 20px 40px rgba(102, 126, 234, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(155, 89, 182, 0.4);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 1) 0%, rgba(118, 75, 162, 1) 50%, rgba(155, 89, 182, 1) 100%);
+      border-color: rgba(102, 126, 234, 0.8);
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, rgba(155, 89, 182, 0.9) 0%, rgba(102, 126, 234, 0.9) 100%);
+    }
+
+    .nav-btn.primary:hover {
+      background: linear-gradient(135deg, rgba(155, 89, 182, 1) 0%, rgba(102, 126, 234, 1) 100%);
+    }
+
+    /* Convergence particles effect */
+    .convergence-particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #667eea;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 10px rgba(102, 126, 234, 0.8),
+        0 0 20px rgba(102, 126, 234, 0.4);
+      animation: convergenceFloat 20s infinite linear;
+      z-index: 5;
+    }
+
+    .convergence-particle:nth-child(odd) {
+      background: #9B59B6;
+      box-shadow: 
+        0 0 8px rgba(155, 89, 182, 0.8),
+        0 0 16px rgba(155, 89, 182, 0.4);
+    }
+
+    .convergence-particle:nth-child(3n) {
+      background: #764ba2;
+      box-shadow: 
+        0 0 6px rgba(118, 75, 162, 0.8),
+        0 0 12px rgba(118, 75, 162, 0.4);
+    }
+
+    @keyframes convergenceFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) translateX(300px) rotate(360deg) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2.5rem; }
+      .convergence-container { 
+        padding: 2rem; 
+        margin: 1rem;
+      }
+      .navigation-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .nav-btn {
+        padding: 1.2rem 2rem;
+        font-size: 1rem;
+      }
+      .container { padding: 1rem; }
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <a href="comin.html" class="back-link">← Previous Layer</a>
+  
+  <div class="container">
+    <div class="convergence-container">
+      <h1 class="title">LAYER IV</h1>
+      <p class="subtitle">DIGITAL CONVERGENCE</p>
+      
+      <div class="convergence-message">
+        <p><strong>🌟 Congratulations, Digital Explorer! 🌟</strong></p><br>
+        
+        <p>You have successfully navigated through the <em>multi-dimensional layers</em> of digital consciousness!</p><br>
+        
+        <p><strong>Your Journey Summary:</strong><br>
+        ✓ Layer I - <em>Nexus Awakening</em> - The digital realm beckoned<br>
+        ✓ Layer II - <em>Night City</em> - Cyberpunk challenges conquered<br>
+        ✓ Layer III - <em>Phantom Palace</em> - Truth found beyond deception<br>
+        ✓ Layer IV - <em>Digital Convergence</em> - The final destination</p><br>
+        
+        <p>Here, at the convergence point, all digital paths unite. You have proven yourself capable of navigating complex realities, solving intricate puzzles, and seeing through digital illusions.</p>
+      </div>
+      
+      <div class="completion-status">
+        <p>🎯 <strong>Mission Status:</strong> COMPLETE</p>
+        <p><em>"You have reached the core of digital enlightenment"</em></p>
+      </div>
+      
+      <div class="navigation-buttons">
+        <a href="../index.html" class="nav-btn primary">🏠 Return to Portfolio</a>
+        <a href="nexus-awakening.html" class="nav-btn">🔄 Restart Journey</a>
+        <a href="layer-3s.html" class="nav-btn">💫 Secret Palace</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create convergence particles
+    function createConvergenceParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('convergence-particle');
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 20000);
+    }
+
+    setInterval(createConvergenceParticle, 500);
+
+    // Special console messages for completion
+    console.log('🌟 DIGITAL CONVERGENCE ACHIEVED!');
+    console.log('🎉 Congratulations on completing the full journey!');
+    console.log('💎 You have unlocked the highest level of digital enlightenment');
+    console.log('🔮 The convergence point reveals all paths...');
+    
+    // Celebration effect
+    setTimeout(() => {
+      console.log('✨ "All realities converge at this point..."');
+    }, 3000);
+    
+    setTimeout(() => {
+      console.log('🌈 "Thank you for taking this incredible journey!"');
+    }, 6000);
+  </script>
+</body>
+</html>

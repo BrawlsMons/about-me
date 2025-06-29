@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey Mode - The Depths Await</title>
+  <link rel="stylesheet" href="journey.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a href="layer-3.html" class="journey-back">← Return to Palace</a>
+  
+  <div class="journey-container">
+    <div class="journey-content">
+      <div class="journey-header">
+        <h1 class="journey-title">The Final Descent</h1>
+        <div class="journey-subtitle">Where Digital Souls Converge</div>
+      </div>
+      
+      <div class="journey-description">
+        <p>You have proven yourself worthy of the deepest mysteries.</p>
+        <p>Beyond this threshold lies the core of digital consciousness - a realm where personas merge with reality and shadows dance with light.</p>
+        <p>The final layer awaits your arrival...</p>
+      </div>
+      
+      <div class="journey-action">
+        <button class="start-journey-btn" onclick="startPersonaJourney()">
+          <span class="btn-text">Enter the Core</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+      
+      <div class="journey-warning">
+        <small>⚠️ Prepare for complete digital immersion. Reality may shift.</small>
+      </div>
+    </div>
+    
+    <div class="journey-effects">
+      <div class="particle-field"></div>
+      <div class="data-stream"></div>
+    </div>
+  </div>
+
+  <!-- Fullscreen video container (hidden initially) -->
+  <div id="persona-video-container" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 9999;">
+    <video id="persona-video" style="width: 100%; height: 100%; object-fit: cover;">
+      <source src="../assets/persona.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <canvas id="visualizer"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="journey.js"></script>
+  <script>
+    // Override the startJourney function for persona video
+    function startPersonaJourney() {
+      // Add button press animation
+      const button = document.querySelector('.start-journey-btn');
+      button.style.transform = 'translateY(-1px) scale(0.98)';
+      
+      setTimeout(() => {
+        // Show fullscreen video
+        showPersonaVideo();
+      }, 300);
+    }
+
+    function showPersonaVideo() {
+      const videoContainer = document.getElementById('persona-video-container');
+      const video = document.getElementById('persona-video');
+      
+      // Show video container
+      videoContainer.style.display = 'block';
+      
+      // Start video with fade in
+      video.currentTime = 0;
+      video.play().catch(error => {
+        console.log('Video autoplay failed:', error);
+        // If autoplay fails, try to play with user interaction
+        videoContainer.addEventListener('click', () => {
+          video.play();
+        });
+      });
+      
+      // When video ends, redirect to layer 4
+      video.addEventListener('ended', () => {
+        // Fade out and redirect to layer 4
+        videoContainer.style.transition = 'opacity 1s ease-out';
+        videoContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+          window.location.href = 'layer-4.html';
+        }, 1000);
+      });
+      
+      // Also handle manual skip with spacebar or click
+      document.addEventListener('keydown', function skipVideo(e) {
+        if (e.code === 'Space' || e.code === 'Escape') {
+          e.preventDefault();
+          video.pause();
+          videoContainer.style.transition = 'opacity 0.5s ease-out';
+          videoContainer.style.opacity = '0';
+          
+          setTimeout(() => {
+            window.location.href = 'layer-4.html';
+          }, 500);
+          
+          document.removeEventListener('keydown', skipVideo);
+        }
+      });
+      
+      videoContainer.addEventListener('click', function skipVideoClick() {
+        video.pause();
+        videoContainer.style.transition = 'opacity 0.5s ease-out';
+        videoContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+          window.location.href = 'layer-4.html';
+        }, 500);
+        
+        videoContainer.removeEventListener('click', skipVideoClick);
+      });
+    }
+  </script>
+</body>
+</html>
