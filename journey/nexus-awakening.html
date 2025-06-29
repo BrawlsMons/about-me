@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frozen Nexus - The Ice Kingdom Riddle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f1419 0%, #1e3a8a 25%, #1e40af 50%, #0f172a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      color: #e0f2fe;
+    }
+
+    /* Snowflakes Animation */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #bfdbfe;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100vh) rotate(0deg);
+      }
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    /* Ice Crystal Background Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(147, 197, 253, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(96, 165, 250, 0.1) 0%, transparent 50%);
+      z-index: -1;
+      animation: crystalShimmer 8s ease-in-out infinite;
+    }
+
+    @keyframes crystalShimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Back Button */
+    .journey-back {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      background: rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(147, 197, 253, 0.3);
+      color: #e0f2fe;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      font-weight: 500;
+      z-index: 1000;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .journey-back:hover {
+      background: rgba(59, 130, 246, 0.4);
+      transform: translateX(-5px);
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+      border-color: rgba(147, 197, 253, 0.5);
+    }
+
+    /* Main Container */
+    .frozen-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .frozen-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: iceFormation 2s ease-out;
+    }
+
+    .ice-label {
+      font-size: 1rem;
+      color: rgba(147, 197, 253, 0.8);
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
+    }
+
+    .frozen-title {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 25%, #60a5fa 50%, #3b82f6 75%, #dbeafe 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: frozenShimmer 3s ease-in-out infinite;
+      text-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+      filter: drop-shadow(0 0 10px rgba(147, 197, 253, 0.3));
+    }
+
+    .frozen-subtitle {
+      font-size: 1.3rem;
+      color: rgba(224, 242, 254, 0.8);
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Riddle Content */
+    .riddle-content {
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: rgba(30, 58, 138, 0.2);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(147, 197, 253, 0.3);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 
+        0 0 40px rgba(59, 130, 246, 0.2),
+        inset 0 0 20px rgba(147, 197, 253, 0.1);
+      animation: iceGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes iceGlow {
+      0%, 100% { 
+        box-shadow: 
+          0 0 40px rgba(59, 130, 246, 0.2),
+          inset 0 0 20px rgba(147, 197, 253, 0.1);
+      }
+      50% { 
+        box-shadow: 
+          0 0 60px rgba(59, 130, 246, 0.4),
+          inset 0 0 30px rgba(147, 197, 253, 0.2);
+      }
+    }
+
+    .riddle-story {
+      font-size: 1.2rem;
+      color: #e0f2fe;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .riddle-story p {
+      margin-bottom: 1.5rem;
+    }
+
+    .ice-riddle {
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid rgba(147, 197, 253, 0.4);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #dbeafe;
+      box-shadow: inset 0 0 20px rgba(147, 197, 253, 0.2);
+    }
+
+    .math-problem {
+      background: rgba(30, 58, 138, 0.3);
+      border: 2px solid rgba(96, 165, 250, 0.4);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1.3rem;
+      color: #bfdbfe;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Input Section */
+    .frozen-input {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .frozen-password {
+      background: rgba(30, 58, 138, 0.3);
+      border: 2px solid rgba(147, 197, 253, 0.4);
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      color: #e0f2fe;
+      text-align: center;
+      min-width: 250px;
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 0 20px rgba(59, 130, 246, 0.2),
+        inset 0 0 10px rgba(147, 197, 253, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .frozen-password:focus {
+      outline: none;
+      border-color: rgba(147, 197, 253, 0.8);
+      box-shadow: 
+        0 0 30px rgba(59, 130, 246, 0.5),
+        inset 0 0 15px rgba(147, 197, 253, 0.2);
+    }
+
+    .frozen-password::placeholder {
+      color: rgba(191, 219, 254, 0.5);
+    }
+
+    .frozen-submit {
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      border: 2px solid rgba(147, 197, 253, 0.4);
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+      min-width: 120px;
+    }
+
+    .frozen-submit:hover {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+
+    .frozen-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Hint Button */
+    .hint-section {
+      margin-top: 2rem;
+    }
+
+    .hint-btn {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(248, 113, 113, 0.4);
+      color: #fecaca;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .hint-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: rgba(248, 113, 113, 0.6);
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Error/Success Messages */
+    .message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(248, 113, 113, 0.4);
+      color: #fecaca;
+    }
+
+    .success-message {
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid rgba(74, 222, 128, 0.4);
+      color: #bbf7d0;
+    }
+
+    .hidden {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+    /* Modal for hint disclaimer */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(30, 58, 138, 0.9);
+      border: 2px solid rgba(147, 197, 253, 0.5);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.5);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      color: #fbbf24;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .modal-text {
+      color: #e0f2fe;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .modal-btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .modal-btn.confirm {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+    }
+
+    .modal-btn.cancel {
+      background: rgba(75, 85, 99, 0.5);
+      color: #e5e7eb;
+      border: 1px solid rgba(156, 163, 175, 0.3);
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Success Animation */
+    .success-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: successFadeIn 1s ease-out;
+    }
+
+    .success-content {
+      text-align: center;
+      background: rgba(30, 58, 138, 0.9);
+      border: 2px solid rgba(147, 197, 253, 0.5);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 50px rgba(59, 130, 246, 0.5);
+      animation: successBounce 1s ease-out;
+    }
+
+    .success-title {
+      font-size: 2.5rem;
+      color: #10b981;
+      margin-bottom: 1rem;
+      font-weight: 800;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    }
+
+    .vulpix-gif {
+      width: 200px;
+      height: 200px;
+      border-radius: 15px;
+      margin: 2rem 0;
+      box-shadow: 0 0 30px rgba(147, 197, 253, 0.5);
+      border: 2px solid rgba(147, 197, 253, 0.3);
+    }
+
+    .success-message {
+      color: #e0f2fe;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .next-challenge-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 2px solid rgba(74, 222, 128, 0.4);
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+      margin: 0.5rem;
+    }
+
+    .next-challenge-btn:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+    }
+
+    .close-success-btn {
+      background: rgba(75, 85, 99, 0.5);
+      border: 1px solid rgba(156, 163, 175, 0.3);
+      color: #e5e7eb;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+    }
+
+    .close-success-btn:hover {
+      background: rgba(75, 85, 99, 0.7);
+      transform: translateY(-2px);
+    }
+
+    @keyframes successFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes successBounce {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+      }
+      50% {
+        transform: translateY(10px) scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes iceFormation {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes frozenShimmer {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .frozen-title {
+        font-size: 2.5rem;
+      }
+      
+      .riddle-content {
+        padding: 2rem;
+        margin: 1rem;
+      }
+      
+      .input-container {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .frozen-password {
+        min-width: auto;
+        width: 100%;
+      }
+      
+      .journey-back {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="journey.html" class="journey-back">← Return to Gateway</a>
+  
+  <div class="frozen-container">
+    <div class="frozen-header">
+      <div class="ice-label">Act I - Layer I</div>
+      <h1 class="frozen-title">❄️ The Frozen Nexus ❄️</h1>
+      <div class="frozen-subtitle">Riddle of the Ice Kingdom</div>
+    </div>
+    
+    <div class="riddle-content">
+      <div class="riddle-story">
+        <p>The digital realm has been frozen by an ancient ice spirit. To unlock the next layer, you must solve the riddle of the Ice Kingdom.</p>
+        
+        <div class="ice-riddle">
+          <h3>🏔️ The Ice Kingdom Riddle 🏔️</h3>
+          <p><strong>In a distant frozen land, where icy winds blow free,</strong></p>
+          <p><strong>Lives a creature, white as snow, with tails that number three.</strong></p>
+          <p><strong>From regions far where palm trees sway, to islands in the sea,</strong></p>
+          <p><strong>This foxy friend adapted well to live quite happily.</strong></p>
+          <p><strong>What am I, this snowy fox, whose name you need to say?</strong></p>
+          <p><strong>From tropical to arctic home, I changed my form to stay.</strong></p>
+        </div>
+        
+        <p>But first, solve this cryptic puzzle hidden within the realm:</p>
+        
+        <div class="math-problem">
+          <strong>🧮 The Crystal Memory Cipher 🧮</strong><br><br>
+          In the depths of the frozen cavern, you discover ancient runes:<br><br>
+          <em>"Where ice crystals dance in groups of THREE,<br>
+          Each holding memories, TWELVE you see.<br>
+          But hidden deep, ONE secret lies,<br>
+          What total count satisfies the skies?"</em><br><br>
+          <strong>Calculate the sacred number to unlock the path forward.</strong>
+        </div>
+        
+        <p>Once you've deciphered both the cipher and the riddle, enter the name of the mystical creature from the verses above.</p>
+      </div>
+      
+      <div class="frozen-input">
+        <div class="input-container">
+          <input type="text" id="frozen-password" class="frozen-password" placeholder="Enter the fox's name..." maxlength="30">
+          <button id="frozen-submit" class="frozen-submit">Submit</button>
+        </div>
+        
+        <div class="hint-section">
+          <button id="hint-btn" class="hint-btn">💡 Need a hint? (Click with caution!)</button>
+        </div>
+        
+        <div id="message-area" class="message-area"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hint Disclaimer Modal -->
+  <div id="hint-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 class="modal-title">⚠️ Hint Disclaimer ⚠️</h3>
+      <p class="modal-text">
+        Are you sure you want to reveal the hint? This will make the riddle significantly easier. 
+        It's more rewarding to solve it on your own first!
+      </p>
+      <div class="modal-buttons">
+        <button id="confirm-hint" class="modal-btn confirm">Yes, show hint</button>
+        <button id="cancel-hint" class="modal-btn cancel">No, I'll try more</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Animation -->
+  <div id="success-overlay" class="success-animation hidden">
+    <div class="success-content">
+      <h2 class="success-title">🎉 Congratulations! 🎉</h2>
+      <img src="../assets/vulpix.gif" alt="Alolan Vulpix" class="vulpix-gif">
+      <p class="success-message">
+        You have successfully solved the Riddle of the Ice Kingdom!<br>
+        The mystical Alolan Vulpix acknowledges your wisdom.
+      </p>
+      <div class="modal-buttons">
+        <button id="next-challenge" class="next-challenge-btn">❄️ Next Challenge</button>
+        <button id="close-success" class="close-success-btn">Stay Here</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="background-music" loop style="display: none;">
+    <source src="../assets/frozen.mp3" type="audio/mpeg">
+    <source src="../assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // IMMEDIATE modal hiding - before anything else
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('hint-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    });
+
+    // Force hide modal immediately when script loads
+    setTimeout(() => {
+      const modal = document.getElementById('hint-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    }, 0);
+
+    // Snowflakes creation and animation
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.opacity = Math.random();
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      
+      document.body.appendChild(snowflake);
+      
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    }
+
+    // Create snowflakes continuously
+    setInterval(createSnowflake, 300);
+
+    // Audio setup
+    const music = document.getElementById('background-music');
+    if (music) {
+      music.volume = 0.2;
+      music.preload = 'auto';
+      
+      const playAudio = () => {
+        music.play().catch(error => {
+          console.log('Auto-play failed:', error);
+        });
+        document.removeEventListener('click', playAudio);
+      };
+      
+      document.addEventListener('click', playAudio);
+    }
+
+    // Riddle logic
+    const correctAnswer = 'Alolan Vulpix';
+    const alternativeAnswers = ['alolan vulpix', 'vulpix', 'Vulpix', 'ALOLAN VULPIX'];
+    
+    const frozenPassword = document.getElementById('frozen-password');
+    const frozenSubmit = document.getElementById('frozen-submit');
+    const messageArea = document.getElementById('message-area');
+    const hintBtn = document.getElementById('hint-btn');
+    const hintModal = document.getElementById('hint-modal');
+    const confirmHint = document.getElementById('confirm-hint');
+    const cancelHint = document.getElementById('cancel-hint');
+    const successOverlay = document.getElementById('success-overlay');
+    const nextChallenge = document.getElementById('next-challenge');
+    const closeSuccess = document.getElementById('close-success');
+
+    // Submit answer
+    function checkAnswer() {
+      const answer = frozenPassword.value.trim();
+      
+      if (answer === correctAnswer || alternativeAnswers.includes(answer.toLowerCase())) {
+        showMessage('🎉 Correct! The Ice Kingdom acknowledges your wisdom. Prepare for the celebration...', 'success');
+        
+        // Success animation
+        frozenSubmit.textContent = '✓ Success!';
+        frozenSubmit.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        
+        setTimeout(() => {
+          successOverlay.classList.remove('hidden');
+        }, 1500);
+        
+      } else if (answer.toLowerCase().includes('vulpix')) {
+        showMessage('🔥 Close! But this fox has adapted to a colder climate. Think about regional variants...', 'error');
+        shakeFrozenBox();
+      } else if (answer === '37' || answer === 'thirty-seven') {
+        showMessage('🧮 That\'s the cipher number, but you need the CREATURE\'S NAME from the riddle!', 'error');
+        shakeFrozenBox();
+      } else if (answer.toLowerCase().includes('alola') && !answer.toLowerCase().includes('vulpix')) {
+        showMessage('🏝️ You\'re thinking of the right region! But what creature lives there?', 'error');
+        shakeFrozenBox();
+      } else if (/^\d+$/.test(answer)) {
+        showMessage('❄️ Numbers won\'t unlock the ice magic. The spirits seek a NAME!', 'error');
+        shakeFrozenBox();
+      } else {
+        showMessage('❌ The ice spirits reject your answer. Study both the cipher and riddle carefully...', 'error');
+        shakeFrozenBox();
+      }
+      
+      frozenPassword.value = '';
+      frozenPassword.focus();
+    }
+
+    // Track if hint was already shown
+    let hintShown = false;
+
+    // Show hint modal (only first time)
+    hintBtn.addEventListener('click', () => {
+      if (!hintShown) {
+        hintModal.classList.remove('hidden');
+      } else {
+        // Show hint directly if already confirmed once
+        showMessage('💡 HINT: The fox is from the Alola region (based on Hawaii) and is the Ice-type regional variant of a classic Fire-type Pokémon. Its name combines its region and species!', 'success');
+      }
+    });
+
+    // Cancel hint
+    cancelHint.addEventListener('click', () => {
+      hintModal.classList.add('hidden');
+    });
+
+    // Confirm hint
+    confirmHint.addEventListener('click', () => {
+      hintModal.classList.add('hidden');
+      hintShown = true;
+      showMessage('💡 HINT: The fox is from the Alola region (based on Hawaii) and is the Ice-type regional variant of a classic Fire-type Pokémon. Its name combines its region and species!', 'success');
+      
+      // Update button text to indicate hint is available
+      hintBtn.textContent = '💡 Show hint again';
+      hintBtn.style.background = 'rgba(34, 197, 94, 0.2)';
+      hintBtn.style.borderColor = 'rgba(74, 222, 128, 0.4)';
+      hintBtn.style.color = '#bbf7d0';
+    });
+
+    // Close modal on outside click
+    hintModal.addEventListener('click', (e) => {
+      if (e.target === hintModal) {
+        hintModal.classList.add('hidden');
+      }
+    });
+
+    // Success overlay handlers
+    nextChallenge.addEventListener('click', () => {
+      window.location.href = 'layer-2-riddle.html';
+    });
+
+    closeSuccess.addEventListener('click', () => {
+      successOverlay.classList.add('hidden');
+    });
+
+    // Close success overlay on outside click
+    successOverlay.addEventListener('click', (e) => {
+      if (e.target === successOverlay) {
+        successOverlay.classList.add('hidden');
+      }
+    });
+
+    // Event listeners
+    frozenSubmit.addEventListener('click', checkAnswer);
+    frozenPassword.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        checkAnswer();
+      }
+    });
+
+    // Escape key to close modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!hintModal.classList.contains('hidden')) {
+          hintModal.classList.add('hidden');
+        }
+        if (!successOverlay.classList.contains('hidden')) {
+          successOverlay.classList.add('hidden');
+        }
+      }
+    });
+
+    // Ensure modals are hidden on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      hintModal.classList.add('hidden');
+      successOverlay.classList.add('hidden');
+    });
+
+    // Also hide them immediately when script loads
+    hintModal.classList.add('hidden');
+    successOverlay.classList.add('hidden');
+
+    // Helper functions
+    function showMessage(text, type) {
+      messageArea.innerHTML = `<div class="message ${type}-message">${text}</div>`;
+      setTimeout(() => {
+        messageArea.innerHTML = '';
+      }, 5000);
+    }
+
+    function shakeFrozenBox() {
+      const content = document.querySelector('.riddle-content');
+      content.style.animation = 'none';
+      content.style.transform = 'translateX(0)';
+      
+      setTimeout(() => {
+        content.style.animation = 'shake 0.5s ease-in-out';
+        setTimeout(() => {
+          content.style.animation = 'iceGlow 4s ease-in-out infinite';
+        }, 500);
+      }, 10);
+    }
+
+    // Add shake animation to CSS dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Ice crystal cursor effect
+    document.addEventListener('mousemove', (e) => {
+      if (Math.random() > 0.95) {
+        const crystal = document.createElement('div');
+        crystal.innerHTML = '❅';
+        crystal.style.position = 'fixed';
+        crystal.style.left = e.clientX + 'px';
+        crystal.style.top = e.clientY + 'px';
+        crystal.style.color = '#bfdbfe';
+        crystal.style.pointerEvents = 'none';
+        crystal.style.fontSize = '12px';
+        crystal.style.opacity = '0.7';
+        crystal.style.zIndex = '5';
+        crystal.style.animation = 'fade-out 2s ease-out forwards';
+        
+        document.body.appendChild(crystal);
+        
+        setTimeout(() => {
+          crystal.remove();
+        }, 2000);
+      }
+    });
+
+    // Add fade-out animation
+    const fadeStyle = document.createElement('style');
+    fadeStyle.textContent = `
+      @keyframes fade-out {
+        0% { opacity: 0.7; transform: scale(1); }
+        100% { opacity: 0; transform: scale(0.5) translateY(-20px); }
+      }
+    `;
+    document.head.appendChild(fadeStyle);
+
+    console.log('❄️ Welcome to the Frozen Nexus! Solve the riddle to proceed...');
+  </script>
+</body>
+</html>

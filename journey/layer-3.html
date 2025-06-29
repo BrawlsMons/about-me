@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layer III - The Depths</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #1a0033 25%, #330066 50%, #000000 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #9d4edd;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .void-container {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(15px);
+      border: 2px solid #9d4edd;
+      border-radius: 20px;
+      box-shadow: 
+        0 0 40px rgba(157, 78, 221, 0.4),
+        inset 0 0 20px rgba(157, 78, 221, 0.1);
+      animation: voidPulse 4s ease-in-out infinite;
+      max-width: 600px;
+    }
+
+    .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #9d4edd;
+      text-shadow: 0 0 30px #9d4edd;
+      margin-bottom: 1rem;
+      animation: textGlow 3s ease-in-out infinite;
+    }
+
+    .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      color: rgba(157, 78, 221, 0.8);
+      margin-bottom: 2rem;
+      letter-spacing: 2px;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      color: rgba(157, 78, 221, 0.9);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .void-message {
+      font-style: italic;
+      color: rgba(157, 78, 221, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .back-btn {
+      background: linear-gradient(135deg, #9d4edd, #7209b7);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(157, 78, 221, 0.5);
+    }
+
+    @keyframes voidPulse {
+      0%, 100% {
+        box-shadow: 
+          0 0 40px rgba(157, 78, 221, 0.4),
+          inset 0 0 20px rgba(157, 78, 221, 0.1);
+      }
+      50% {
+        box-shadow: 
+          0 0 60px rgba(157, 78, 221, 0.6),
+          inset 0 0 30px rgba(157, 78, 221, 0.2);
+      }
+    }
+
+    @keyframes textGlow {
+      0%, 100% {
+        text-shadow: 0 0 30px #9d4edd;
+      }
+      50% {
+        text-shadow: 
+          0 0 40px #9d4edd,
+          0 0 60px #9d4edd,
+          0 0 80px #9d4edd;
+      }
+    }
+
+    /* Void particles */
+    .void-particle {
+      position: absolute;
+      background: rgba(157, 78, 221, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: voidFloat 12s infinite ease-in-out;
+    }
+
+    @keyframes voidFloat {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.2;
+      }
+      33% {
+        transform: translateY(-30px) translateX(20px) scale(1.2);
+        opacity: 0.6;
+      }
+      66% {
+        transform: translateY(-10px) translateX(-15px) scale(0.8);
+        opacity: 0.4;
+      }
+    }
+
+    .matrix-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    .matrix-char {
+      position: absolute;
+      color: #9d4edd;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      animation: matrixFall 8s linear infinite;
+    }
+
+    @keyframes matrixFall {
+      0% {
+        transform: translateY(-100px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2.5rem; }
+      .void-container { 
+        padding: 2rem; 
+        margin: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="matrix-rain" id="matrixRain"></div>
+  
+  <div class="void-container">
+    <h1 class="title">LAYER III</h1>
+    <p class="subtitle">THE DEPTHS</p>
+    <div class="message">
+      <p>You have reached the edge of the known.</p>
+      <p>Beyond this point lies uncharted territory.</p>
+    </div>
+    <div class="void-message">
+      <p>"In the depths of cyberspace, only echoes remain..."</p>
+    </div>
+    <p style="margin-bottom: 2rem; color: rgba(157, 78, 221, 0.7);">
+      🚧 This layer is currently under construction 🚧
+    </p>
+    <a href="layer-2-riddle.html" class="back-btn">← Return to Night City</a>
+  </div>
+
+  <script>
+    // Create void particles
+    function createVoidParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('void-particle');
+      
+      const size = Math.random() * 8 + 3;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.top = Math.random() * 100 + 'vh';
+      particle.style.animationDelay = Math.random() * 12 + 's';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 12000);
+    }
+
+    // Create matrix rain effect
+    function createMatrixChar() {
+      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+      const char = document.createElement('div');
+      char.classList.add('matrix-char');
+      char.textContent = chars[Math.floor(Math.random() * chars.length)];
+      char.style.left = Math.random() * 100 + 'vw';
+      char.style.animationDelay = Math.random() * 2 + 's';
+      char.style.animationDuration = (Math.random() * 4 + 4) + 's';
+      
+      document.getElementById('matrixRain').appendChild(char);
+      
+      setTimeout(() => {
+        char.remove();
+      }, 8000);
+    }
+
+    // Initialize effects
+    setInterval(createVoidParticle, 1500);
+    setInterval(createMatrixChar, 100);
+
+    // Console message
+    console.log('🕳️ Layer III - The Depths... Something lurks in the void.');
+    console.log('💜 You have reached the current boundary of this journey.');
+  </script>
+</body>
+</html>

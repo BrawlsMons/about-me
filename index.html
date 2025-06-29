@@ -3,51 +3,224 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrawlsMons Portfolio</title>
+  <title>BrawlsMons - Developer Portfolio</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar">
+    <a href="#hero" class="nav-link" data-tooltip="Home">🏠</a>
     <a href="#about" class="nav-link" data-tooltip="About Me">👤</a>
-    <a href="#projects" class="nav-link" data-tooltip="Projects">📁</a>
+    <a href="#projects" class="nav-link" data-tooltip="Projects">💻</a>
     <a href="#favorites" class="nav-link" data-tooltip="Favorites">❤️</a>
     <button class="nav-link theme-toggle" data-tooltip="Toggle Theme">🌙</button>
-    <button class="nav-link music-toggle" data-tooltip="Toggle Music">▶️</button>
+    <button class="nav-link music-toggle" data-tooltip="Toggle Music">🎵</button>
+    <button class="nav-link journey-toggle" data-tooltip="Journey Mode">🚀</button>
   </nav>
 
-  <canvas id="visualizer"></canvas>
-
-  <section id="about" class="section">
-    <div class="wave-bg"></div>
-    <div class="content">
-      <h1 class="animate-title">Hi, I'm BrawlsMons</h1>
-      <p class="animate-text">Always a bored developer of whatever I think of. I usually lack motivation but if I can just finish a project I create some cool stuff :D</p>
+  <!-- Secret Journey Panel -->
+  <div id="journey-panel" class="journey-panel hidden">
+    <div class="journey-content">
+      <div class="journey-header">
+        <h3>🌟 Journey Mode Activated</h3>
+        <button class="journey-close">✕</button>
+      </div>
+      <div class="journey-body">
+        <p>Enter the secret code to continue your journey...</p>
+        <div class="journey-input-container">
+          <input type="password" id="journey-password" placeholder="Enter the code..." maxlength="20">
+          <button id="journey-submit">Enter</button>
+        </div>
+        <div id="journey-hint" class="journey-hint">
+          💡 What's it like to hold the hand of someone you love?
+        </div>
+        <div id="journey-error" class="journey-error hidden">
+          ❌ Incorrect code. Try again...
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <section id="projects" class="section">
+  <canvas id="visualizer"></canvas>
+  <audio id="background-music" loop style="display: none;">
+    <source src="assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Hero Section -->
+  <section id="hero" class="section hero-section">
     <div class="wave-bg"></div>
-    <div>
-      <h2 class="animate-title">My Projects</h2>
-      <div class="project-grid">
-        <div class="project-card animate-project">
-          <h3>Brawls-EQDrops</h3>
-          <p>Minecraft plugin for percentage drops of items after death</p>
-          <p><a href="https://github.com/BrawlsMons/Brawls-EQDrops" target="_blank">View on GitHub</a></p>
+    <div class="hero-content">
+      <div class="profile-container">
+        <img src="https://avatars.githubusercontent.com/u/54508721?v=4" alt="BrawlsMons Profile" class="profile-image">
+        <div class="profile-glow"></div>
+      </div>
+      <h1 class="hero-title">BrawlsMons</h1>
+      <p class="hero-subtitle">Passionate Developer & Creator</p>
+      <p class="hero-description">🎯 I dunno at this point... Always a bored developer of whatever I think of. I usually lack motivation but if I can just finish a project I create some cool stuff :D</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">8+</span>
+          <span class="stat-label">Projects</span>
         </div>
-        <div class="project-card animate-project">
-          <h3>PTD3D</h3>
-          <p>A Pokemon-themed tower defense game made in godot</p>
-          <p><a href="https://github.com/BrawlsMons/PTD3D" target="_blank">View on GitHub</a></p>
+        <div class="stat-item">
+          <span class="stat-number">5+</span>
+          <span class="stat-label">Languages</span>
         </div>
-        <div class="project-card animate-project">
-          <h3>Work in Progress</h3>
-          <p>Exciting new project currently under development. Stay tuned for updates!</p>
+        <div class="stat-item">
+          <span class="stat-number" title="The answer to everything">42</span>
+          <span class="stat-label">Ideas</span>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="wave-bg"></div>
+    <div class="content">
+      <h2 class="animate-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">🚀</div>
+          <h3>Developer</h3>
+          <p>Creating innovative solutions with various programming languages and frameworks</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🎮</div>
+          <h3>Game Developer</h3>
+          <p>Building engaging games and interactive experiences with Godot and web technologies</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🤖</div>
+          <h3>AI Enthusiast</h3>
+          <p>Exploring artificial intelligence and creating AI-powered applications</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section">
+    <div class="wave-bg"></div>
+    <div>
+      <h2 class="animate-title">My Projects</h2>
+      <div class="project-grid">
+        <div class="project-card animate-project featured">
+          <div class="project-header">
+            <h3>PTD3D</h3>
+            <span class="project-badge">Featured</span>
+          </div>
+          <p>A Pokemon-themed tower defense game made in Godot with immersive 3D graphics and strategic gameplay</p>
+          <div class="project-tech">
+            <span class="tech-tag">GDScript</span>
+            <span class="tech-tag">Godot</span>
+            <span class="tech-tag">3D</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/PTD3D" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card animate-project">
+          <div class="project-header">
+            <h3>OpenRouter AI Assistant</h3>
+          </div>
+          <p>My old AI assistant built with Python, featuring advanced conversational capabilities</p>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">AI</span>
+            <span class="tech-tag">API</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/OpenRouter-Ai-Assistant" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card animate-project">
+          <div class="project-header">
+            <h3>Brawls-EQDrops</h3>
+          </div>
+          <p>Minecraft plugin for percentage-based item drops after player death with configurable settings</p>
+          <div class="project-tech">
+            <span class="tech-tag">Java</span>
+            <span class="tech-tag">Minecraft</span>
+            <span class="tech-tag">Plugin</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/Brawls-EQDrops" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card animate-project">
+          <div class="project-header">
+            <h3>Fantasy AI Game</h3>
+          </div>
+          <p>Interactive fantasy-themed web game incorporating AI elements and engaging gameplay mechanics</p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">AI</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/Fantasy-AI-Game" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card animate-project">
+          <div class="project-header">
+            <h3>Scryfall Fetcher</h3>
+          </div>
+          <p>App for fetching Scryfall Magic: The Gathering card data to JSON format</p>
+          <div class="project-tech">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">API</span>
+            <span class="tech-tag">JSON</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/scryfall-fetcher" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card animate-project">
+          <div class="project-header">
+            <h3>Laurka w HTML</h3>
+            <span class="project-badge archived">Archived</span>
+          </div>
+          <p>A heartfelt HTML page created as a digital love letter ❤️</p>
+          <div class="project-tech">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JavaScript</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/BrawlsMons/Laurka-w-HTML" target="_blank" class="project-link">
+              <span>View on GitHub</span>
+              <span class="link-icon">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Favorites Section -->
   <section id="favorites" class="section">
     <div class="wave-bg"></div>
     <div>

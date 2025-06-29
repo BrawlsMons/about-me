@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journey Mode - The Adventure Begins</title>
+  <link rel="stylesheet" href="journey.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a href="../index.html" class="journey-back">← Return to Reality</a>
+  
+  <div class="journey-container">
+    <div class="journey-content">
+      <div class="journey-header">
+        <h1 class="journey-title">The Journey Begins</h1>
+        <div class="journey-subtitle">A Digital Adventure Awaits</div>
+      </div>
+      
+      <div class="journey-description">
+        <p>You have successfully unlocked the hidden pathway to a world beyond the ordinary portfolio.</p>
+        <p>What lies ahead is an interactive journey through layers of digital reality, where each act reveals new mysteries and challenges.</p>
+        <p>Are you ready to step into the unknown?</p>
+      </div>
+      
+      <div class="journey-action">
+        <button class="start-journey-btn" onclick="startJourney()">
+          <span class="btn-text">Begin the Adventure</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+      
+      <div class="journey-warning">
+        <small>⚠️ This experience requires an open mind and willingness to explore the unconventional.</small>
+      </div>
+    </div>
+    
+    <div class="journey-effects">
+      <div class="particle-field"></div>
+      <div class="data-stream"></div>
+    </div>
+  </div>
+
+  <canvas id="visualizer"></canvas>
+  <audio id="background-music" loop style="display: none;">
+    <source src="../assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="journey.js"></script>
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layer II - Night City</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Cyberpunk';
+      src: url('../assets/cyberpunk.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #000000 75%, #ffff00 100%);
+      background-size: 300% 300%;
+      background-attachment: fixed;
+      animation: cyberpunkBg 8s ease-in-out infinite;
+      height: 100vh;
+      color: #ffff00;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    @keyframes cyberpunkBg {
+      0%, 100% { 
+        background-position: 0% 50%;
+        filter: brightness(1) contrast(1.2);
+      }
+      50% { 
+        background-position: 100% 50%;
+        filter: brightness(1.1) contrast(1.3);
+      }
+    }
+
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(rgba(255, 255, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 0, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 0, 0.05) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255, 255, 0, 0.05) 2px, transparent 2px);
+      background-size: 30px 30px, 30px 30px, 150px 150px, 150px 150px;
+      z-index: -1;
+      animation: gridGlitch 6s linear infinite;
+    }
+
+    @keyframes gridGlitch {
+      0%, 90%, 100% { 
+        transform: translate(0, 0); 
+        opacity: 0.3;
+      }
+      92%, 94%, 96%, 98% { 
+        transform: translate(2px, -2px); 
+        opacity: 0.6;
+      }
+      93%, 95%, 97% { 
+        transform: translate(-2px, 2px); 
+        opacity: 0.4;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0.5rem 2rem;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .title {
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 4rem;
+      font-weight: normal;
+      color: #ffff00;
+      text-shadow: 
+        0 0 5px #ffff00,
+        0 0 10px #ffff00,
+        0 0 15px #ffff00,
+        2px 2px 0px #000000,
+        4px 4px 0px rgba(0, 0, 0, 0.7);
+      margin-bottom: 1rem;
+      animation: cyberpunkGlow 3s ease-in-out infinite;
+      letter-spacing: 3px;
+    }
+
+    @keyframes cyberpunkGlow {
+      0%, 100% { 
+        text-shadow: 
+          0 0 5px #ffff00,
+          0 0 10px #ffff00,
+          0 0 15px #ffff00,
+          2px 2px 0px #000000,
+          4px 4px 0px rgba(0, 0, 0, 0.7);
+      }
+      50% { 
+        text-shadow: 
+          0 0 8px #ffff00,
+          0 0 15px #ffff00,
+          0 0 20px #ffff00,
+          0 0 25px #ffff00,
+          2px 2px 0px #000000,
+          4px 4px 0px rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    .subtitle {
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      color: #ffff00;
+      text-shadow: 0 0 8px #ffff00, 1px 1px 0px #000000;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    .location {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+      text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 5px rgba(255, 255, 0, 0.3);
+    }
+
+    .riddle-container {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+      border: 3px solid #ffff00;
+      border-radius: 0px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 
+        0 0 15px rgba(255, 255, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 0, 0.05),
+        0 0 30px rgba(255, 255, 0, 0.1);
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    .riddle-container::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: linear-gradient(45deg, #ffff00, #000000, #ffff00, #000000);
+      background-size: 200% 200%;
+      z-index: -1;
+      animation: cyberpunkBorder 4s linear infinite;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    .riddle-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 0, 0.03) 2px,
+          rgba(255, 255, 0, 0.03) 4px
+        );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes cyberpunkBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .riddle-title {
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      color: #ffff00;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        0 0 8px #ffff00;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .riddle-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 3px rgba(255, 255, 0, 0.3);
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .riddle-text strong {
+      color: #ffff00;
+      text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.9),
+        0 0 8px #ffff00;
+      font-weight: 700;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cyber-input {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+      border: 2px solid #ffff00;
+      color: #ffff00;
+      padding: 1rem 1.5rem;
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      border-radius: 0px;
+      outline: none;
+      transition: all 0.3s ease;
+      min-width: 250px;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      box-shadow: 
+        0 0 8px rgba(255, 255, 0, 0.2),
+        inset 0 0 10px rgba(255, 255, 0, 0.05);
+      position: relative;
+      z-index: 2;
+    }
+
+    .cyber-input:focus {
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 15px rgba(255, 255, 0, 0.4),
+        inset 0 0 15px rgba(255, 255, 0, 0.1),
+        0 0 25px rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      text-shadow: 0 0 5px #ffff00;
+    }
+
+    .cyber-input::placeholder {
+      color: rgba(255, 255, 0, 0.5);
+    }
+
+    .cyber-btn {
+      background: linear-gradient(135deg, #ffff00 0%, #000000 50%, #ffff00 100%);
+      border: 2px solid #ffff00;
+      color: #000000;
+      padding: 1rem 2rem;
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 0px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      box-shadow: 
+        0 0 10px rgba(255, 255, 0, 0.3),
+        inset 0 0 5px rgba(255, 255, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    .cyber-btn:hover {
+      background: linear-gradient(135deg, #ffffff 0%, #ffff00 50%, #ffffff 100%);
+      transform: translateY(-3px);
+      box-shadow: 
+        0 10px 20px rgba(255, 255, 0, 0.4),
+        inset 0 0 10px rgba(255, 255, 0, 0.2),
+        0 0 25px rgba(255, 255, 255, 0.3);
+      border-color: #ffffff;
+    }
+
+    .cyber-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .hint-btn {
+      background: linear-gradient(135deg, rgba(255, 255, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(255, 255, 0, 0.2) 100%);
+      border: 2px solid rgba(255, 255, 0, 0.6);
+      color: #ffff00;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    }
+
+    .hint-btn:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 0, 0.3) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(255, 255, 0, 0.3) 100%);
+      border-color: #ffff00;
+      box-shadow: 
+        0 10px 25px rgba(255, 255, 0, 0.4),
+        inset 0 0 15px rgba(255, 255, 0, 0.2);
+      text-shadow: 0 0 15px #ffff00;
+    }
+
+    .completed {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .completed .riddle-container {
+      border-color: #ffffff;
+      box-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.4),
+        inset 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .completed .riddle-container::before {
+      background: linear-gradient(45deg, #ffffff, #ffff00, #ffffff, #ffff00);
+    }
+
+    .completed .riddle-title {
+      color: #ffffff;
+      text-shadow: 
+        0 0 15px #ffffff,
+        1px 1px 0px #000000;
+    }
+
+    .progress-bar {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+      border: 2px solid #ffff00;
+      border-radius: 0px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+      box-shadow: 
+        0 0 25px rgba(255, 255, 0, 0.3),
+        inset 0 0 20px rgba(255, 255, 0, 0.1);
+    }
+
+    .progress-text {
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.9),
+        0 0 5px rgba(255, 255, 0, 0.5);
+      letter-spacing: 1px;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #ffff00 0%, #ffffff 50%, #ffff00 100%);
+      height: 8px;
+      border-radius: 0px;
+      transition: width 0.8s ease;
+      box-shadow: 
+        0 0 15px rgba(255, 255, 0, 0.6),
+        inset 0 0 10px rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.2) 2px,
+          rgba(0, 0, 0, 0.2) 4px
+        );
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 0, 0.95) 50%, rgba(0, 0, 0, 0.95) 100%);
+      margin: 10% auto;
+      padding: 2.5rem;
+      border: 3px solid #ffff00;
+      border-radius: 0px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 
+        0 0 40px rgba(255, 255, 0, 0.5),
+        inset 0 0 30px rgba(255, 255, 0, 0.1);
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+      position: relative;
+    }
+
+    .modal-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3px,
+          rgba(255, 255, 0, 0.05) 3px,
+          rgba(255, 255, 0, 0.05) 6px
+        );
+      pointer-events: none;
+    }
+
+    .modal h3 {
+      color: #ffff00;
+      margin-bottom: 1.5rem;
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      text-shadow: 
+        0 0 15px #ffff00,
+        1px 1px 0px #000000;
+      letter-spacing: 1px;
+    }
+
+    .modal p {
+      color: #ffff00;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+    }
+
+    .modal strong {
+      color: #ffffff;
+      text-shadow: 0 0 10px #ffff00;
+    }
+
+    .modal em {
+      color: rgba(255, 255, 0, 0.7);
+      font-style: italic;
+    }
+
+    .close-btn {
+      background: linear-gradient(135deg, rgba(255, 255, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(255, 255, 0, 0.2) 100%);
+      border: 2px solid rgba(255, 255, 0, 0.6);
+      color: #ffff00;
+      padding: 0.8rem 1.5rem;
+      border-radius: 0px;
+      cursor: pointer;
+      margin-top: 1rem;
+      font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 0, 0.3) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(255, 255, 0, 0.3) 100%);
+      border-color: #ffff00;
+      box-shadow: 0 5px 15px rgba(255, 255, 0, 0.4);
+      text-shadow: 0 0 10px #ffff00;
+    }
+
+    .cyber-particles {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: #ffff00;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 10px #ffff00,
+        0 0 20px #ffff00,
+        0 0 30px rgba(255, 255, 0, 0.5);
+      animation: cyberpunkParticles 12s infinite linear;
+      z-index: -1;
+    }
+
+    .cyber-particles:nth-child(odd) {
+      background: #ffffff;
+      box-shadow: 
+        0 0 8px #ffffff,
+        0 0 16px #ffffff,
+        0 0 24px rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes cyberpunkParticles {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(200px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Scanlines Effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: 
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(255, 255, 0, 0.01) 3px,
+          rgba(255, 255, 0, 0.01) 6px
+        );
+      pointer-events: none;
+      z-index: 100;
+      animation: scanlines 0.2s linear infinite;
+    }
+
+    @keyframes scanlines {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(6px); }
+    }
+
+    /* Random Glitch Effect */
+    .glitch-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      pointer-events: none;
+      z-index: 99;
+      animation: randomGlitch 8s infinite;
+    }
+
+    @keyframes randomGlitch {
+      0%, 95%, 100% { 
+        background: transparent;
+        transform: translate(0);
+      }
+      96% { 
+        background: rgba(255, 255, 0, 0.1);
+        transform: translate(2px, 0);
+      }
+      97% { 
+        background: rgba(0, 0, 0, 0.3);
+        transform: translate(-2px, 0);
+      }
+      98% { 
+        background: rgba(255, 255, 0, 0.05);
+        transform: translate(1px, -1px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2rem; }
+      .input-group { 
+        flex-direction: column; 
+        align-items: stretch;
+      }
+      .cyber-input { min-width: auto; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cyber-grid"></div>
+  <div class="glitch-overlay"></div>
+  
+  <!-- Back button -->
+  <a href="nexus-awakening.html" style="position: fixed; top: 1rem; left: 1rem; background: rgba(255, 255, 0, 0.2); border: 2px solid rgba(255, 255, 0, 0.6); color: #ffff00; padding: 0.5rem 1rem; text-decoration: none; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)); font-family: 'Cyberpunk', monospace; font-size: 0.9rem; z-index: 1000; transition: all 0.3s ease;">← Layer I</a>
+  
+  <div class="container">
+    <div class="header">
+      <h1 class="title">LAYER II</h1>
+      <p class="subtitle">NIGHT CITY</p>
+      <p class="location">Welcome to the dark future, choom...</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-text">Progress: <span id="progress-count">0</span>/2 Challenges Complete</div>
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+
+    <!-- First Riddle: Cyberpsychosis -->
+    <div class="riddle-container" id="riddle1">
+      <h3 class="riddle-title">💀 CYBERPSYCHOSIS PROTOCOL 💀</h3>
+      <div class="riddle-text">
+        In the neon-lit streets where corpo towers pierce the sky,<br>
+        A young man dreamed of climbing high.<br>
+        From the barrio to Arasaka's golden gate,<br>
+        He pushed his chrome beyond human fate.<br><br>
+        
+        Sandy's dance, Rebecca's final stand,<br>
+        A legend born from trembling hand.<br>
+        Studio Trigger told his tragic story,<br>
+        Of synthetic dreams and fading glory.<br><br>
+        
+        <strong>What name echoes through Night City's data streams?<br>
+        Two words that shattered cybernetic dreams.</strong>
+      </div>
+      <div class="input-group">
+        <input type="text" class="cyber-input" id="answer1" placeholder="Enter the full name...">
+        <button class="cyber-btn" onclick="checkAnswer1()">Submit</button>
+      </div>
+      <button class="cyber-btn hint-btn" onclick="showHint1()">🔍 Access Hint</button>
+    </div>
+
+    <!-- Second Riddle: The Phantom Fixer -->
+    <div class="riddle-container" id="riddle2">
+      <h3 class="riddle-title">🕶️ PHANTOM FIXER PROTOCOL 🕶️</h3>
+      <div class="riddle-text">
+        In the sprawling networks of Night City, there exists a fixer who operates in the shadows.<br>
+        He's not found on any official maps, not even the most comprehensive ones.<br>
+        A master of discretion, dealing in the rarest gigs and darkest secrets.<br><br>
+        <strong>Name this ghost in the machine, choom.</strong>
+      </div>
+      <div class="input-group">
+        <input type="text" class="cyber-input" id="answer2" placeholder="Enter the fixer's name...">
+        <button class="cyber-btn" onclick="checkAnswer2()">Submit</button>
+      </div>
+      <button class="cyber-btn hint-btn" onclick="showHint2()">🔍 Access Hint</button>
+    </div>
+  </div>
+
+  <!-- Hint Modal -->
+  <div id="hintModal" class="modal">
+    <div class="modal-content">
+      <h3>💡 Neural Interface Hint</h3>
+      <p id="hintText"></p>
+      <button class="close-btn" onclick="closeModal('hintModal')">Close</button>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h3 id="successTitle">✅ Protocol Complete</h3>
+      <p id="successText"></p>
+      <button id="successBtn" class="cyber-btn" onclick="handleSuccess()">Continue</button>
+    </div>
+  </div>
+
+  <audio id="background-music" loop style="display: none;">
+    <source src="../assets/cyberpunk.mp3" type="audio/mpeg">
+    <source src="../assets/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let completedRiddles = 0;
+    let currentSuccess = null;
+
+    // Audio setup
+    const music = document.getElementById('background-music');
+    if (music) {
+      music.volume = 0.3;
+      music.preload = 'auto';
+      
+      const playAudio = () => {
+        music.play().catch(error => {
+          console.log('Auto-play failed:', error);
+        });
+        document.removeEventListener('click', playAudio);
+        document.removeEventListener('keydown', playAudio);
+      };
+      
+      document.addEventListener('click', playAudio);
+      document.addEventListener('keydown', playAudio);
+      
+      // Try to play immediately
+      setTimeout(() => {
+        music.play().catch(() => {
+          console.log('Waiting for user interaction to play music...');
+        });
+      }, 1000);
+    }
+
+    // Create cyber particles
+    function createCyberParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('cyber-particles');
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDelay = Math.random() * 3 + 's';
+      particle.style.animationDuration = (Math.random() * 4 + 8) + 's';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 12000);
+    }
+
+    setInterval(createCyberParticle, 600);
+
+    function updateProgress() {
+      const progressCount = document.getElementById('progress-count');
+      const progressFill = document.getElementById('progress-fill');
+      
+      progressCount.textContent = completedRiddles;
+      progressFill.style.width = (completedRiddles / 2) * 100 + '%';
+    }
+
+    function checkAnswer1() {
+      const answer = document.getElementById('answer1').value.trim().toLowerCase();
+      
+      if (answer === 'david martinez') {
+        if (!document.getElementById('riddle1').classList.contains('completed')) {
+          completedRiddles++;
+          updateProgress();
+          document.getElementById('riddle1').classList.add('completed');
+          
+          currentSuccess = 'map';
+          document.getElementById('successTitle').textContent = '🎯 Cyberpsychosis Data Retrieved';
+          document.getElementById('successText').innerHTML = 
+            'Memory core accessed successfully!<br><br>' +
+            'David Martinez - The edgerunner who burned bright and fast.<br>' +
+            'His story echoes through Night City\'s data streams.<br><br>' +
+            '<strong>Special reward unlocked: Night City Interactive Map</strong>';
+          document.getElementById('successBtn').textContent = '🗺️ Access Map';
+          document.getElementById('successModal').style.display = 'block';
+        }
+      } else if (answer === 'david' || answer === 'martinez') {
+        alert('❌ Incomplete neural pattern - Full designation required');
+      } else if (answer.includes('david') || answer.includes('martinez')) {
+        alert('⚠️ Partial match detected - Verify complete identity sequence');
+      } else {
+        alert('❌ Access Denied - Incorrect neural pattern detected');
+      }
+    }
+
+    function checkAnswer2() {
+      const answer = document.getElementById('answer2').value.trim().toLowerCase();
+      
+      if (answer === 'wade bleecker' || answer === 'bleecker' || answer === 'wade') {
+        if (!document.getElementById('riddle2').classList.contains('completed')) {
+          completedRiddles++;
+          updateProgress();
+          document.getElementById('riddle2').classList.add('completed');
+          
+          currentSuccess = 'next';
+          document.getElementById('successTitle').textContent = '👻 Phantom Protocol Accessed';
+          document.getElementById('successText').innerHTML = 
+            'Ghost fixer identity confirmed!<br><br>' +
+            'Wade Bleecker - The invisible hand that moves in Night City\'s shadows.<br>' +
+            'His network operates beyond conventional detection.<br><br>' +
+            '<strong>Deeper layers of the matrix await...</strong>';
+          document.getElementById('successBtn').textContent = '⚡ Enter Layer III';
+          document.getElementById('successModal').style.display = 'block';
+        }
+      } else {
+        alert('❌ Access Denied - Ghost signature not recognized');
+      }
+    }
+
+    function showHint1() {
+      document.getElementById('hintText').innerHTML = 
+        '<strong>Neural Fragment Decryption:</strong><br><br>' +
+        'Seek the anime where chrome meets flesh,<br>' +
+        'Where Studio Trigger wove tales fresh.<br>' +
+        'A yellow-eyed warrior with Sandevistan\'s speed,<br>' +
+        'Who fell to the curse of cybernetic greed.<br><br>' +
+        'His name consists of two earthly words,<br>' +
+        'One a king, one a warrior\'s surname heard.<br><br>' +
+        '<em>Hint: Think biblical king + Spanish surname</em><br>' +
+        '<em>Series aired in 2022 on Netflix</em>';
+      document.getElementById('hintModal').style.display = 'block';
+    }
+
+    function showHint2() {
+      document.getElementById('hintText').innerHTML = 
+        '<strong>Data Fragment:</strong><br><br>' +
+        'Think of someone who operates completely off the grid.<br>' +
+        'Not even the most detailed fan-made maps include him.<br>' +
+        'His surname sounds like a street name in NYC.<br><br>' +
+        '<em>Disclaimer: This references a very obscure character from Cyberpunk 2077 lore.</em>';
+      document.getElementById('hintModal').style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function handleSuccess() {
+      if (currentSuccess === 'map') {
+        window.open('https://cyberpunk2077-map.com/', '_blank');
+        closeModal('successModal');
+      } else if (currentSuccess === 'next') {
+        if (completedRiddles >= 2) {
+          window.location.href = 'layer-3.html';
+        } else {
+          closeModal('successModal');
+        }
+      }
+    }
+
+    // Close modals with ESC key or click outside
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal('hintModal');
+        closeModal('successModal');
+      }
+    });
+
+    // Allow Enter key to submit answers
+    document.getElementById('answer1').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkAnswer1();
+      }
+    });
+
+    document.getElementById('answer2').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        checkAnswer2();
+      }
+    });
+
+    console.log('🌃 Night City activated - Two protocols await your neural input...');
+    console.log('🎵 Cyberpunk music loading - Click anywhere to start audio...');
+  </script>
+</body>
+</html>
