@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Act II - Layer I - The Apothecary's Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 25%, #3d2817 50%, #2c1810 75%, #4a3222 100%);
+      background-size: 300% 300%;
+      background-attachment: fixed;
+      animation: herbBg 12s ease-in-out infinite;
+      height: 100vh;
+      color: #f4e6d3;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    @keyframes herbBg {
+      0%, 100% { 
+        background-position: 0% 50%;
+        filter: brightness(1) contrast(1.1);
+      }
+      50% { 
+        background-position: 100% 50%;
+        filter: brightness(1.1) contrast(1.2);
+      }
+    }
+
+    .herb-particles {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #90c695;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 6px #90c695,
+        0 0 12px rgba(144, 198, 149, 0.5);
+      animation: herbFloat 15s infinite linear;
+      z-index: 1;
+    }
+
+    .herb-particles:nth-child(odd) {
+      background: #d4af37;
+      box-shadow: 
+        0 0 6px #d4af37,
+        0 0 12px rgba(212, 175, 55, 0.5);
+    }
+
+    @keyframes herbFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(60, 40, 23, 0.8);
+      border: 3px solid #d4af37;
+      border-radius: 15px;
+      box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.3),
+        inset 0 0 15px rgba(212, 175, 55, 0.1);
+    }
+
+    .title {
+      font-family: 'Noto Serif', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #d4af37;
+      text-shadow: 
+        0 0 10px #d4af37,
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      font-family: 'Noto Serif', serif;
+      font-size: 1.3rem;
+      color: #90c695;
+      text-shadow: 0 0 8px rgba(144, 198, 149, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 1rem;
+      color: #f4e6d3;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .game-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .ingredients-panel {
+      background: rgba(60, 40, 23, 0.9);
+      border: 2px solid #90c695;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 
+        0 0 15px rgba(144, 198, 149, 0.3),
+        inset 0 0 10px rgba(144, 198, 149, 0.1);
+    }
+
+    .panel-title {
+      font-family: 'Noto Serif', serif;
+      font-size: 1.5rem;
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+    }
+
+    .ingredient {
+      background: linear-gradient(135deg, rgba(144, 198, 149, 0.2), rgba(60, 40, 23, 0.8));
+      border: 2px solid #90c695;
+      border-radius: 8px;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      color: #f4e6d3;
+    }
+
+    .ingredient:hover {
+      background: linear-gradient(135deg, rgba(144, 198, 149, 0.4), rgba(60, 40, 23, 0.9));
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(144, 198, 149, 0.4);
+      border-color: #d4af37;
+    }
+
+    .ingredient.selected {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(60, 40, 23, 0.9));
+      border-color: #d4af37;
+      color: #d4af37;
+      transform: scale(1.05);
+    }
+
+    .mortar-panel {
+      background: rgba(60, 40, 23, 0.9);
+      border: 2px solid #d4af37;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+      text-align: center;
+    }
+
+    .mortar {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, #6b4423 0%, #4a2f17 100%);
+      border: 4px solid #3d2817;
+      border-radius: 50%;
+      margin: 1rem auto;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .mortar:hover {
+      transform: scale(1.05);
+      box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 8px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .mortar-content {
+      font-size: 0.8rem;
+      color: #f4e6d3;
+      text-align: center;
+      max-width: 120px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #90c695 0%, #6b8e70 100%);
+      border: 2px solid #90c695;
+      color: #2c1810;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Noto Serif', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: capitalize;
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+      border-color: #d4af37;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(144, 198, 149, 0.4);
+    }
+
+    .action-btn:disabled {
+      background: rgba(100, 100, 100, 0.3);
+      border-color: #666;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .recipe-book {
+      background: rgba(60, 40, 23, 0.9);
+      border: 2px solid #d4af37;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.3),
+        inset 0 0 10px rgba(212, 175, 55, 0.1);
+    }
+
+    .current-recipe {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(144, 198, 149, 0.1);
+      border: 1px solid #90c695;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .recipe-name {
+      font-family: 'Noto Serif', serif;
+      font-size: 1.3rem;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+    }
+
+    .recipe-description {
+      font-size: 0.9rem;
+      color: #f4e6d3;
+      line-height: 1.5;
+    }
+
+    .progress-container {
+      background: rgba(60, 40, 23, 0.9);
+      border: 2px solid #90c695;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .progress-text {
+      font-family: 'Noto Serif', serif;
+      color: #f4e6d3;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .progress-bar {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #90c695 0%, #d4af37 100%);
+      height: 100%;
+      transition: width 0.5s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(144, 198, 149, 0.5);
+    }
+
+    .result-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, rgba(60, 40, 23, 0.95), rgba(44, 24, 16, 0.95));
+      margin: 10% auto;
+      padding: 2rem;
+      border: 3px solid #d4af37;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 
+        0 0 30px rgba(212, 175, 55, 0.5),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+
+    .modal h3 {
+      color: #d4af37;
+      margin-bottom: 1rem;
+      font-family: 'Noto Serif', serif;
+      font-size: 1.8rem;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .modal p {
+      color: #f4e6d3;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .close-btn {
+      background: linear-gradient(135deg, #90c695 0%, #6b8e70 100%);
+      border: 2px solid #90c695;
+      color: #2c1810;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Noto Serif', serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+      border-color: #d4af37;
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2rem; }
+      .game-area { 
+        grid-template-columns: 1fr; 
+        gap: 1rem;
+      }
+      .ingredients-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .container { padding: 0.5rem 1rem; }
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(144, 198, 149, 0.2);
+      border: 2px solid rgba(144, 198, 149, 0.6);
+      color: #90c695;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-family: 'Noto Serif', serif;
+      font-size: 0.9rem;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(144, 198, 149, 0.3);
+      border-color: #90c695;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <a href="layer-2-riddle.html" class="back-btn">← Previous Layer</a>
+  
+  <div class="container">
+    <div class="header">
+      <h1 class="title">The Apothecary's Workshop</h1>
+      <p class="subtitle">Act II - Layer I</p>
+      <p class="description">Welcome to Maomao's workshop! Help create traditional medicines by combining the right ingredients. Each recipe requires specific herbs and careful preparation.</p>
+    </div>
+
+    <div class="recipe-book">
+      <div class="panel-title">📜 Current Recipe</div>
+      <div class="current-recipe">
+        <div class="recipe-name" id="recipeName">Digestive Tea</div>
+        <div class="recipe-description" id="recipeDescription">A soothing blend to calm an upset stomach. Requires: Ginger, Mint, Honey</div>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <div class="ingredients-panel">
+        <div class="panel-title">🌿 Available Ingredients</div>
+        <div class="ingredients-grid" id="ingredientsGrid">
+          <div class="ingredient" data-ingredient="ginger">🫚<br>Ginger</div>
+          <div class="ingredient" data-ingredient="mint">🌿<br>Mint</div>
+          <div class="ingredient" data-ingredient="honey">🍯<br>Honey</div>
+          <div class="ingredient" data-ingredient="ginseng">🪴<br>Ginseng</div>
+          <div class="ingredient" data-ingredient="chamomile">🌼<br>Chamomile</div>
+          <div class="ingredient" data-ingredient="licorice">🌾<br>Licorice</div>
+          <div class="ingredient" data-ingredient="cinnamon">🥄<br>Cinnamon</div>
+          <div class="ingredient" data-ingredient="turmeric">🟡<br>Turmeric</div>
+          <div class="ingredient" data-ingredient="goji">🔴<br>Goji Berry</div>
+        </div>
+      </div>
+
+      <div class="mortar-panel">
+        <div class="panel-title">🥣 Mortar & Pestle</div>
+        <div class="mortar" id="mortar">
+          <div class="mortar-content" id="mortarContent">
+            Click ingredients to add them here
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button class="action-btn" id="grindBtn" onclick="grindIngredients()">Grind</button>
+          <button class="action-btn" id="clearBtn" onclick="clearMortar()">Clear</button>
+          <button class="action-btn" id="brewBtn" onclick="brewMedicine()" disabled>Brew</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-text">Progress: <span id="progressCount">0</span>/5 Medicines Created</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div id="resultModal" class="result-modal">
+    <div class="modal-content">
+      <h3 id="resultTitle">Medicine Complete!</h3>
+      <p id="resultText"></p>
+      <button class="close-btn" onclick="closeModal()">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedIngredients = [];
+    let currentRecipeIndex = 0;
+    let completedMedicines = 0;
+    let isGround = false;
+
+    const recipes = [
+      {
+        name: "Digestive Tea",
+        description: "A soothing blend to calm an upset stomach. Requires: Ginger, Mint, Honey",
+        ingredients: ["ginger", "mint", "honey"],
+        effect: "Soothes digestive issues and reduces nausea"
+      },
+      {
+        name: "Energy Tonic",
+        description: "A revitalizing drink for fatigue. Requires: Ginseng, Honey, Cinnamon",
+        ingredients: ["ginseng", "honey", "cinnamon"],
+        effect: "Boosts energy and improves vitality"
+      },
+      {
+        name: "Sleep Aid",
+        description: "A calming remedy for insomnia. Requires: Chamomile, Honey, Licorice",
+        ingredients: ["chamomile", "honey", "licorice"],
+        effect: "Promotes restful sleep and reduces anxiety"
+      },
+      {
+        name: "Anti-inflammatory Paste",
+        description: "Reduces swelling and pain. Requires: Turmeric, Ginger, Honey",
+        ingredients: ["turmeric", "ginger", "honey"],
+        effect: "Reduces inflammation and alleviates pain"
+      },
+      {
+        name: "Vision Enhancement Elixir",
+        description: "Improves eyesight and clarity. Requires: Goji Berry, Ginseng, Honey",
+        ingredients: ["goji", "ginseng", "honey"],
+        effect: "Enhances vision and protects eye health"
+      }
+    ];
+
+    // Create floating herb particles
+    function createHerbParticle() {
+      if (document.querySelectorAll('.herb-particles').length > 15) return;
+      
+      const particle = document.createElement('div');
+      particle.classList.add('herb-particles');
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 3 + 's';
+      particle.style.animationDuration = (Math.random() * 5 + 10) + 's';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        if (particle.parentNode) {
+          particle.remove();
+        }
+      }, 15000);
+    }
+
+    setInterval(createHerbParticle, 1200);
+
+    // Initialize game
+    function initGame() {
+      updateRecipeDisplay();
+      attachIngredientListeners();
+      updateProgress();
+    }
+
+    function updateRecipeDisplay() {
+      const recipe = recipes[currentRecipeIndex];
+      document.getElementById('recipeName').innerHTML = recipe.name;
+      document.getElementById('recipeDescription').innerHTML = recipe.description;
+    }
+
+    function attachIngredientListeners() {
+      const ingredients = document.querySelectorAll('.ingredient');
+      ingredients.forEach(ingredient => {
+        ingredient.addEventListener('click', () => selectIngredient(ingredient));
+      });
+    }
+
+    function selectIngredient(element) {
+      const ingredient = element.dataset.ingredient;
+      
+      if (selectedIngredients.includes(ingredient)) return;
+      
+      selectedIngredients.push(ingredient);
+      element.classList.add('selected');
+      
+      updateMortarDisplay();
+      checkBrewButton();
+    }
+
+    function updateMortarDisplay() {
+      const mortarContent = document.getElementById('mortarContent');
+      
+      if (selectedIngredients.length === 0) {
+        mortarContent.innerHTML = "Click ingredients to add them here";
+      } else {
+        const ingredientElements = selectedIngredients.map(ing => {
+          const element = document.querySelector(`[data-ingredient="${ing}"]`);
+          const fullText = element.innerHTML;
+          // Extract emoji and name from the HTML content
+          const emoji = fullText.split('<br>')[0];
+          const name = fullText.split('<br>')[1];
+          return `${emoji} ${name}`;
+        }).join(', ');
+        mortarContent.innerHTML = `Added: ${ingredientElements}`;
+      }
+    }
+
+    function grindIngredients() {
+      if (selectedIngredients.length === 0) {
+        alert("Add some ingredients first!");
+        return;
+      }
+      
+      isGround = true;
+      document.getElementById('grindBtn').textContent = "Ground ✓";
+      document.getElementById('grindBtn').disabled = true;
+      
+      // Visual feedback
+      const mortar = document.getElementById('mortar');
+      mortar.style.animation = "shake 0.5s ease-in-out";
+      setTimeout(() => {
+        mortar.style.animation = "";
+      }, 500);
+      
+      checkBrewButton();
+    }
+
+    function clearMortar() {
+      selectedIngredients = [];
+      isGround = false;
+      
+      // Reset ingredient selections
+      document.querySelectorAll('.ingredient').forEach(ing => {
+        ing.classList.remove('selected');
+      });
+      
+      // Reset buttons
+      document.getElementById('grindBtn').textContent = "Grind";
+      document.getElementById('grindBtn').disabled = false;
+      document.getElementById('brewBtn').disabled = true;
+      
+      updateMortarDisplay();
+    }
+
+    function checkBrewButton() {
+      const brewBtn = document.getElementById('brewBtn');
+      brewBtn.disabled = !(selectedIngredients.length > 0 && isGround);
+    }
+
+    function brewMedicine() {
+      const currentRecipe = recipes[currentRecipeIndex];
+      const requiredIngredients = currentRecipe.ingredients.sort();
+      const providedIngredients = selectedIngredients.sort();
+      
+      const isCorrect = JSON.stringify(requiredIngredients) === JSON.stringify(providedIngredients);
+      
+      if (!isCorrect) {
+        // Show failure immediately if ingredients are wrong
+        showBrewResult(false, currentRecipe, requiredIngredients, providedIngredients);
+        return;
+      }
+      
+      // Start brewing mini-game
+      startBrewingMiniGame(currentRecipe);
+    }
+
+    function startBrewingMiniGame(recipe) {
+      // Disable all buttons during mini-game
+      document.getElementById('brewBtn').disabled = true;
+      document.getElementById('grindBtn').disabled = true;
+      document.getElementById('clearBtn').disabled = true;
+      
+      // Show brewing modal with challenging mini-game
+      document.getElementById('resultTitle').innerHTML = '🔥 BREWING CHALLENGE 🔥';
+      document.getElementById('resultText').innerHTML = 
+        `<div style="margin-bottom: 1rem; color: #f39c12; font-weight: bold;">⚠️ CHALLENGING BREWING ⚠️</div>
+         <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+           <div style="margin-bottom: 0.5rem;">🌡️ Temperature Control (MOUSE CONTROLLED!)</div>
+           <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+             <div style="background: #4a90e2; color: white; padding: 0.3rem 0.6rem; border-radius: 4px;">🖱️ Mouse</div>
+             <div id="tempBar" style="flex: 1; height: 25px; background: linear-gradient(90deg, #e74c3c 0%, #f39c12 20%, #90c695 40%, #90c695 60%, #f39c12 80%, #e74c3c 100%); border-radius: 10px; position: relative; border: 2px solid #fff; cursor: crosshair;">
+               <div id="tempIndicator" style="position: absolute; top: 0; left: 50%; width: 6px; height: 100%; background: #2c1810; border-radius: 3px; transform: translateX(-50%); border: 1px solid #fff;"></div>
+               <div id="targetZone" style="position: absolute; top: 0; left: 40%; width: 25%; height: 100%; border: 2px solid #00ff00; border-radius: 8px; box-shadow: 0 0 10px #00ff00;"></div>
+             </div>
+             <div style="background: #f39c12; color: white; padding: 0.3rem 0.6rem; border-radius: 4px;">Control</div>
+           </div>
+           <div style="margin-bottom: 0.5rem;">⏱️ Time: <span id="brewTimer">0</span>/8 seconds</div>
+           <div style="margin-bottom: 0.5rem;">💥 Lives: <span id="livesCount">1</span>/1</div>
+           <div style="margin-bottom: 0.5rem;">🎯 Perfect Streak: <span id="streakCount">0</span></div>
+           <div style="margin-bottom: 0.5rem;">📊 Recipe Level: <span style="color: #f39c12; font-weight: bold;">${currentRecipeIndex + 1}/5</span> ${currentRecipeIndex === 0 ? '(Beginner)' : currentRecipeIndex === 1 ? '(Fast)' : currentRecipeIndex === 2 ? '(Very Fast)' : currentRecipeIndex === 3 ? '(Super Fast)' : '(Lightning Speed)'}</div>
+           <div style="color: #00ff00; font-size: 0.9rem;">Move mouse over temperature bar! GREEN zone moves ${currentRecipeIndex === 0 ? 'moderately' : currentRecipeIndex <= 2 ? 'fast' : 'VERY fast'}!</div>
+         </div>
+         <div id="brewingStatus" style="font-weight: bold; color: #90c695;">Temperature: Perfect ✅</div>`;
+      
+      // Add custom button for the mini-game
+      const modalContent = document.querySelector('.modal-content');
+      const existingButton = modalContent.querySelector('.close-btn');
+      existingButton.style.display = 'none';
+      
+      document.getElementById('resultModal').style.display = 'block';
+      
+      // Initialize brewing mini-game variables
+      window.brewingGame = {
+        temperature: 50, // 0-100, controlled by mouse
+        time: 0,
+        maxTime: 8,
+        lives: 1, // Only 1 life now!
+        perfectStreak: 0,
+        targetZoneStart: 40,
+        targetZoneEnd: 65, // Increased initial zone size
+        interval: null,
+        targetMoveInterval: null,
+        successThreshold: 4, // Reduced from 6 to 4 seconds needed
+        mouseControlActive: false,
+        targetDirection: 1, // For smooth movement
+        targetSpeed: 0.2 * (1 + currentRecipeIndex * 0.8), // Speed increases more gradually with each recipe
+        baseSpeed: 0.2,
+        speedMultiplier: 1 + currentRecipeIndex * 0.8 // Each recipe is 0.8x faster than previous (gentler progression)
+      };
+      
+      // Add mouse control for temperature
+      const tempBar = document.getElementById('tempBar');
+      if (tempBar) {
+        // Mouse move event for temperature control
+        tempBar.addEventListener('mousemove', (e) => {
+          if (!window.brewingGame || !window.brewingGame.mouseControlActive) return;
+          
+          const rect = tempBar.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const percentage = (mouseX / rect.width) * 100;
+          
+          window.brewingGame.temperature = Math.max(0, Math.min(100, percentage));
+          
+          // Update visual indicator
+          const indicator = document.getElementById('tempIndicator');
+          if (indicator) {
+            indicator.style.left = window.brewingGame.temperature + '%';
+          }
+        });
+        
+        // Activate mouse control when entering the area
+        tempBar.addEventListener('mouseenter', () => {
+          if (window.brewingGame) {
+            window.brewingGame.mouseControlActive = true;
+            tempBar.style.boxShadow = '0 0 20px #00ff00';
+          }
+        });
+        
+        tempBar.addEventListener('mouseleave', () => {
+          if (window.brewingGame) {
+            window.brewingGame.mouseControlActive = false;
+            tempBar.style.boxShadow = '';
+          }
+        });
+      }
+      
+      // Start the brewing timer
+      window.brewingGame.interval = setInterval(() => {
+        window.brewingGame.time++;
+        document.getElementById('brewTimer').textContent = window.brewingGame.time;
+        
+        // Check if temperature is in target range
+        const temp = window.brewingGame.temperature;
+        const inZone = temp >= window.brewingGame.targetZoneStart && temp <= window.brewingGame.targetZoneEnd;
+        
+        if (inZone) {
+          window.brewingGame.perfectStreak++;
+          document.getElementById('brewingStatus').innerHTML = '<span style="color: #00ff00;">Temperature: PERFECT! ✅</span>';
+        } else {
+          // Lose a life for being outside zone
+          window.brewingGame.lives--;
+          window.brewingGame.perfectStreak = 0;
+          document.getElementById('livesCount').textContent = window.brewingGame.lives;
+          document.getElementById('brewingStatus').innerHTML = 
+            temp < window.brewingGame.targetZoneStart ? 
+            '<span style="color: #4a90e2;">Temperature: TOO COLD! ❄️ LIFE LOST!</span>' :
+            '<span style="color: #e74c3c;">Temperature: TOO HOT! 🔥 LIFE LOST!</span>';
+          
+          // Flash the screen red
+          document.body.style.filter = 'hue-rotate(0deg) brightness(1.5) saturate(2)';
+          setTimeout(() => {
+            document.body.style.filter = '';
+          }, 200);
+        }
+        
+        document.getElementById('streakCount').textContent = window.brewingGame.perfectStreak;
+        
+        // Check for game over
+        if (window.brewingGame.lives <= 0) {
+          clearInterval(window.brewingGame.interval);
+          clearInterval(window.brewingGame.targetMoveInterval);
+          finishBrewingMiniGame(recipe);
+          return;
+        }
+        
+        // End mini-game after time limit
+        if (window.brewingGame.time >= window.brewingGame.maxTime) {
+          clearInterval(window.brewingGame.interval);
+          clearInterval(window.brewingGame.targetMoveInterval);
+          finishBrewingMiniGame(recipe);
+        }
+      }, 1000);
+      
+      // Move target zone with progressive speed (each recipe gets much faster)
+      window.brewingGame.targetMoveInterval = setInterval(() => {
+        // Smooth movement with progressive speed based on recipe number
+        const moveAmount = window.brewingGame.targetDirection * window.brewingGame.targetSpeed;
+        window.brewingGame.targetZoneStart += moveAmount;
+        
+        // Bounce off edges and change direction
+        if (window.brewingGame.targetZoneStart <= 5) {
+          window.brewingGame.targetZoneStart = 5;
+          window.brewingGame.targetDirection = 1; // Move right
+          // Speed increases when bouncing, but more moderately
+          window.brewingGame.targetSpeed = window.brewingGame.baseSpeed * window.brewingGame.speedMultiplier * (0.7 + Math.random() * 0.6);
+        }
+        if (window.brewingGame.targetZoneStart >= 75) {
+          window.brewingGame.targetZoneStart = 75;
+          window.brewingGame.targetDirection = -1; // Move left
+          // Speed increases when bouncing, but more moderately
+          window.brewingGame.targetSpeed = window.brewingGame.baseSpeed * window.brewingGame.speedMultiplier * (0.7 + Math.random() * 0.6);
+        }
+        
+        window.brewingGame.targetZoneEnd = window.brewingGame.targetZoneStart + 25; // Increased target zone size from 20 to 25
+        
+        const targetZone = document.getElementById('targetZone');
+        if (targetZone) {
+          targetZone.style.left = window.brewingGame.targetZoneStart + '%';
+          targetZone.style.width = '25%'; // Increased target zone width
+          
+          // Add pulsing effect to show it's moving
+          targetZone.style.boxShadow = '0 0 15px #00ff00, 0 0 30px #00ff00';
+          setTimeout(() => {
+            if (targetZone) {
+              targetZone.style.boxShadow = '0 0 10px #00ff00';
+            }
+          }, 100);
+        }
+      }, Math.max(30, 60 - (currentRecipeIndex * 6))); // Gets faster more gradually: 60ms, 54ms, 48ms, 42ms, 36ms
+    }
+
+    function adjustTemperature(change) {
+      // This function is now disabled - using mouse control instead
+      return;
+    }
+
+    function finishBrewingMiniGame(recipe) {
+      const game = window.brewingGame;
+      let success = false;
+      let resultMessage = '';
+      
+      // Determine success based on multiple factors
+      if (game.lives <= 0) {
+        // Complete failure - lost all lives
+        success = false;
+        resultMessage = `💀 TOTAL FAILURE! All lives lost!<br><br>` +
+          `The medicine exploded due to catastrophic temperature control failure!<br><br>` +
+          `<strong>💡 Tips for the Brewing Challenge:</strong><br>` +
+          `• React quickly to temperature changes<br>` +
+          `• Watch the moving target zone carefully<br>` +
+          `• Keep your mouse steady and focused<br>` +
+          `• Each recipe gets progressively faster!`;
+      } else if (game.perfectStreak >= game.successThreshold && game.lives > 0) {
+        // Perfect success - maintained control for most of the time
+        success = true;
+        resultMessage = `🏆 PERFECT PERFORMANCE! 🏆<br><br>` +
+          `You've achieved incredible precision! Perfect temperature control under challenging conditions!<br><br>` +
+          `<strong>Final Stats:</strong><br>` +
+          `• Lives Remaining: ${game.lives}/1<br>` +
+          `• Perfect Streak: ${game.perfectStreak} seconds<br>` +
+          `• Recipe Level: ${currentRecipeIndex + 1}/5<br><br>` +
+          `<strong>🌟 EXPERT APOTHECARY TECHNIQUE!</strong><br>` +
+          `Your brewing skills are truly exceptional!`;
+      } else if (game.lives > 0 && game.perfectStreak >= 3) {
+        // Partial success - good enough
+        success = true;
+        resultMessage = `⚡ GREAT SUCCESS! ⚡<br><br>` +
+          `You successfully completed the brewing challenge with skill and focus!<br><br>` +
+          `<strong>Final Stats:</strong><br>` +
+          `• Lives Remaining: ${game.lives}/1<br>` +
+          `• Perfect Streak: ${game.perfectStreak} seconds<br>` +
+          `• Result: Medicine created successfully!<br><br>` +
+          `<strong>🔥 BREWING CHALLENGE COMPLETED!</strong><br>` +
+          `Your reflexes and concentration proved up to the task!`;
+      } else {
+        // Failure - not good enough
+        success = false;
+        resultMessage = `💥 BREWING FAILED! 💥<br><br>` +
+          `The medicine was ruined by insufficient temperature control!<br><br>` +
+          `<strong>What went wrong:</strong><br>` +
+          `• Lives Remaining: ${game.lives}/1<br>` +
+          `• Perfect Streak: Only ${game.perfectStreak} seconds (need ${game.successThreshold}+)<br>` +
+          `• The moving target zone was too challenging<br><br>` +
+          `<strong>💡 Try again with better focus!</strong><br>` +
+          `Watch the movement patterns and stay calm!`;
+      }
+      
+      // Clean up all intervals
+      if (game.interval) clearInterval(game.interval);
+      if (game.targetMoveInterval) clearInterval(game.targetMoveInterval);
+      delete window.brewingGame;
+      
+      // Re-enable buttons
+      document.getElementById('brewBtn').disabled = false;
+      document.getElementById('grindBtn').disabled = false;
+      document.getElementById('clearBtn').disabled = false;
+      
+      // Show result
+      if (success) {
+        // Success!
+        completedMedicines++;
+        
+        // Move to next recipe BEFORE updating progress
+        currentRecipeIndex = (currentRecipeIndex + 1) % recipes.length;
+        updateProgress();
+        
+        document.getElementById('resultTitle').textContent = `${recipe.name} - SUCCESS! ✅`;
+        document.getElementById('resultText').innerHTML = 
+          `🎉 EXCELLENT! You've completed the brewing challenge!<br><br>` +
+          `<strong>Medicine:</strong> ${recipe.name}<br>` +
+          `<strong>Effect:</strong> ${recipe.effect}<br><br>` +
+          resultMessage;
+        
+      } else {
+        // Failure
+        document.getElementById('resultTitle').textContent = `${recipe.name} - FAILED! ❌`;
+        document.getElementById('resultText').innerHTML = resultMessage;
+      }
+      
+      // Restore normal close button
+      const modalContent = document.querySelector('.modal-content');
+      const existingButton = modalContent.querySelector('.close-btn');
+      existingButton.style.display = 'inline-block';
+      
+      // Clear mortar after brewing attempt
+      setTimeout(() => {
+        clearMortar();
+      }, 100);
+    }
+
+    function showBrewResult(success, recipe, requiredIngredients, providedIngredients) {
+      if (!success) {
+        // Failure due to wrong ingredients
+        const missingIngredients = requiredIngredients.filter(ing => !providedIngredients.includes(ing));
+        const extraIngredients = providedIngredients.filter(ing => !requiredIngredients.includes(ing));
+        
+        let feedbackText = `The medicine didn't turn out right...<br><br>`;
+        
+        if (missingIngredients.length > 0) {
+          feedbackText += `<strong>Missing ingredients:</strong> ${missingIngredients.join(', ')}<br>`;
+        }
+        if (extraIngredients.length > 0) {
+          feedbackText += `<strong>Unnecessary ingredients:</strong> ${extraIngredients.join(', ')}<br>`;
+        }
+        
+        feedbackText += `<br><em>Check the recipe and try again!</em>`;
+        
+        document.getElementById('resultTitle').textContent = `${recipe.name} - Wrong Ingredients ❌`;
+        document.getElementById('resultText').innerHTML = feedbackText;
+        
+        document.getElementById('resultModal').style.display = 'block';
+        
+        // Clear mortar after brewing
+        setTimeout(() => {
+          clearMortar();
+        }, 100);
+      }
+    }
+
+    function updateProgress() {
+      document.getElementById('progressCount').textContent = completedMedicines;
+      document.getElementById('progressFill').style.width = (completedMedicines / 5) * 100 + '%';
+      
+      // Always update recipe display when progress changes
+      if (completedMedicines < 5) {
+        updateRecipeDisplay();
+      }
+      
+      if (completedMedicines >= 5) {
+        setTimeout(() => {
+          document.getElementById('resultTitle').textContent = '🎉 Master Apothecary! 🎉';
+          document.getElementById('resultText').innerHTML = 
+            `Congratulations! You've successfully created all 5 traditional medicines!<br><br>` +
+            `Your knowledge of herbal remedies rivals that of Maomao herself. You've proven yourself ` +
+            `as a skilled apothecary capable of healing and helping others.<br><br>` +
+            `<strong>Achievement Unlocked: Master of Traditional Medicine</strong><br><br>` +
+            `<em>Proceeding to Act II - Layer II...</em>`;
+          document.getElementById('resultModal').style.display = 'block';
+        }, 1000);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('resultModal').style.display = 'none';
+      
+      if (completedMedicines >= 5) {
+        // Game completed - redirect to next layer
+        setTimeout(() => {
+          window.location.href = 'layer-2-2.html';
+        }, 1000);
+      }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('resultModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Add shake animation for grinding effect
+    const shakeKeyframes = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+    `;
+    const style = document.createElement('style');
+    style.textContent = shakeKeyframes;
+    document.head.appendChild(style);
+
+    // Initialize the game
+    initGame();
+
+    console.log('%c🌿 The Apothecary\'s Workshop Initialized', 'color: #90c695; font-size: 16px; font-weight: bold;');
+    console.log('%c📜 Create traditional medicines like Maomao!', 'color: #d4af37; font-size: 12px;');
+  </script>
+</body>
+</html>

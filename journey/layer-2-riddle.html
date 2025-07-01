@@ -23,16 +23,16 @@
 
     html, body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a1a 50%, #000000 75%, #ffff00 100%);
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a2a 50%, #000000 75%, #001122 100%);
       background-size: 300% 300%;
       background-attachment: fixed;
       animation: cyberpunkBg 8s ease-in-out infinite;
-      min-height: 100vh;
+      height: 100vh;
       color: #ffff00;
       position: relative;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     @keyframes cyberpunkBg {
@@ -50,8 +50,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background-image: 
         linear-gradient(rgba(255, 255, 0, 0.1) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 0, 0.1) 1px, transparent 1px),
@@ -80,14 +80,15 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0.5rem 2rem 2rem 2rem;
-      min-height: 100vh;
+      padding: 1rem 2rem;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       box-sizing: border-box;
       position: relative;
       z-index: 10;
+      overflow-y: auto;
     }
 
     .header {
@@ -171,17 +172,30 @@
 
     .riddle-container {
       background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 30, 0.95) 50%, rgba(0, 0, 0, 0.95) 100%);
       border: 3px solid #ffff00;
       border-radius: 0px;
-      padding: 1.5rem;
+      padding: 2rem;
       margin-bottom: 1rem;
       box-shadow: 
-        0 0 15px rgba(255, 255, 0, 0.3),
-        inset 0 0 20px rgba(255, 255, 0, 0.05),
-        0 0 30px rgba(255, 255, 0, 0.1);
+        0 0 20px rgba(255, 255, 0, 0.4),
+        inset 0 0 30px rgba(255, 255, 0, 0.08),
+        0 0 40px rgba(255, 255, 0, 0.15);
       position: relative;
       clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+      transition: all 0.3s ease;
+    }
+
+    .riddle-container:last-child {
+      margin-bottom: 0;
+    }
+
+    .riddle-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 10px 30px rgba(255, 255, 0, 0.5),
+        inset 0 0 40px rgba(255, 255, 0, 0.12),
+        0 0 50px rgba(255, 255, 0, 0.2);
     }
 
     .riddle-container::before {
@@ -274,20 +288,20 @@
 
     .cyber-input {
       background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 30, 0.95) 50%, rgba(0, 0, 0, 0.95) 100%);
       border: 2px solid #ffff00;
       color: #ffff00;
-      padding: 1rem 1.5rem;
+      padding: 1.2rem 1.5rem;
       font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
       font-size: 1rem;
       border-radius: 0px;
       outline: none;
       transition: all 0.3s ease;
-      min-width: 250px;
+      min-width: 280px;
       clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
       box-shadow: 
-        0 0 8px rgba(255, 255, 0, 0.2),
-        inset 0 0 10px rgba(255, 255, 0, 0.05);
+        0 0 10px rgba(255, 255, 0, 0.3),
+        inset 0 0 15px rgba(255, 255, 0, 0.08);
       position: relative;
       z-index: 2;
     }
@@ -307,10 +321,10 @@
     }
 
     .cyber-btn {
-      background: linear-gradient(135deg, #ffff00 0%, #000000 50%, #ffff00 100%);
+      background: linear-gradient(135deg, #ffff00 0%, #e6e600 25%, #ffff00 50%, #e6e600 75%, #ffff00 100%);
       border: 2px solid #ffff00;
       color: #000000;
-      padding: 1rem 2rem;
+      padding: 1.2rem 2.5rem;
       font-family: 'Cyberpunk', 'JetBrains Mono', monospace;
       font-size: 1rem;
       font-weight: bold;
@@ -321,20 +335,21 @@
       letter-spacing: 2px;
       clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
       box-shadow: 
-        0 0 10px rgba(255, 255, 0, 0.3),
-        inset 0 0 5px rgba(255, 255, 0, 0.1);
+        0 0 15px rgba(255, 255, 0, 0.4),
+        inset 0 0 8px rgba(255, 255, 255, 0.2);
       position: relative;
       z-index: 2;
     }
 
     .cyber-btn:hover {
-      background: linear-gradient(135deg, #ffffff 0%, #ffff00 50%, #ffffff 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #ffff00 25%, #ffffff 50%, #ffff00 75%, #ffffff 100%);
       transform: translateY(-3px);
       box-shadow: 
-        0 10px 20px rgba(255, 255, 0, 0.4),
-        inset 0 0 10px rgba(255, 255, 0, 0.2),
-        0 0 25px rgba(255, 255, 255, 0.3);
+        0 15px 30px rgba(255, 255, 0, 0.5),
+        inset 0 0 15px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.4);
       border-color: #ffffff;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
 
     .cyber-btn:active {
@@ -386,16 +401,16 @@
 
     .progress-bar {
       background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 30, 0.95) 50%, rgba(0, 0, 0, 0.95) 100%);
       border: 2px solid #ffff00;
       border-radius: 0px;
-      padding: 1rem;
+      padding: 1.5rem;
       margin-bottom: 1rem;
       text-align: center;
       clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
       box-shadow: 
-        0 0 25px rgba(255, 255, 0, 0.3),
-        inset 0 0 20px rgba(255, 255, 0, 0.1);
+        0 0 30px rgba(255, 255, 0, 0.4),
+        inset 0 0 25px rgba(255, 255, 0, 0.08);
     }
 
     .progress-text {
@@ -452,19 +467,33 @@
 
     .modal-content {
       background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 0, 0.95) 50%, rgba(0, 0, 0, 0.95) 100%);
+        linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(10, 10, 30, 0.98) 50%, rgba(0, 0, 0, 0.98) 100%);
       margin: 10% auto;
-      padding: 2.5rem;
+      padding: 3rem;
       border: 3px solid #ffff00;
       border-radius: 0px;
       width: 80%;
-      max-width: 500px;
+      max-width: 550px;
       text-align: center;
       box-shadow: 
-        0 0 40px rgba(255, 255, 0, 0.5),
-        inset 0 0 30px rgba(255, 255, 0, 0.1);
-      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+        0 0 50px rgba(255, 255, 0, 0.6),
+        inset 0 0 40px rgba(255, 255, 0, 0.12);
+      clip-path: polygon(0 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 25px 100%, 0 calc(100% - 25px));
       position: relative;
+      animation: modalGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes modalGlow {
+      0%, 100% { 
+        box-shadow: 
+          0 0 50px rgba(255, 255, 0, 0.6),
+          inset 0 0 40px rgba(255, 255, 0, 0.12);
+      }
+      50% { 
+        box-shadow: 
+          0 0 60px rgba(255, 255, 0, 0.8),
+          inset 0 0 50px rgba(255, 255, 0, 0.15);
+      }
     }
 
     .modal-content::before {
@@ -559,7 +588,7 @@
 
     @keyframes cyberpunkParticles {
       0% {
-        transform: translateY(100vh) translateX(0) rotate(0deg);
+        transform: translateY(100%) translateX(0) rotate(0deg);
         opacity: 0;
       }
       10% {
@@ -569,7 +598,7 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(-100px) translateX(200px) rotate(360deg);
+        transform: translateY(-100%) translateX(200px) rotate(360deg);
         opacity: 0;
       }
     }
@@ -580,8 +609,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: 
         repeating-linear-gradient(
           0deg,
@@ -605,8 +634,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       background: transparent;
       pointer-events: none;
       z-index: 99;
@@ -633,13 +662,55 @@
     }
 
     @media (max-width: 768px) {
-      .title { font-size: 2rem; }
+      .title { 
+        font-size: 2.5rem; 
+        letter-spacing: 2px;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+      }
       .input-group { 
         flex-direction: column; 
         align-items: stretch;
+        gap: 1.5rem;
       }
-      .cyber-input { min-width: auto; }
-      .container { padding: 1rem; }
+      .cyber-input { 
+        min-width: auto; 
+        font-size: 1.1rem;
+        padding: 1.5rem;
+      }
+      .cyber-btn {
+        padding: 1.5rem 2rem;
+        font-size: 1.1rem;
+      }
+      .container { 
+        padding: 1rem; 
+        height: 100vh;
+        overflow-y: auto;
+      }
+      .riddle-container {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .modal-content {
+        width: 95%;
+        padding: 2rem;
+        margin: 5% auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title { 
+        font-size: 2rem; 
+      }
+      .cyber-input, .cyber-btn {
+        font-size: 1rem;
+      }
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
     }
   </style>
 </head>
@@ -755,22 +826,26 @@
       }, 1000);
     }
 
-    // Create cyber particles
+    // Create cyber particles with better performance
     function createCyberParticle() {
+      if (document.querySelectorAll('.cyber-particles').length > 20) return; // Limit particles
+      
       const particle = document.createElement('div');
       particle.classList.add('cyber-particles');
-      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.left = Math.random() * 100 + '%';
       particle.style.animationDelay = Math.random() * 3 + 's';
       particle.style.animationDuration = (Math.random() * 4 + 8) + 's';
       
       document.body.appendChild(particle);
       
       setTimeout(() => {
-        particle.remove();
+        if (particle.parentNode) {
+          particle.remove();
+        }
       }, 12000);
     }
 
-    setInterval(createCyberParticle, 600);
+    setInterval(createCyberParticle, 800);
 
     function updateProgress() {
       const progressCount = document.getElementById('progress-count');
@@ -903,8 +978,10 @@
       }
     });
 
-    console.log('🌃 Night City activated - Two protocols await your neural input...');
-    console.log('🎵 Cyberpunk music loading - Click anywhere to start audio...');
+    console.log('%c🌃 NIGHT CITY PROTOCOLS ACTIVATED', 'color: #ffff00; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px #ffff00;');
+    console.log('%c🎯 Two neural challenges await your input...', 'color: #ffffff; font-size: 12px;');
+    console.log('%c🎵 Cyberpunk audio initializing - Click anywhere to start...', 'color: #00ff00; font-size: 12px;');
+    console.log('%c⚡ Made with cybernetic precision by BrawlsMons', 'color: #ff00ff; font-size: 10px;');
   </script>
 </body>
 </html>

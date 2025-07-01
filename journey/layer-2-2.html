@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Act II - Layer II - Dragon's Guild Tycoon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #1a0e2e 0%, #2d1b3d 25%, #4a2c5a 50%, #2d1b3d 75%, #5c3671 100%);
+      background-size: 300% 300%;
+      background-attachment: fixed;
+      animation: dungeonBg 15s ease-in-out infinite;
+      height: 100vh;
+      color: #f4e6d3;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    @keyframes dungeonBg {
+      0%, 100% { 
+        background-position: 0% 50%;
+        filter: brightness(1) contrast(1.2);
+      }
+      50% { 
+        background-position: 100% 50%;
+        filter: brightness(1.2) contrast(1.4);
+      }
+    }
+
+    .magic-particles {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: #9d4edd;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 8px #9d4edd,
+        0 0 16px rgba(157, 78, 221, 0.6);
+      animation: magicFloat 18s infinite linear;
+      z-index: 1;
+    }
+
+    .magic-particles:nth-child(odd) {
+      background: #ffd60a;
+      box-shadow: 
+        0 0 8px #ffd60a,
+        0 0 16px rgba(255, 214, 10, 0.6);
+    }
+
+    .magic-particles:nth-child(even) {
+      background: #f72585;
+      box-shadow: 
+        0 0 8px #f72585,
+        0 0 16px rgba(247, 37, 133, 0.6);
+    }
+
+    @keyframes magicFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(150px) rotate(720deg) scale(0.2);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      min-height: 100vh;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(45, 27, 61, 0.9);
+      border: 3px solid #9d4edd;
+      border-radius: 15px;
+      box-shadow: 
+        0 0 20px rgba(157, 78, 221, 0.4),
+        inset 0 0 15px rgba(157, 78, 221, 0.2);
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #ffd60a;
+      text-shadow: 
+        0 0 15px #ffd60a,
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 0.5rem;
+      letter-spacing: 3px;
+    }
+
+    .subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: #9d4edd;
+      text-shadow: 0 0 8px rgba(157, 78, 221, 0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .description {
+      font-size: 1.1rem;
+      color: #f4e6d3;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Resources Panel */
+    .resources-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .resource-item {
+      background: rgba(45, 27, 61, 0.8);
+      border: 2px solid #9d4edd;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+    }
+
+    .resource-icon {
+      font-size: 1.5rem;
+    }
+
+    .resource-value {
+      color: #ffd60a;
+      text-shadow: 0 0 5px #ffd60a;
+    }
+
+    /* Main Game Grid */
+    .game-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .game-section {
+      background: rgba(45, 27, 61, 0.9);
+      border: 2px solid #9d4edd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 
+        0 0 15px rgba(157, 78, 221, 0.3),
+        inset 0 0 10px rgba(157, 78, 221, 0.1);
+    }
+
+    .panel-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: #ffd60a;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 8px rgba(255, 214, 10, 0.5);
+    }
+
+    /* Dragon Click Area */
+    .click-section {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    .dragon-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .dragon-display {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dragon-display:hover {
+      transform: scale(1.05);
+    }
+
+    .dragon-emoji {
+      font-size: 8rem;
+      text-shadow: 0 0 20px #f72585;
+      animation: dragonPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dragonPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .dragon-health {
+      margin-top: 1rem;
+      width: 300px;
+    }
+
+    .health-bar {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid #9d4edd;
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .health-fill {
+      background: linear-gradient(90deg, #f72585, #9d4edd);
+      height: 100%;
+      transition: width 0.3s ease;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(247, 37, 133, 0.5);
+    }
+
+    .health-text {
+      color: #f4e6d3;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .attack-btn {
+      background: linear-gradient(135deg, #f72585, #9d4edd);
+      border: 3px solid #ffd60a;
+      color: #fff;
+      padding: 1rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+    }
+
+    .attack-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(247, 37, 133, 0.6);
+      background: linear-gradient(135deg, #9d4edd, #f72585);
+    }
+
+    .attack-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Heroes Section */
+    .heroes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+
+    .hero-item {
+      background: rgba(157, 78, 221, 0.2);
+      border: 1px solid #9d4edd;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-icon {
+      font-size: 1.5rem;
+    }
+
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-name {
+      font-weight: 600;
+      color: #ffd60a;
+    }
+
+    .hero-dps {
+      font-size: 0.9rem;
+      color: #9d4edd;
+    }
+
+    .recruit-btn, .upgrade-btn {
+      background: linear-gradient(135deg, #9d4edd, #5c3671);
+      border: 2px solid #ffd60a;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .recruit-btn:hover, .upgrade-btn:hover {
+      background: linear-gradient(135deg, #ffd60a, #f72585);
+      transform: translateY(-2px);
+    }
+
+    .recruit-btn:disabled, .upgrade-btn:disabled {
+      background: rgba(100, 100, 100, 0.3);
+      border-color: #666;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Upgrades Section */
+    .upgrades-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .upgrade-item {
+      background: rgba(255, 214, 10, 0.1);
+      border: 1px solid #ffd60a;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .upgrade-name {
+      font-weight: 600;
+      color: #ffd60a;
+      margin-bottom: 0.5rem;
+    }
+
+    .upgrade-description {
+      font-size: 0.9rem;
+      color: #f4e6d3;
+      margin-bottom: 1rem;
+    }
+
+    /* Quests Section */
+    .quests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .quest-item {
+      background: rgba(247, 37, 133, 0.1);
+      border: 1px solid #f72585;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .quest-name {
+      font-weight: 600;
+      color: #f72585;
+      margin-bottom: 0.5rem;
+    }
+
+    .quest-description {
+      font-size: 0.9rem;
+      color: #f4e6d3;
+      margin-bottom: 0.5rem;
+    }
+
+    .quest-progress {
+      font-size: 0.8rem;
+      color: #9d4edd;
+    }
+
+    /* Progress Section */
+    .progress-section {
+      background: rgba(45, 27, 61, 0.9);
+      border: 2px solid #9d4edd;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .progress-text {
+      font-family: 'Cinzel', serif;
+      color: #f4e6d3;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .progress-bar {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      height: 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #9d4edd 0%, #ffd60a 100%);
+      height: 100%;
+      transition: width 0.5s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+    }
+
+    /* Back button */
+    .back-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(157, 78, 221, 0.2);
+      border: 2px solid rgba(157, 78, 221, 0.6);
+      color: #9d4edd;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(157, 78, 221, 0.3);
+      border-color: #9d4edd;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .title { font-size: 2.5rem; }
+      .game-grid { 
+        grid-template-columns: 1fr;
+      }
+      .resources-panel { 
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dragon-emoji { font-size: 6rem; }
+      .dragon-health { width: 250px; }
+    }
+
+    /* Animations */
+    @keyframes goldGain {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+    }
+
+    .gold-popup {
+      position: absolute;
+      color: #ffd60a;
+      font-weight: bold;
+      font-size: 1.2rem;
+      pointer-events: none;
+      animation: goldGain 1s ease-out forwards;
+      text-shadow: 0 0 5px #ffd60a;
+    }
+
+    @keyframes dragonHit {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95); filter: brightness(1.5); }
+      100% { transform: scale(1); }
+    }
+
+    .dragon-hit {
+      animation: dragonHit 0.3s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <a href="layer-2-1.html" class="back-btn">← Previous Layer</a>
+  
+  <div class="container">
+    <div class="header">
+      <h1 class="title">Dragon's Guild Tycoon</h1>
+      <p class="subtitle">Act II - Layer II</p>
+      <p class="description">Build and manage your adventuring guild! Recruit heroes, send them on quests, and become the most legendary guild master in the realm!</p>
+    </div>
+
+    <!-- Resources Display -->
+    <div class="resources-panel">
+      <div class="resource-item">
+        <span class="resource-icon">💰</span>
+        <span class="resource-label">Gold:</span>
+        <span class="resource-value" id="goldCount">100</span>
+      </div>
+      <div class="resource-item">
+        <span class="resource-icon">🎖️</span>
+        <span class="resource-label">Fame:</span>
+        <span class="resource-value" id="fameCount">0</span>
+      </div>
+      <div class="resource-item">
+        <span class="resource-icon">💎</span>
+        <span class="resource-label">Gems:</span>
+        <span class="resource-value" id="gemCount">0</span>
+      </div>
+      <div class="resource-item">
+        <span class="resource-icon">⚔️</span>
+        <span class="resource-label">Guild Level:</span>
+        <span class="resource-value" id="guildLevel">1</span>
+      </div>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-grid">
+      <!-- Click Area -->
+      <div class="game-section click-section">
+        <div class="panel-title">🐉 Main Quest</div>
+        <div class="dragon-area">
+          <div class="dragon-display" id="dragonDisplay">
+            <div class="dragon-emoji" id="dragonEmoji">🐲</div>
+            <div class="dragon-health">
+              <div class="health-bar">
+                <div class="health-fill" id="dragonHealthFill" style="width: 100%"></div>
+              </div>
+              <div class="health-text">Dragon HP: <span id="dragonHp">50</span>/<span id="dragonMaxHp">50</span></div>
+            </div>
+          </div>
+          <button class="attack-btn" id="attackBtn">⚔️ Attack! (+<span id="attackDamage">5</span> damage)</button>
+        </div>
+      </div>
+
+      <!-- Heroes Section -->
+      <div class="game-section heroes-section">
+        <div class="panel-title">👥 Heroes</div>
+        <div class="heroes-list" id="heroesList">
+          <!-- Heroes will be added here dynamically -->
+        </div>
+        <div class="hero-recruitment">
+          <button class="recruit-btn" id="recruitBtn">Recruit Hero (💰<span id="recruitCost">25</span>)</button>
+        </div>
+      </div>
+
+      <!-- Upgrades Section -->
+      <div class="game-section upgrades-section">
+        <div class="panel-title">⬆️ Upgrades</div>
+        <div class="upgrades-list" id="upgradesList">
+          <!-- Upgrades will be added here dynamically -->
+        </div>
+      </div>
+
+      <!-- Quests Section -->
+      <div class="game-section quests-section">
+        <div class="panel-title">📜 Quests</div>
+        <div class="quests-list" id="questsList">
+          <!-- Quests will be added here dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="progress-section">
+      <div class="progress-text">Dragons Defeated: <span id="dragonsDefeated">0</span> | Next Goal: <span id="nextGoal">Defeat 5 dragons to unlock new content</span></div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Game State
+    let gameState = {
+      gold: 100,
+      fame: 0,
+      gems: 0,
+      guildLevel: 1,
+      clickDamage: 5,
+      totalDps: 0,
+      dragonsDefeated: 0,
+      currentDragon: {
+        hp: 50,
+        maxHp: 50,
+        level: 1,
+        emoji: '🐲'
+      },
+      heroes: [],
+      upgrades: [],
+      quests: []
+    };
+
+    // Hero Templates
+    const heroTypes = [
+      { name: 'Warrior', icon: '⚔️', baseDps: 5, baseCost: 25, description: 'A brave fighter' },
+      { name: 'Archer', icon: '🏹', baseDps: 10, baseCost: 50, description: 'Swift and precise' },
+      { name: 'Mage', icon: '🧙‍♂️', baseDps: 20, baseCost: 100, description: 'Wields powerful magic' },
+      { name: 'Paladin', icon: '🛡️', baseDps: 40, baseCost: 200, description: 'Holy warrior' }
+    ];
+
+    // Upgrade Templates
+    const upgradeTypes = [
+      { 
+        id: 'clickPower', 
+        name: 'Sharp Blade', 
+        description: 'Increases click damage by 5', 
+        baseCost: 10, 
+        effect: () => gameState.clickDamage += 5 
+      },
+      { 
+        id: 'heroBoost', 
+        name: 'Training Grounds', 
+        description: 'All heroes deal 50% more damage', 
+        baseCost: 50, 
+        effect: () => gameState.heroes.forEach(hero => hero.dps *= 1.5) 
+      },
+      { 
+        id: 'goldBoost', 
+        name: 'Treasure Hunter', 
+        description: 'Dragons drop 100% more gold', 
+        baseCost: 100, 
+        effect: () => gameState.goldMultiplier = (gameState.goldMultiplier || 1) * 2 
+      }
+    ];
+
+    // Quest Templates
+    const questTypes = [
+      { name: 'Slay 3 Dragons', target: 3, reward: { gold: 100, fame: 10 }, type: 'kill' },
+      { name: 'Recruit 2 Heroes', target: 2, reward: { gold: 50, gems: 1 }, type: 'recruit' },
+      { name: 'Reach 20 DPS', target: 20, reward: { gold: 200, fame: 25 }, type: 'dps' }
+    ];
+
+    // Dragon Types for progression
+    const dragonTypes = [
+      { emoji: '🐲', name: 'Green Dragon', hp: 50 },
+      { emoji: '🔥', name: 'Fire Dragon', hp: 100 },
+      { emoji: '❄️', name: 'Ice Dragon', hp: 150 },
+      { emoji: '⚡', name: 'Storm Dragon', hp: 200 },
+      { emoji: '🌟', name: 'Celestial Dragon', hp: 300 }
+    ];
+
+    // Create floating magic particles
+    function createMagicParticle() {
+      if (document.querySelectorAll('.magic-particles').length > 20) return;
+      
+      const particle = document.createElement('div');
+      particle.classList.add('magic-particles');
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particle.style.animationDuration = (Math.random() * 8 + 15) + 's';
+      
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        if (particle.parentNode) {
+          particle.remove();
+        }
+      }, 25000);
+    }
+
+    setInterval(createMagicParticle, 800);
+
+    // Initialize game
+    function initGame() {
+      updateDisplay();
+      initializeUpgrades();
+      initializeQuests();
+      attachEventListeners();
+      startGameLoop();
+    }
+
+    function attachEventListeners() {
+      // Attack button
+      document.getElementById('attackBtn').addEventListener('click', attackDragon);
+      
+      // Dragon click
+      document.getElementById('dragonDisplay').addEventListener('click', attackDragon);
+      
+      // Recruit button
+      document.getElementById('recruitBtn').addEventListener('click', recruitHero);
+    }
+
+    function attackDragon() {
+      const damage = gameState.clickDamage;
+      dealDamage(damage);
+      
+      // Visual feedback
+      const dragonDisplay = document.getElementById('dragonDisplay');
+      dragonDisplay.classList.add('dragon-hit');
+      setTimeout(() => dragonDisplay.classList.remove('dragon-hit'), 300);
+      
+      // Show damage popup
+      showDamagePopup(damage, dragonDisplay);
+    }
+
+    function dealDamage(damage) {
+      gameState.currentDragon.hp -= damage;
+      
+      if (gameState.currentDragon.hp <= 0) {
+        defeatDragon();
+      }
+      
+      updateDragonDisplay();
+    }
+
+    function defeatDragon() {
+      // Reward calculation
+      const goldReward = Math.floor(gameState.currentDragon.maxHp / 2) * (gameState.goldMultiplier || 1);
+      const fameReward = Math.floor(gameState.currentDragon.level / 2) + 1;
+      
+      gameState.gold += goldReward;
+      gameState.fame += fameReward;
+      gameState.dragonsDefeated++;
+      
+      // Show rewards
+      showGoldPopup(goldReward, document.getElementById('dragonDisplay'));
+      
+      // Check for game completion
+      if (gameState.dragonsDefeated >= 10) {
+        setTimeout(() => {
+          alert("🎉 Congratulations! You've built the most legendary guild in the realm!\n\nYour guild has defeated 10 mighty dragons and become a legend!\n\nReady for the next adventure?");
+          // Could redirect to next layer here
+          // window.location.href = 'layer-3.html';
+        }, 1000);
+        return;
+      }
+      
+      // Spawn new dragon
+      spawnNewDragon();
+      
+      // Check quests
+      checkQuestProgress();
+      
+      updateDisplay();
+    }
+
+    function spawnNewDragon() {
+      const dragonTypeIndex = Math.min(Math.floor(gameState.dragonsDefeated / 2), dragonTypes.length - 1);
+      const dragonType = dragonTypes[dragonTypeIndex];
+      
+      gameState.currentDragon = {
+        hp: dragonType.hp + (gameState.dragonsDefeated * 5),
+        maxHp: dragonType.hp + (gameState.dragonsDefeated * 5),
+        level: gameState.dragonsDefeated + 1,
+        emoji: dragonType.emoji
+      };
+      
+      updateDragonDisplay();
+    }
+
+    function recruitHero() {
+      const cost = getRecruitCost();
+      if (gameState.gold < cost) return;
+      
+      const availableHeroes = heroTypes.filter(type => 
+        type.baseCost <= gameState.gold && 
+        gameState.heroes.filter(h => h.type === type.name).length < 10
+      );
+      
+      if (availableHeroes.length === 0) return;
+      
+      const heroType = availableHeroes[Math.floor(Math.random() * availableHeroes.length)];
+      const heroCount = gameState.heroes.filter(h => h.type === heroType.name).length;
+      
+      const newHero = {
+        type: heroType.name,
+        icon: heroType.icon,
+        dps: heroType.baseDps * Math.pow(1.15, heroCount),
+        cost: heroType.baseCost * Math.pow(1.5, heroCount),
+        level: 1
+      };
+      
+      gameState.gold -= cost;
+      gameState.heroes.push(newHero);
+      
+      updateDisplay();
+      updateHeroesDisplay();
+    }
+
+    function getRecruitCost() {
+      return Math.floor(25 * Math.pow(1.2, gameState.heroes.length));
+    }
+
+    function updateDisplay() {
+      document.getElementById('goldCount').textContent = Math.floor(gameState.gold);
+      document.getElementById('fameCount').textContent = gameState.fame;
+      document.getElementById('gemCount').textContent = gameState.gems;
+      document.getElementById('guildLevel').textContent = gameState.guildLevel;
+      document.getElementById('attackDamage').textContent = gameState.clickDamage;
+      document.getElementById('recruitCost').textContent = getRecruitCost();
+      document.getElementById('dragonsDefeated').textContent = gameState.dragonsDefeated;
+      
+      // Update recruit button
+      const recruitBtn = document.getElementById('recruitBtn');
+      recruitBtn.disabled = gameState.gold < getRecruitCost();
+      
+      // Update progress
+      updateProgressDisplay();
+    }
+
+    function updateDragonDisplay() {
+      document.getElementById('dragonHp').textContent = Math.max(0, Math.floor(gameState.currentDragon.hp));
+      document.getElementById('dragonMaxHp').textContent = Math.floor(gameState.currentDragon.maxHp);
+      document.getElementById('dragonEmoji').textContent = gameState.currentDragon.emoji;
+      
+      const healthPercent = (gameState.currentDragon.hp / gameState.currentDragon.maxHp) * 100;
+      document.getElementById('dragonHealthFill').style.width = healthPercent + '%';
+    }
+
+    function updateHeroesDisplay() {
+      const heroesList = document.getElementById('heroesList');
+      heroesList.innerHTML = '';
+      
+      // Group heroes by type
+      const heroGroups = {};
+      gameState.heroes.forEach(hero => {
+        if (!heroGroups[hero.type]) {
+          heroGroups[hero.type] = { count: 0, totalDps: 0, icon: hero.icon };
+        }
+        heroGroups[hero.type].count++;
+        heroGroups[hero.type].totalDps += hero.dps;
+      });
+      
+      Object.entries(heroGroups).forEach(([type, data]) => {
+        const heroElement = document.createElement('div');
+        heroElement.className = 'hero-item';
+        heroElement.innerHTML = `
+          <div class="hero-info">
+            <span class="hero-icon">${data.icon}</span>
+            <div class="hero-details">
+              <div class="hero-name">${type} x${data.count}</div>
+              <div class="hero-dps">${data.totalDps.toFixed(1)} DPS</div>
+            </div>
+          </div>
+        `;
+        heroesList.appendChild(heroElement);
+      });
+      
+      // Update total DPS
+      gameState.totalDps = gameState.heroes.reduce((total, hero) => total + hero.dps, 0);
+    }
+
+    function initializeUpgrades() {
+      const upgradesList = document.getElementById('upgradesList');
+      
+      upgradeTypes.forEach((upgrade, index) => {
+        const upgradeElement = document.createElement('div');
+        upgradeElement.className = 'upgrade-item';
+        upgradeElement.innerHTML = `
+          <div class="upgrade-name">${upgrade.name}</div>
+          <div class="upgrade-description">${upgrade.description}</div>
+          <button class="upgrade-btn" data-upgrade="${index}">
+            Buy (💰${upgrade.baseCost})
+          </button>
+        `;
+        upgradesList.appendChild(upgradeElement);
+        
+        // Add event listener
+        const button = upgradeElement.querySelector('.upgrade-btn');
+        button.addEventListener('click', () => buyUpgrade(index));
+      });
+    }
+
+    function buyUpgrade(index) {
+      const upgrade = upgradeTypes[index];
+      if (gameState.gold < upgrade.baseCost) return;
+      
+      gameState.gold -= upgrade.baseCost;
+      upgrade.effect();
+      upgrade.baseCost = Math.floor(upgrade.baseCost * 1.5);
+      
+      // Update button text
+      const button = document.querySelector(`[data-upgrade="${index}"]`);
+      button.innerHTML = `Buy (💰${upgrade.baseCost})`;
+      
+      updateDisplay();
+      updateHeroesDisplay();
+    }
+
+    function initializeQuests() {
+      const questsList = document.getElementById('questsList');
+      
+      questTypes.forEach((quest, index) => {
+        const questElement = document.createElement('div');
+        questElement.className = 'quest-item';
+        questElement.innerHTML = `
+          <div class="quest-name">${quest.name}</div>
+          <div class="quest-description">Reward: 💰${quest.reward.gold || 0} ${quest.reward.fame ? '🎖️' + quest.reward.fame : ''} ${quest.reward.gems ? '💎' + quest.reward.gems : ''}</div>
+          <div class="quest-progress" id="quest-${index}">Progress: 0/${quest.target}</div>
+        `;
+        questsList.appendChild(questElement);
+      });
+      
+      gameState.quests = questTypes.map(() => ({ progress: 0, completed: false }));
+    }
+
+    function checkQuestProgress() {
+      questTypes.forEach((quest, index) => {
+        if (gameState.quests[index].completed) return;
+        
+        let progress = 0;
+        switch (quest.type) {
+          case 'kill':
+            progress = gameState.dragonsDefeated;
+            break;
+          case 'recruit':
+            progress = gameState.heroes.length;
+            break;
+          case 'dps':
+            progress = Math.floor(gameState.totalDps);
+            break;
+        }
+        
+        gameState.quests[index].progress = progress;
+        
+        if (progress >= quest.target && !gameState.quests[index].completed) {
+          completeQuest(index);
+        }
+        
+        // Update display
+        document.getElementById(`quest-${index}`).textContent = 
+          `Progress: ${Math.min(progress, quest.target)}/${quest.target}`;
+      });
+    }
+
+    function completeQuest(index) {
+      const quest = questTypes[index];
+      gameState.quests[index].completed = true;
+      
+      // Give rewards
+      if (quest.reward.gold) gameState.gold += quest.reward.gold;
+      if (quest.reward.fame) gameState.fame += quest.reward.fame;
+      if (quest.reward.gems) gameState.gems += quest.reward.gems;
+      
+      // Visual feedback
+      const questElement = document.querySelector(`#quest-${index}`);
+      questElement.textContent = 'COMPLETED! ✅';
+      questElement.style.color = '#00ff00';
+      
+      updateDisplay();
+    }
+
+    function updateProgressDisplay() {
+      const nextMilestone = Math.ceil((gameState.dragonsDefeated + 1) / 2) * 2;
+      const progress = (gameState.dragonsDefeated % 2) / 2 * 100;
+      
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('nextGoal').textContent = `Defeat ${nextMilestone} dragons to unlock new content`;
+    }
+
+    function showDamagePopup(damage, element) {
+      const popup = document.createElement('div');
+      popup.className = 'gold-popup';
+      popup.textContent = `-${damage}`;
+      popup.style.color = '#ff4444';
+      popup.style.left = Math.random() * 100 + 'px';
+      popup.style.top = '50%';
+      
+      element.appendChild(popup);
+      
+      setTimeout(() => {
+        if (popup.parentNode) popup.remove();
+      }, 1000);
+    }
+
+    function showGoldPopup(gold, element) {
+      const popup = document.createElement('div');
+      popup.className = 'gold-popup';
+      popup.textContent = `+${gold} 💰`;
+      popup.style.left = Math.random() * 100 + 'px';
+      popup.style.top = '30%';
+      
+      element.appendChild(popup);
+      
+      setTimeout(() => {
+        if (popup.parentNode) popup.remove();
+      }, 1000);
+    }
+
+    // Game loop for passive income
+    function startGameLoop() {
+      setInterval(() => {
+        if (gameState.totalDps > 0) {
+          dealDamage(gameState.totalDps / 10); // DPS every 100ms
+        }
+        
+        // Update displays periodically
+        updateDisplay();
+        updateHeroesDisplay();
+        checkQuestProgress();
+      }, 100);
+    }
+
+    // Initialize the game
+    initGame();
+
+    console.log('%c🐉 Dragon\'s Guild Tycoon Initialized', 'color: #9d4edd; font-size: 16px; font-weight: bold;');
+    console.log('%c⚔️ Build your legendary guild!', 'color: #ffd60a; font-size: 12px;');
+  </script>
+</body>
+</html>
