@@ -520,6 +520,12 @@
       <p class="description">Build and manage your adventuring guild! Recruit heroes, send them on quests, and become the most legendary guild master in the realm!</p>
     </div>
 
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+      <source src="../assets/dandd.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
     <!-- Resources Display -->
     <div class="resources-panel">
       <div class="resource-item">
@@ -698,6 +704,15 @@
       initializeQuests();
       attachEventListeners();
       startGameLoop();
+      
+      // Start background music
+      const music = document.getElementById('backgroundMusic');
+      music.volume = 0.3; // Set volume to 30%
+      
+      // Try to play music (will be blocked by most browsers until user interaction)
+      music.play().catch(e => {
+        console.log('Background music blocked by browser. Will start on first user interaction.');
+      });
     }
 
     function attachEventListeners() {
@@ -709,6 +724,21 @@
       
       // Recruit button
       document.getElementById('recruitBtn').addEventListener('click', recruitHero);
+      
+      // Start music on first user interaction
+      let musicStarted = false;
+      const startMusic = () => {
+        if (!musicStarted) {
+          const music = document.getElementById('backgroundMusic');
+          music.play().catch(e => console.log('Could not start music:', e));
+          musicStarted = true;
+        }
+      };
+      
+      // Add music start to all interactive elements
+      document.getElementById('attackBtn').addEventListener('click', startMusic);
+      document.getElementById('dragonDisplay').addEventListener('click', startMusic);
+      document.getElementById('recruitBtn').addEventListener('click', startMusic);
     }
 
     function attackDragon() {
