@@ -17,7 +17,8 @@
     html, body {
       font-family: 'Inter', sans-serif;
       background: 
-        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(139, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
         url('../assets/personabg.jpg');
       background-size: cover;
       background-position: center;
@@ -28,7 +29,7 @@
       overflow-x: hidden;
     }
 
-    /* Persona 5 red accent overlay */
+    /* Simple red accent overlay */
     body::before {
       content: '';
       position: fixed;
@@ -36,656 +37,514 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 30%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(139, 0, 0, 0.1) 100%);
-      z-index: -1;
-      animation: phantomPulse 6s ease-in-out infinite;
-    }
-
-    @keyframes phantomPulse {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
+      background: linear-gradient(135deg, 
+        rgba(220, 20, 60, 0.1) 0%, 
+        transparent 20%, 
+        rgba(139, 0, 0, 0.05) 50%, 
+        transparent 80%, 
+        rgba(255, 23, 68, 0.1) 100%);
+      pointer-events: none;
+      z-index: 1;
     }
 
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem;
+      position: relative;
+      z-index: 2;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Back button in Persona style */
-    .back-link {
-      position: fixed;
-      top: 2rem;
-      left: 2rem;
-      background: linear-gradient(135deg, #dc143c 0%, #8b0000 100%);
-      border: 3px solid #ffffff;
-      color: #ffffff;
-      padding: 0.8rem 1.5rem;
-      text-decoration: none;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: bold;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-      box-shadow: 
-        0 0 20px rgba(220, 20, 60, 0.5),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    .back-link:hover {
-      transform: translateY(-3px);
-      box-shadow: 
-        0 10px 30px rgba(220, 20, 60, 0.7),
-        inset 0 0 15px rgba(255, 255, 255, 0.2);
-      background: linear-gradient(135deg, #ff1744 0%, #dc143c 100%);
+      padding: 2rem;
+      text-align: center;
     }
 
     .header {
-      text-align: center;
       margin-bottom: 3rem;
     }
 
     .title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 4.5rem;
-      font-weight: 900;
-      color: #ffffff;
+      font-size: 4rem;
+      font-weight: 800;
+      color: #dc143c;
       text-shadow: 
-        0 0 10px #dc143c,
-        0 0 20px #dc143c,
-        0 0 30px #dc143c,
-        3px 3px 0px #000000,
-        6px 6px 0px rgba(0, 0, 0, 0.7);
+        0 0 20px rgba(220, 20, 60, 0.8),
+        0 0 40px rgba(220, 20, 60, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.8);
       margin-bottom: 1rem;
-      animation: phantomGlow 4s ease-in-out infinite;
-      letter-spacing: 3px;
-      transform: perspective(500px) rotateX(15deg);
-    }
-
-    @keyframes phantomGlow {
-      0%, 100% { 
-        text-shadow: 
-          0 0 10px #dc143c,
-          0 0 20px #dc143c,
-          0 0 30px #dc143c,
-          3px 3px 0px #000000,
-          6px 6px 0px rgba(0, 0, 0, 0.7);
-      }
-      50% { 
-        text-shadow: 
-          0 0 15px #dc143c,
-          0 0 30px #dc143c,
-          0 0 45px #dc143c,
-          0 0 60px #ff1744,
-          3px 3px 0px #000000,
-          6px 6px 0px rgba(0, 0, 0, 0.9);
-      }
+      letter-spacing: 0.1em;
     }
 
     .subtitle {
-      font-family: 'JetBrains Mono', monospace;
       font-size: 2rem;
-      color: #dc143c;
+      font-weight: 600;
+      color: #ffffff;
       text-shadow: 
-        0 0 15px #dc143c,
-        2px 2px 0px #000000;
-      margin-bottom: 0.5rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+        0 0 15px rgba(255, 255, 255, 0.6),
+        0 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
     }
 
     .location {
       font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 3rem;
-      text-shadow: 
-        1px 1px 2px rgba(0, 0, 0, 0.8),
-        0 0 8px rgba(220, 20, 60, 0.4);
+      color: #ff6b6b;
       font-style: italic;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 3rem;
     }
 
-    /* Persona 5 style riddle container */
-    .palace-container {
-      background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(139, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.9) 100%);
-      border: 4px solid #dc143c;
-      border-radius: 0px;
-      padding: 3rem;
-      margin-bottom: 2rem;
-      box-shadow: 
-        0 0 40px rgba(220, 20, 60, 0.6),
-        inset 0 0 30px rgba(220, 20, 60, 0.1),
-        0 0 80px rgba(220, 20, 60, 0.3);
-      position: relative;
-      clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
-      max-width: 800px;
-    }
-
-    .palace-container::before {
-      content: '';
-      position: absolute;
-      top: -4px;
-      left: -4px;
-      right: -4px;
-      bottom: -4px;
-      background: linear-gradient(45deg, #dc143c, #ffffff, #dc143c, #ffffff);
-      background-size: 200% 200%;
-      z-index: -1;
-      animation: phantomBorder 3s linear infinite;
-      clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px));
-    }
-
-    .palace-container::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 3px,
-          rgba(220, 20, 60, 0.05) 3px,
-          rgba(220, 20, 60, 0.05) 6px
-        );
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    @keyframes phantomBorder {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .riddle-title {
+    .hidden-fragment {
+      color: transparent;
+      background: transparent;
+      font-size: 0.8rem;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 2.2rem;
+      font-weight: bold;
+      user-select: none;
+      cursor: default;
+      transition: all 0.3s ease;
+      font-style: normal;
+    }
+
+    .hidden-fragment:hover {
+      color: #dc143c;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-shadow: 0 0 10px rgba(220, 20, 60, 0.8);
+      box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
+    }
+
+    /* Phantom Palace riddle system */
+    .phantom-palace {
+      background: linear-gradient(135deg, 
+        rgba(139, 0, 0, 0.3) 0%, 
+        rgba(0, 0, 0, 0.8) 50%, 
+        rgba(220, 20, 60, 0.3) 100%);
+      border: 2px solid rgba(220, 20, 60, 0.6);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      backdrop-filter: blur(10px);
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .palace-title {
+      font-size: 2.5rem;
       color: #dc143c;
       margin-bottom: 2rem;
-      text-align: center;
-      text-shadow: 
-        0 0 15px #dc143c,
-        2px 2px 4px rgba(0, 0, 0, 0.9);
-      letter-spacing: 2px;
-      position: relative;
-      z-index: 2;
-      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(220, 20, 60, 0.8);
+    }
+
+    .riddle-section {
+      margin-bottom: 2rem;
     }
 
     .riddle-text {
       font-size: 1.3rem;
-      line-height: 2;
       color: #ffffff;
-      margin-bottom: 2.5rem;
-      text-align: center;
-      text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.9),
-        0 0 5px rgba(220, 20, 60, 0.3);
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 1.5rem;
-      border-radius: 10px;
-      border: 2px solid rgba(220, 20, 60, 0.3);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
-    .riddle-text strong {
-      color: #dc143c;
-      text-shadow: 
-        0 0 10px #dc143c,
-        1px 1px 2px rgba(0, 0, 0, 0.9);
-      font-weight: 800;
-    }
-
-    .input-group {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .phantom-input {
-      background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(139, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.9) 100%);
-      border: 3px solid #dc143c;
-      color: #ffffff;
-      padding: 1.2rem 2rem;
-      font-family: 'JetBrains Mono', monospace;
+    .riddle-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 1rem;
       font-size: 1.1rem;
-      border-radius: 0px;
-      outline: none;
-      transition: all 0.3s ease;
-      min-width: 300px;
-      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-      box-shadow: 
-        0 0 15px rgba(220, 20, 60, 0.3),
-        inset 0 0 15px rgba(220, 20, 60, 0.1);
-      position: relative;
-      z-index: 2;
-    }
-
-    .phantom-input:focus {
-      border-color: #ffffff;
-      box-shadow: 
-        0 0 25px rgba(220, 20, 60, 0.6),
-        inset 0 0 20px rgba(220, 20, 60, 0.2),
-        0 0 40px rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(220, 20, 60, 0.6);
+      border-radius: 10px;
       color: #ffffff;
-      text-shadow: 0 0 8px #dc143c;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 1rem;
     }
 
-    .phantom-input::placeholder {
-      color: rgba(220, 20, 60, 0.6);
+    .riddle-input:focus {
+      outline: none;
+      border-color: #dc143c;
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
     }
 
     .phantom-btn {
-      background: linear-gradient(135deg, #dc143c 0%, #8b0000 50%, #dc143c 100%);
-      border: 3px solid #ffffff;
+      background: linear-gradient(135deg, #dc143c, #8b0000);
       color: #ffffff;
-      padding: 1.2rem 2.5rem;
-      font-family: 'JetBrains Mono', monospace;
+      border: none;
+      padding: 1rem 2rem;
       font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 0px;
+      font-weight: 600;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-      box-shadow: 
-        0 0 20px rgba(220, 20, 60, 0.4),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-      position: relative;
-      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 15px rgba(220, 20, 60, 0.4);
     }
 
     .phantom-btn:hover {
-      background: linear-gradient(135deg, #ff1744 0%, #dc143c 50%, #ff1744 100%);
-      transform: translateY(-3px);
-      box-shadow: 
-        0 15px 40px rgba(220, 20, 60, 0.6),
-        inset 0 0 15px rgba(255, 255, 255, 0.2),
-        0 0 50px rgba(255, 255, 255, 0.4);
-      border-color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220, 20, 60, 0.6);
     }
 
-    .phantom-btn:active {
-      transform: translateY(-1px);
+    .phantom-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
     }
 
     .hint-btn {
-      background: linear-gradient(135deg, rgba(220, 20, 60, 0.3) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(220, 20, 60, 0.3) 100%);
-      border: 3px solid rgba(220, 20, 60, 0.7);
-      color: #dc143c;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-      margin-top: 1.5rem;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-      text-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
+      background: rgba(220, 20, 60, 0.3) !important;
+      border: 2px solid rgba(220, 20, 60, 0.5);
+      font-size: 0.95rem;
+      padding: 0.8rem 1.5rem;
     }
 
-    .hint-btn:hover {
-      background: linear-gradient(135deg, rgba(220, 20, 60, 0.4) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(220, 20, 60, 0.4) 100%);
-      border-color: #dc143c;
-      box-shadow: 
-        0 15px 35px rgba(220, 20, 60, 0.5),
-        inset 0 0 20px rgba(220, 20, 60, 0.3);
-      text-shadow: 0 0 20px #dc143c;
+    .hint-btn:hover:not(:disabled) {
+      background: rgba(220, 20, 60, 0.5) !important;
+      border-color: rgba(220, 20, 60, 0.7);
     }
 
-    /* Modal styles in Persona theme */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-content {
-      background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(139, 0, 0, 0.9) 50%, rgba(0, 0, 0, 0.95) 100%);
-      margin: 8% auto;
-      padding: 3rem;
-      border: 4px solid #dc143c;
-      border-radius: 0px;
-      width: 85%;
-      max-width: 600px;
-      text-align: center;
-      box-shadow: 
-        0 0 60px rgba(220, 20, 60, 0.8),
-        inset 0 0 40px rgba(220, 20, 60, 0.1);
-      clip-path: polygon(0 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 25px 100%, 0 calc(100% - 25px));
-      position: relative;
-    }
-
-    .modal-content::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 4px,
-          rgba(220, 20, 60, 0.05) 4px,
-          rgba(220, 20, 60, 0.05) 8px
-        );
-      pointer-events: none;
-    }
-
-    .modal h3 {
-      color: #dc143c;
-      margin-bottom: 2rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2rem;
-      text-shadow: 
-        0 0 20px #dc143c,
-        2px 2px 0px #000000;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .modal p {
-      color: #ffffff;
-      line-height: 2;
-      margin-bottom: 1.5rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-      font-size: 1.1rem;
-    }
-
-    .modal strong {
-      color: #dc143c;
-      text-shadow: 0 0 15px #dc143c;
-    }
-
-    .modal em {
-      color: rgba(220, 20, 60, 0.8);
+    .hint {
+      color: #ff6b6b;
       font-style: italic;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(220, 20, 60, 0.1);
+      border-left: 3px solid rgba(220, 20, 60, 0.5);
+      border-radius: 5px;
+      min-height: 3rem;
+      display: flex;
+      align-items: center;
     }
 
-    .close-btn {
-      background: linear-gradient(135deg, rgba(220, 20, 60, 0.3) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(220, 20, 60, 0.3) 100%);
-      border: 3px solid rgba(220, 20, 60, 0.7);
-      color: #dc143c;
-      padding: 1rem 2rem;
-      border-radius: 0px;
-      cursor: pointer;
-      margin-top: 2rem;
-      font-family: 'JetBrains Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .error-message {
+      color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    .success-message {
+      color: #00ff00;
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
       font-weight: bold;
-      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-weight: bold;
+      margin-top: 1rem;
+      text-shadow: 0 0 10px rgba(255, 68, 68, 0.6);
+    }
+
+    .progress-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(220, 20, 60, 0.3);
+      border: 2px solid rgba(220, 20, 60, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
       transition: all 0.3s ease;
     }
 
-    .close-btn:hover {
-      background: linear-gradient(135deg, rgba(220, 20, 60, 0.4) 0%, rgba(0, 0, 0, 0.9) 50%, rgba(220, 20, 60, 0.4) 100%);
-      border-color: #dc143c;
-      box-shadow: 0 8px 25px rgba(220, 20, 60, 0.5);
-      text-shadow: 0 0 15px #dc143c;
+    .progress-step.active {
+      background: rgba(220, 20, 60, 0.8);
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
     }
 
-    /* Phantom particles effect */
-    .phantom-particle {
+    .progress-step.completed {
+      background: rgba(0, 255, 0, 0.8);
+      border-color: #00ff00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    }
+
+    /* Back button */
+    .back-link {
       position: fixed;
-      width: 8px;
-      height: 8px;
-      background: #dc143c;
-      border-radius: 50%;
-      box-shadow: 
-        0 0 15px #dc143c,
-        0 0 30px #dc143c,
-        0 0 45px rgba(220, 20, 60, 0.6);
-      animation: phantomFloat 15s infinite linear;
-      z-index: 5;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      color: #dc143c;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 0.8rem 1.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid rgba(220, 20, 60, 0.6);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
     }
 
-    .phantom-particle:nth-child(odd) {
-      background: #ffffff;
-      box-shadow: 
-        0 0 12px #ffffff,
-        0 0 24px #ffffff,
-        0 0 36px rgba(255, 255, 255, 0.6);
+    .back-link:hover {
+      background: rgba(220, 20, 60, 0.2);
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+      transform: translateX(-5px);
     }
 
-    @keyframes phantomFloat {
-      0% {
-        transform: translateY(100vh) translateX(0) rotate(0deg) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-        transform: scale(1);
-      }
-      80% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-150px) translateX(300px) rotate(360deg) scale(0);
-        opacity: 0;
-      }
-    }
-
+    /* Responsive design */
     @media (max-width: 768px) {
-      .title { font-size: 2.8rem; }
-      .palace-container { 
-        padding: 2rem; 
-        margin: 1rem;
-      }
-      .input-group { 
-        flex-direction: column; 
-        align-items: stretch;
-      }
-      .phantom-input { min-width: auto; }
-      .container { padding: 1rem; }
-      .back-link {
-        top: 1rem;
-        left: 1rem;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-      }
+      .title { font-size: 2.5rem; }
+      .subtitle { font-size: 1.5rem; }
+      .phantom-palace { padding: 2rem 1.5rem; margin: 1rem; }
+      .palace-title { font-size: 2rem; }
+      .riddle-text { font-size: 1.1rem; }
+      .back-link { top: 1rem; left: 1rem; font-size: 1rem; padding: 0.6rem 1rem; }
     }
   </style>
+</head>
 <body>
   <!-- Back button -->
-  <a href="layer-2-riddle.html" class="back-link">← Night City</a>
+  <a href="layer-2-riddle.html" class="back-link">← Digital Nexus</a>
   
   <div class="container">
     <div class="header">
       <h1 class="title">LAYER III</h1>
       <p class="subtitle">PHANTOM PALACE</p>
-      <p class="location">"I am thou, thou art I..."</p>
+      <p class="location">"I am a shadow, the true self" <span class="hidden-fragment" title="Fragment found">JYZ</span></p>
     </div>
 
-    <!-- Persona 5 style riddle container -->
-    <div class="palace-container">
-      <h3 class="riddle-title">🎭 THE ULTIMATE PERSONA 🎭</h3>
-      <div class="riddle-text">
-        In the depths of Mementos, where shadows dwell deep,<br>
-        A rebel's heart awakened from slumber and sleep.<br>
-        Born from the fusion of justice and rebellion's flame,<br>
-        The ultimate Persona, with a celestial name.<br><br>
-        
-        With wings of an angel, yet bearing the mark<br>
-        Of one who once challenged the heavens so stark.<br>
-        Six wings spread wide in defiant display,<br>
-        <strong>What is the name of this Persona's way?</strong><br><br>
-        
-        <em>The one who bears the title of "Great Angel of Rebellion"...</em>
+    <!-- Phantom Palace Challenge -->
+    <div class="phantom-palace">
+      <h3 class="palace-title">🎭 WELCOME TO THE PALACE 🎭</h3>
+      
+      <!-- Progress Indicator -->
+      <div class="progress-indicator">
+        <div class="progress-step completed" id="step1">1</div>
+        <div class="progress-step active" id="step2">2</div>
+        <div class="progress-step" id="step3">3</div>
+        <div class="progress-step" id="step4">4</div>
       </div>
-      <div class="input-group">
-        <input type="text" class="phantom-input" id="personaAnswer" placeholder="Enter the Persona's name...">
-        <button class="phantom-btn" onclick="checkPersonaAnswer()">REBEL</button>
+
+      <!-- Current Challenge -->
+      <div class="riddle-section" id="challengeSection">
+        <div class="riddle-text" id="challengeText">
+          The shadows whisper secrets of the past...<br>
+          What mask do you wear in the realm of personas?
+        </div>
+        
+        <input type="text" class="riddle-input" id="answerInput" placeholder="Enter your answer..." maxlength="50">
+        <br><br>
+        <button class="phantom-btn" id="submitBtn" onclick="checkAnswer()">Submit Answer</button>
+        <button class="phantom-btn hint-btn" id="hintBtn" onclick="showHint()" style="margin-left: 1rem; background: rgba(220, 20, 60, 0.3);">💡 Show Hint</button>
+        
+        <div class="hint" id="hintText">
+          Think about the psychological concept that Jung introduced...
+        </div>
+        
+        <div id="messageArea"></div>
       </div>
-      <button class="phantom-btn hint-btn" onclick="showHint()">🔍 Cognitive Insight</button>
     </div>
   </div>
-
-  <!-- Hint Modal -->
-  <div id="hintModal" class="modal">
-    <div class="modal-content">
-      <h3>� Cognitive Palace Hint</h3>
-      <p id="hintText"></p>
-      <button class="close-btn" onclick="closeModal('hintModal')">Close</button>
-    </div>
-  </div>
-
-  <!-- Success Modal (with trick) -->
-  <div id="successModal" class="modal">
-    <div class="modal-content">
-      <h3 id="successTitle">❌ COGNITIVE DISSONANCE</h3>
-      <p id="successText"></p>
-      <button id="successBtn" class="phantom-btn" onclick="handleTrickSuccess()">Continue Into the Depths</button>
-    </div>
-  </div>
-
-  <!-- Background music for Layer III -->
-  <audio id="background-music" loop style="display: none;">
-    <source src="../assets/persona.mp3" type="audio/mpeg">
-    <source src="../assets/background.mp3" type="audio/mpeg">
-  </audio>
 
   <script>
-    // Audio setup for Layer III
-    const music = document.getElementById('background-music');
-    if (music) {
-      music.volume = 0.4;
-      music.preload = 'auto';
-      
-      const playAudio = () => {
-        music.play().catch(error => {
-          console.log('Auto-play failed:', error);
-        });
-        document.removeEventListener('click', playAudio);
-        document.removeEventListener('keydown', playAudio);
-      };
-      
-      document.addEventListener('click', playAudio);
-      document.addEventListener('keydown', playAudio);
-      
-      // Try to play immediately
-      setTimeout(() => {
-        music.play().catch(() => {
-          console.log('Waiting for user interaction to play Persona music...');
-        });
-      }, 1000);
-    }
-
-    // Create phantom particles
-    function createPhantomParticle() {
-      const particle = document.createElement('div');
-      particle.classList.add('phantom-particle');
-      particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.animationDelay = Math.random() * 3 + 's';
-      particle.style.animationDuration = (Math.random() * 5 + 10) + 's';
-      
-      document.body.appendChild(particle);
-      
-      setTimeout(() => {
-        particle.remove();
-      }, 15000);
-    }
-
-    setInterval(createPhantomParticle, 800);
-
-    function checkPersonaAnswer() {
-      const answer = document.getElementById('personaAnswer').value.trim().toLowerCase();
-      
-      if (answer === 'satanael' || answer === 'satanaël') {
-        // This is the trick - correct answer shows as wrong and redirects to secret layer
-        document.getElementById('successTitle').textContent = '❌ COGNITIVE DISSONANCE DETECTED';
-        document.getElementById('successText').innerHTML = 
-          '<strong>ERROR: PALACE SECURITY BREACH</strong><br><br>' +
-          'Your answer has been deemed... <em>incorrect</em>.<br>' +
-          'The cognitive world rejects your truth.<br><br>' +
-          'But perhaps... there are deeper layers to explore.<br>' +
-          'Sometimes the wrong path leads to hidden truths.<br><br>' +
-          '<em>"The game is rigged, but you can still play..."</em>';
-        document.getElementById('successBtn').textContent = '🕳️ Descend Deeper';
-        document.getElementById('successModal').style.display = 'block';
-      } else if (answer.includes('satan') || answer.includes('lucifer') || answer.includes('arsene')) {
-        alert('⚠️ Close, but the ultimate form eludes you...');
-      } else {
-        alert('❌ The cognitive world rejects your answer - try again, Phantom Thief!');
+    const challenges = [
+      {
+        text: "The shadows whisper secrets of the past...<br>What mask do you wear in the realm of personas?",
+        answers: ["persona", "mask", "shadow", "jung"],
+        hints: [
+          "Think about the psychological concept that Jung introduced...",
+          "It's a mask you wear in social situations, your public face...",
+          "Jung called it the 'social mask' - starts with 'P'...",
+          "PERSONA - the mask we show to the world!"
+        ],
+        success: "🎭 Excellent! You understand the nature of personas!"
+      },
+      {
+        text: "In the depths of the psyche, what lies beneath consciousness?<br>The realm where forgotten memories dwell...",
+        answers: ["unconscious", "subconscious", "id", "shadow"],
+        hints: [
+          "Freud and Jung both explored this hidden realm of the mind...",
+          "It's the part of your mind you're not aware of...",
+          "The opposite of conscious - starts with 'UN'...",
+          "UNCONSCIOUS - the hidden depths of the mind!"
+        ],
+        success: "🧠 Perfect! The unconscious holds many secrets!"
+      },
+      {
+        text: "What force drives us to hide our true nature?<br>The pressure to conform, to fit the mold...",
+        answers: ["society", "social", "conformity", "pressure"],
+        hints: [
+          "It's the external force that shapes how we present ourselves...",
+          "The collective group of people around us...",
+          "Think about peer pressure and social expectations...",
+          "SOCIETY - the collective force that shapes our behavior!"
+        ],
+        success: "🏛️ Correct! Society shapes our public masks!"
+      },
+      {
+        text: "When all masks fall away, what remains?<br>The core of who you truly are...",
+        answers: ["self", "true self", "identity", "soul"],
+        hints: [
+          "It's what exists when you strip away all pretense...",
+          "Your authentic, genuine nature without masks...",
+          "Jung would say this is who you really are deep down...",
+          "SELF - your true, authentic identity!"
+        ],
+        success: "✨ Magnificent! You've found your true self!"
       }
-    }
+    ];
 
-    function showHint() {
-      document.getElementById('hintText').innerHTML = 
-        '<strong>Palace Cognitive Data:</strong><br><br>' +
-        'Think of the final Persona in Persona 5.<br>' +
-        'The ultimate evolution of Joker\'s rebellious spirit.<br>' +
-        'A name that means "adversary" in Hebrew.<br><br>' +
-        'This Persona appears during the final battle against Yaldabaoth.<br>' +
-        'Six wings, bearing the title of the Great Angel of Rebellion.<br><br>' +
-        '<em>Hint: The name starts with "S" and ends with "el"</em><br>' +
-        '<em>Associated with rebellion against divine authority</em>';
-      document.getElementById('hintModal').style.display = 'block';
-    }
+    let currentChallenge = 0;
+    let completed = false;
+    let hintLevel = 0;
+    let wrongAttempts = 0;
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
+    function updateChallenge() {
+      if (currentChallenge >= challenges.length) {
+        completed = true;
+        showCompletion();
+        return;
+      }
 
-    function handleTrickSuccess() {
-      // Redirect to coming soon page with journey aesthetics
-      window.location.href = 'comin.html';
-    }
-
-    // Close modals with ESC key or click outside
-    window.onclick = function(event) {
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(modal => {
-        if (event.target === modal) {
-          modal.style.display = 'none';
+      const challenge = challenges[currentChallenge];
+      document.getElementById('challengeText').innerHTML = challenge.text;
+      document.getElementById('hintText').textContent = challenge.hints[0];
+      document.getElementById('answerInput').value = '';
+      document.getElementById('messageArea').innerHTML = '';
+      
+      // Reset hint level and wrong attempts for new challenge
+      hintLevel = 0;
+      wrongAttempts = 0;
+      
+      // Reset hint button
+      const hintBtn = document.getElementById('hintBtn');
+      hintBtn.disabled = false;
+      hintBtn.textContent = '💡 Show Hint';
+      hintBtn.style.background = 'rgba(220, 20, 60, 0.3)';
+      
+      // Update progress indicator
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        step.classList.remove('active', 'completed');
+        if (index < currentChallenge) {
+          step.classList.add('completed');
+        } else if (index === currentChallenge) {
+          step.classList.add('active');
         }
       });
     }
 
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        closeModal('hintModal');
-        closeModal('successModal');
+    function showHint() {
+      const challenge = challenges[currentChallenge];
+      if (hintLevel < challenge.hints.length - 1) {
+        hintLevel++;
+        document.getElementById('hintText').textContent = challenge.hints[hintLevel];
+        
+        if (hintLevel >= challenge.hints.length - 1) {
+          document.getElementById('hintBtn').textContent = '🔍 Final Hint';
+          document.getElementById('hintBtn').style.background = 'rgba(255, 165, 0, 0.3)';
+        }
+      } else {
+        document.getElementById('hintText').innerHTML = `<strong style="color: #ff6b6b;">${challenge.hints[hintLevel]}</strong>`;
+        document.getElementById('hintBtn').disabled = true;
+        document.getElementById('hintBtn').textContent = '💯 All Hints Used';
+        document.getElementById('hintBtn').style.background = 'rgba(128, 128, 128, 0.3)';
+      }
+    }
+
+    function checkAnswer() {
+      if (completed) return;
+
+      const userAnswer = document.getElementById('answerInput').value.toLowerCase().trim();
+      const challenge = challenges[currentChallenge];
+      const messageArea = document.getElementById('messageArea');
+
+      if (userAnswer === '') {
+        messageArea.innerHTML = '<div class="error-message">Please enter an answer!</div>';
+        return;
+      }
+
+      const isCorrect = challenge.answers.some(answer => 
+        userAnswer.includes(answer.toLowerCase()) || answer.toLowerCase().includes(userAnswer)
+      );
+
+      if (isCorrect) {
+        messageArea.innerHTML = `<div class="success-message">${challenge.success}</div>`;
+        currentChallenge++;
+        
+        setTimeout(() => {
+          updateChallenge();
+        }, 2000);
+      } else {
+        wrongAttempts++;
+        let errorMsg = `<div class="error-message">Not quite right. Think deeper about the shadows... (Attempt ${wrongAttempts})`;
+        
+        // Auto-advance hint level after wrong answers
+        if (wrongAttempts === 2 && hintLevel < challenge.hints.length - 1) {
+          hintLevel++;
+          document.getElementById('hintText').textContent = challenge.hints[hintLevel];
+          errorMsg += '<br><br>💡 Hint automatically advanced!';
+        } else if (wrongAttempts === 4 && hintLevel < challenge.hints.length - 1) {
+          hintLevel = challenge.hints.length - 1;
+          document.getElementById('hintText').innerHTML = `<strong style="color: #ff6b6b;">${challenge.hints[hintLevel]}</strong>`;
+          errorMsg += '<br><br>🆘 Final hint revealed!';
+          document.getElementById('hintBtn').disabled = true;
+          document.getElementById('hintBtn').textContent = '💯 All Hints Used';
+          document.getElementById('hintBtn').style.background = 'rgba(128, 128, 128, 0.3)';
+        }
+        
+        errorMsg += '</div>';
+        messageArea.innerHTML = errorMsg;
+      }
+    }
+
+    function showCompletion() {
+      document.getElementById('challengeSection').innerHTML = `
+        <div class="riddle-text">
+          🌟 <strong>PALACE CONQUERED!</strong> 🌟<br><br>
+          You have successfully navigated the depths of the human psyche!<br>
+          The shadows no longer hold power over you.<br><br>
+          <em>"The privilege of a lifetime is to become who you truly are."</em><br>
+          - Carl Jung
+        </div>
+        <br>
+        <button class="phantom-btn" onclick="proceedToNextLayer()">
+          Enter the Time Laboratory →
+        </button>
+      `;
+
+      // Mark all steps as completed
+      document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.remove('active');
+        step.classList.add('completed');
+      });
+    }
+
+    function proceedToNextLayer() {
+      window.location.href = 'comin.html';
+    }
+
+    // Event listeners
+    document.getElementById('answerInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkAnswer();
       }
     });
 
-    // Allow Enter key to submit answer
-    document.getElementById('personaAnswer').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        checkPersonaAnswer();
-      }
-    });
+    // Initialize the first challenge
+    updateChallenge();
 
-    console.log('🎭 Phantom Palace activated...');
-    console.log('� For my next trick... the correct answer is wrong!');
-    console.log('� Satanael awaits, but the Palace lies...');
+    console.log('🎭 Phantom Palace initialized');
+    console.log('💭 The journey into the psyche begins...');
   </script>
 </body>
 </html>

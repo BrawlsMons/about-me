@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layer V - The Gate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: 
+        linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(25, 0, 51, 0.9) 25%, rgba(0, 0, 0, 0.95) 50%, rgba(51, 0, 102, 0.9) 75%, rgba(0, 0, 0, 0.95) 100%),
+        radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
+      background-size: 300% 300%, 150% 150%, 120% 120%;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #ffffff;
+      position: relative;
+      overflow-x: hidden;
+      animation: cosmicShift 20s ease-in-out infinite;
+    }
+
+    @keyframes cosmicShift {
+      0%, 100% {
+        background-position: 0% 50%, left top, right bottom;
+        filter: brightness(0.8) contrast(1.2) saturate(1.1) hue-rotate(0deg);
+      }
+      50% {
+        background-position: 100% 50%, right top, left bottom;
+        filter: brightness(0.9) contrast(1.4) saturate(1.3) hue-rotate(10deg);
+      }
+    }
+
+    /* Mystical overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.15) 0%, transparent 40%),
+        conic-gradient(from 0deg at 50% 50%, transparent, rgba(138, 43, 226, 0.05) 90deg, transparent 180deg, rgba(75, 0, 130, 0.05) 270deg, transparent);
+      z-index: -1;
+      animation: mysticalPulse 12s ease-in-out infinite;
+    }
+
+    @keyframes mysticalPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      color: #8a2be2;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 0.8rem 1.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid rgba(138, 43, 226, 0.6);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-link:hover {
+      background: rgba(138, 43, 226, 0.2);
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+      transform: translateX(-5px);
+    }
+
+    .gate-header {
+      margin-bottom: 3rem;
+    }
+
+    .gate-title {
+      font-size: 4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #8a2be2, #9370db, #dda0dd, #8a2be2);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+      animation: titleShimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes titleShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .gate-subtitle {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #dda0dd;
+      text-shadow: 0 0 15px rgba(221, 160, 221, 0.6);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .gate-description {
+      font-size: 1.3rem;
+      color: #e6e6fa;
+      font-style: italic;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      margin-bottom: 3rem;
+      max-width: 800px;
+      line-height: 1.6;
+    }
+
+    .gate-challenge {
+      background: linear-gradient(135deg, 
+        rgba(138, 43, 226, 0.2) 0%, 
+        rgba(75, 0, 130, 0.3) 50%, 
+        rgba(138, 43, 226, 0.2) 100%);
+      border: 3px solid rgba(138, 43, 226, 0.5);
+      border-radius: 20px;
+      padding: 3rem;
+      max-width: 700px;
+      width: 100%;
+      backdrop-filter: blur(15px);
+      box-shadow: 
+        0 0 50px rgba(138, 43, 226, 0.3),
+        inset 0 0 30px rgba(138, 43, 226, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gate-challenge::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #8a2be2, transparent, #9370db, transparent, #8a2be2);
+      background-size: 400% 400%;
+      z-index: -1;
+      border-radius: 20px;
+      animation: gateBorder 6s linear infinite;
+    }
+
+    @keyframes gateBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .challenge-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #dda0dd;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 20px rgba(221, 160, 221, 0.8);
+    }
+
+    .challenge-text {
+      font-size: 1.2rem;
+      color: #e6e6fa;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .fragments-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(138, 43, 226, 0.4);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .fragments-title {
+      font-size: 1.5rem;
+      color: #8a2be2;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .fragment-hint {
+      color: #dda0dd;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-left: 3px solid rgba(138, 43, 226, 0.5);
+      padding-left: 1rem;
+    }
+
+    .code-input-section {
+      margin: 2rem 0;
+    }
+
+    .code-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.8);
+      border: 3px solid rgba(138, 43, 226, 0.6);
+      border-radius: 15px;
+      color: #ffffff;
+      text-align: center;
+      letter-spacing: 0.2em;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .code-input:focus {
+      outline: none;
+      border-color: #8a2be2;
+      box-shadow: 
+        0 0 30px rgba(138, 43, 226, 0.5),
+        inset 0 0 20px rgba(138, 43, 226, 0.1);
+      transform: scale(1.05);
+    }
+
+    .code-input::placeholder {
+      color: rgba(221, 160, 221, 0.6);
+      letter-spacing: 0.1em;
+    }
+
+    .gate-submit {
+      background: linear-gradient(135deg, #8a2be2, #9370db);
+      border: 3px solid rgba(147, 112, 219, 0.6);
+      color: #ffffff;
+      padding: 1rem 2.5rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      margin-top: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 30px rgba(138, 43, 226, 0.4);
+    }
+
+    .gate-submit:hover {
+      background: linear-gradient(135deg, #9370db, #8a2be2);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 50px rgba(138, 43, 226, 0.6);
+      border-color: #dda0dd;
+    }
+
+    .gate-submit:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .message-area {
+      margin-top: 2rem;
+      min-height: 3rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .success-message {
+      color: #00ff00;
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+      animation: successPulse 2s ease-in-out infinite;
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      text-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+      animation: errorShake 0.5s ease-in-out;
+    }
+
+    @keyframes successPulse {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    @keyframes errorShake {
+      0%, 20%, 40%, 60%, 80%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    }
+
+    .act2-portal {
+      display: none;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 127, 0.2));
+      border: 3px solid rgba(0, 255, 0, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      animation: portalPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes portalPulse {
+      0%, 100% { 
+        box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+        transform: scale(1);
+      }
+      50% { 
+        box-shadow: 0 0 60px rgba(0, 255, 0, 0.8);
+        transform: scale(1.02);
+      }
+    }
+
+    .portal-title {
+      font-size: 2rem;
+      color: #00ff00;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    }
+
+    .portal-text {
+      font-size: 1.2rem;
+      color: #e6ffe6;
+      margin-bottom: 2rem;
+    }
+
+    .act2-btn {
+      background: linear-gradient(135deg, #00ff00, #00ff7f);
+      border: 3px solid rgba(0, 255, 127, 0.6);
+      color: #000000;
+      padding: 1rem 2.5rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+    }
+
+    .act2-btn:hover {
+      background: linear-gradient(135deg, #00ff7f, #00ff00);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 50px rgba(0, 255, 0, 0.6);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .gate-title { font-size: 2.5rem; }
+      .gate-subtitle { font-size: 1.5rem; }
+      .gate-challenge { padding: 2rem 1.5rem; margin: 1rem; }
+      .challenge-title { font-size: 2rem; }
+      .code-input { font-size: 1.2rem; }
+      .back-link { top: 1rem; left: 1rem; font-size: 1rem; padding: 0.6rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button -->
+  <a href="layer-4.html" class="back-link">← Laboratory</a>
+  
+  <div class="container">
+    <div class="gate-header">
+      <h1 class="gate-title">THE GATE</h1>
+      <p class="gate-subtitle">LAYER V</p>
+      <p class="gate-description">
+        You have journeyed through four layers of challenges, collecting fragments of an ancient code. 
+        Now, at the threshold between acts, you must prove your mastery by combining what you have discovered.
+      </p>
+    </div>
+
+    <div class="gate-challenge">
+      <h3 class="challenge-title">🌀 THE FINAL CONVERGENCE 🌀</h3>
+      
+      <div class="challenge-text">
+        Throughout your journey across the layers, you have encountered hidden fragments of power. 
+        These fragments, when combined in the correct order, will unlock the path to Act II.
+      </div>
+
+      <div class="fragments-info">
+        <div class="fragments-title">📜 FRAGMENT LOCATIONS 📜</div>
+        <div class="fragment-hint">Layer I (Frozen Nexus): Hidden within the crystal cipher's title</div>
+        <div class="fragment-hint">Layer II (Night City): Concealed in the shadows of the dark future</div>
+        <div class="fragment-hint">Layer III (Phantom Palace): Whispered by the true self</div>
+        <div class="fragment-hint">Layer IV (Laboratory): Logged among the warnings of time</div>
+      </div>
+
+      <div class="challenge-text">
+        <strong>Combine the four fragments in the order you discovered them to forge the key.</strong><br>
+        <em>Remember: The fragments are case-sensitive and should be joined without spaces.</em>
+      </div>
+
+      <div class="code-input-section">
+        <input type="text" 
+               id="combinedCode" 
+               class="code-input" 
+               placeholder="Enter the combined code..." 
+               maxlength="12">
+        <br>
+        <button class="gate-submit" onclick="checkGateCode()">🔑 UNLOCK THE GATE</button>
+      </div>
+
+      <div class="message-area" id="messageArea"></div>
+    </div>
+
+    <!-- Act 2 Portal (hidden initially) -->
+    <div class="act2-portal" id="act2Portal">
+      <h3 class="portal-title">🎭 PORTAL TO ACT II 🎭</h3>
+      <p class="portal-text">
+        Congratulations, traveler! You have proven yourself worthy. 
+        The gate opens before you, revealing the path to greater challenges and deeper mysteries.
+      </p>
+      <button class="act2-btn" onclick="enterAct2()">ENTER ACT II</button>
+    </div>
+  </div>
+
+  <script>
+    // The correct combination: HEt + MGS + JYZ + Doq = HEtMGSJYZDoq
+    const correctCode = 'HEtMGSJYZDoq';
+    let attempts = 0;
+    const maxAttempts = 5;
+
+    function checkGateCode() {
+      const userInput = document.getElementById('combinedCode').value.trim();
+      const messageArea = document.getElementById('messageArea');
+      attempts++;
+
+      if (userInput === correctCode) {
+        // Success!
+        messageArea.innerHTML = '<div class="success-message">🎉 THE GATE OPENS! THE CODE IS CORRECT! 🎉</div>';
+        document.getElementById('act2Portal').style.display = 'block';
+        document.getElementById('combinedCode').disabled = true;
+        document.querySelector('.gate-submit').disabled = true;
+        
+        // Scroll to the portal
+        setTimeout(() => {
+          document.getElementById('act2Portal').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 1000);
+        
+      } else {
+        // Provide hints based on what they got wrong
+        let errorMessage = '❌ Incorrect combination. ';
+        
+        if (userInput.length !== correctCode.length) {
+          errorMessage += `Expected ${correctCode.length} characters, got ${userInput.length}. `;
+        }
+        
+        if (attempts >= maxAttempts) {
+          errorMessage += '<br><br>💡 HINT: The fragments are:<br>';
+          errorMessage += '• Layer I: Hidden in the crystal cipher title (hover to reveal)<br>';
+          errorMessage += '• Layer II: Hidden in plain sight in the welcome message<br>';
+          errorMessage += '• Layer III: Whispered by the shadow\'s quote<br>';
+          errorMessage += '• Layer IV: Logged among the experiment warnings<br>';
+          errorMessage += '<br>Combine them in order: Layer1+Layer2+Layer3+Layer4';
+        } else {
+          errorMessage += `(${attempts}/${maxAttempts} attempts used)`;
+        }
+        
+        messageArea.innerHTML = `<div class="error-message">${errorMessage}</div>`;
+      }
+    }
+
+    function enterAct2() {
+      // For now, redirect to the main journey page with a success parameter
+      // In the future, this could redirect to the actual Act 2
+      alert('🎭 Act II is currently under construction! 🎭\n\nYou have successfully completed Act I of the journey. More adventures await in future updates!');
+      
+      // Could redirect to a coming soon page or back to the main portfolio
+      window.location.href = '../index.html?act1Complete=true';
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('combinedCode').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkGateCode();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🌀 THE GATE AWAITS...');
+      console.log('🔑 Four fragments must be combined to proceed...');
+      console.log('🎭 The key to Act II lies within your discoveries...');
+    });
+  </script>
+</body>
+</html>

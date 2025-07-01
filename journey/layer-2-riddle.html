@@ -149,6 +149,26 @@
         0 0 5px rgba(255, 255, 0, 0.3);
     }
 
+    .hidden-fragment {
+      color: transparent;
+      background: transparent;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: bold;
+      user-select: none;
+      cursor: default;
+      transition: all 0.3s ease;
+    }
+
+    .hidden-fragment:hover {
+      color: #00ff00;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    }
+
     .riddle-container {
       background: 
         linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 0, 0.9) 50%, rgba(0, 0, 0, 0.9) 100%);
@@ -634,7 +654,7 @@
     <div class="header">
       <h1 class="title">LAYER II</h1>
       <p class="subtitle">NIGHT CITY</p>
-      <p class="location">Welcome to the dark future, choom...</p>
+      <p class="location">Welcome to the dark future, choom... <span class="hidden-fragment" title="Fragment found">MGS</span></p>
     </div>
 
     <div class="progress-bar">
