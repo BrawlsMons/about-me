@@ -644,6 +644,32 @@
           2px 2px 4px rgba(0, 0, 0, 0.8);
       }
     }
+
+    #konami-activated {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem;
+      color: #00ff00;
+      text-shadow: 0 0 20px #00ff00;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #00ff00;
+    }
+
+    .player.invincible {
+      animation: blink 0.1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
   </style>
 </head>
 <body>
@@ -699,6 +725,10 @@
     <div class="difficulty-indicator">
       CHALLENGING MODE - ONE HIT DEATH
     </div>
+
+    <div id="konami-activated" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Orbitron', monospace; font-size: 2rem; color: #00ff00; text-shadow: 0 0 20px #00ff00; z-index: 2000; background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px; border: 2px solid #00ff00;">
+      KONAMI CODE ACTIVATED!
+    </div>
   </div>
 
   <!-- Game Over Screen -->
@@ -713,7 +743,7 @@
   <!-- Victory Screen -->
   <div class="victory" id="victory">
     <h2>LEGENDARY ACHIEVEMENT!</h2>
-    <p>You reached 100,000 points in the bullet hell nightmare!</p>
+    <p>You reached 25,000 points in the bullet hell nightmare!</p>
     <p>Final Score: <span id="victoryScore">0</span></p>
     <button class="next-btn" onclick="nextLayer()">Continue to Next Layer</button>
   </div>
@@ -721,7 +751,7 @@
   <script>
     // Game state - heavily optimized for performance
     let gameState = {
-      player: { x: 400, y: 500, health: 1, maxHealth: 1, lives: 1 }, // One hit death
+      player: { x: 400, y: 500, health: 1, maxHealth: 1, lives: 1, invincible: false, invincibleTimer: 0 }, // One hit death
       boss: { x: 400, y: 100, health: 1000, maxHealth: 1000, phase: 1 },
       bullets: [],
       bulletPool: [], // Object pool for performance
@@ -737,8 +767,13 @@
       bulletSpawnRate: 0.12, // Increased spawn rate for more intensity
       patternIndex: 0,
       phaseTimer: 0,
-      frameCount: 0 // For performance monitoring
+      frameCount: 0, // For performance monitoring
+      konamiCode: false
     };
+
+    // Konami Code sequence
+    const konamiSequence = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+    let konamiProgress = 0;
 
     // Bullet patterns with more variety
     const bulletPatterns = [
@@ -780,10 +815,45 @@
       if (music.paused) {
         music.play().catch(e => console.log('Could not start music:', e));
       }
+
+      // Check for Konami Code
+      if (e.key.toLowerCase() === konamiSequence[konamiProgress]) {
+        konamiProgress++;
+        if (konamiProgress === konamiSequence.length) {
+          activateKonamiCode();
+          konamiProgress = 0; // Reset for potential re-activation
+        }
+      } else {
+        konamiProgress = 0;
+      }
     }
 
     function handleKeyUp(e) {
       gameState.keys[e.key.toLowerCase()] = false;
+    }
+
+    function activateKonamiCode() {
+      if (gameState.konamiCode) return; // Already activated
+
+      gameState.konamiCode = true;
+      gameState.player.lives = 3; // Give player lives
+      gameState.bulletSpeed = 6; // Reduce bullet speed
+      gameState.bulletSpawnRate = 0.06; // Reduce spawn rate
+
+      // Update UI to show changes
+      document.querySelector('.difficulty-indicator').textContent = 'EASY MODE - KONAMI ACTIVATED';
+      document.querySelector('.difficulty-indicator').style.color = '#00ff00';
+      document.querySelector('.difficulty-indicator').style.borderColor = '#00ff00';
+      document.querySelector('.lives').textContent = `Lives: ${gameState.player.lives}`;
+      document.querySelector('.lives').style.color = '#00ff00';
+      document.querySelector('.health-bar').style.display = 'none'; // Hide health bar
+
+      // Show activation message
+      const konamiMessage = document.getElementById('konami-activated');
+      konamiMessage.style.display = 'block';
+      setTimeout(() => {
+        konamiMessage.style.display = 'none';
+      }, 3000);
     }
 
     // Removed mouse movement function - only keyboard controls now
@@ -794,12 +864,18 @@
       const deltaTime = currentTime - gameState.lastTime;
       gameState.lastTime = currentTime;
       
-      updatePlayer();
+      updatePlayer(deltaTime);
       updateBoss();
       spawnBullets();
       updateBullets();
       checkCollisions();
-      updateUI();
+      
+      // Only update UI if not in Konami mode, otherwise it's handled separately
+      if (!gameState.konamiCode) {
+        updateUI();
+      } else {
+        document.getElementById('score').textContent = gameState.score;
+      }
       
       gameState.phaseTimer += deltaTime;
       
@@ -813,9 +889,18 @@
       requestAnimationFrame(gameLoop);
     }
 
-    function updatePlayer() {
+    function updatePlayer(deltaTime) {
       const speed = 8; // Increased player speed to compensate for faster bullets
       const player = document.getElementById('player');
+
+      // Handle invincibility frames
+      if (gameState.player.invincible) {
+        gameState.player.invincibleTimer -= deltaTime;
+        if (gameState.player.invincibleTimer <= 0) {
+          gameState.player.invincible = false;
+          player.classList.remove('invincible');
+        }
+      }
       
       // WASD movement
       if (gameState.keys['w'] || gameState.keys['arrowup']) {
@@ -833,6 +918,12 @@
       
       player.style.left = gameState.player.x + 'px';
       player.style.top = gameState.player.y + 'px';
+    }
+
+    function updateHealthBar() {
+      const healthFill = document.getElementById('healthFill');
+      const healthPercentage = (gameState.player.health / gameState.player.maxHealth) * 100;
+      healthFill.style.width = `${healthPercentage}%`;
     }
 
     function updateBoss() {
@@ -1123,6 +1214,16 @@
       bullet.dy = dy;
       bullet.type = type;
       
+      let size;
+      switch (type) {
+        case 'small': size = 8; break;
+        case 'medium': size = 14; break;
+        case 'large': size = 20; break;
+        case 'laser': size = 45; break; // Height of the laser
+        default: size = 8;
+      }
+      bullet.size = size;
+
       // Use transform for better performance
       bulletElement.style.transform = `translate(${x}px, ${y}px)`;
       bulletElement.style.display = 'block';
@@ -1165,32 +1266,34 @@
     }
 
     function checkCollisions() {
-      const playerRect = {
-        x: gameState.player.x + 5, // Smaller hitbox for fair play
-        y: gameState.player.y + 5,
-        width: 10,
-        height: 10
-      };
-      
+      if (gameState.player.invincible) return; // Player is invincible
+
+      const player = document.getElementById('player');
+      const playerRect = { x: gameState.player.x, y: gameState.player.y, width: 24, height: 24 };
+
       for (let i = gameState.bullets.length - 1; i >= 0; i--) {
-        const bullet = gameState.bullets[i];
-        const bulletSize = bullet.type === 'small' ? 6 : bullet.type === 'medium' ? 12 : bullet.type === 'large' ? 18 : 4;
-        const bulletRect = {
-          x: bullet.x,
-          y: bullet.y,
-          width: bulletSize,
-          height: bullet.type === 'laser' ? 40 : bulletSize
-        };
-        
+        const b = gameState.bullets[i];
+        const bulletRect = { x: b.x, y: b.y, width: b.size, height: b.size };
+
         if (isColliding(playerRect, bulletRect)) {
-          takeDamage(bullet.type === 'laser' ? 30 : bullet.type === 'large' ? 20 : 10);
-          createExplosion(bullet.x, bullet.y);
+          if (gameState.konamiCode) {
+            gameState.player.lives--;
+            document.querySelector('.lives').textContent = `Lives: ${gameState.player.lives}`;
+            if (gameState.player.lives <= 0) {
+              gameOver();
+            } else {
+              // Grant 1 second of invincibility
+              gameState.player.invincible = true;
+              gameState.player.invincibleTimer = 1000;
+              player.classList.add('invincible');
+            }
+          } else {
+            gameOver(); // Original one-hit death
+          }
           
-          // Return bullet to pool
-          bullet.element.style.display = 'none';
-          gameState.bulletPool.push({ bullet: bullet, element: bullet.element });
-          gameState.bullets.splice(i, 1);
-          break; // Only need one collision for instant death
+          createExplosion(b.x, b.y);
+          removeBullet(i);
+          return; // Only one collision per frame
         }
       }
     }
@@ -1200,6 +1303,20 @@
              rect1.x + rect1.width > rect2.x &&
              rect1.y < rect2.y + rect2.height &&
              rect1.y + rect1.height > rect2.y;
+    }
+
+    function removeBullet(index) {
+      if (index >= 0 && index < gameState.bullets.length) {
+        const bullet = gameState.bullets[index];
+        if (bullet && bullet.element) {
+          bullet.element.style.display = 'none';
+          // Return to pool for reuse
+          if (gameState.bulletPool.length < 100) {
+            gameState.bulletPool.push({ bullet: bullet, element: bullet.element });
+          }
+        }
+        gameState.bullets.splice(index, 1);
+      }
     }
 
     function takeDamage(damage) {
@@ -1228,7 +1345,6 @@
       document.getElementById('gameArea').appendChild(warning);
       
       // Removed orange flash effect to fix orange flashes
-      
       setTimeout(() => warning.remove(), 1500);
     }
 
@@ -1250,8 +1366,8 @@
       // Increase score over time (faster for extreme difficulty)
       gameState.score += 5; // 5x faster score gain
       
-      // Check for victory at 100,000 points
-      if (gameState.score >= 100000) {
+      // Check for victory at 5,000 points
+      if (gameState.score >= 5000) {
         victory();
         return;
       }
@@ -1281,38 +1397,60 @@
     }
 
     function restartGame() {
-      // Reset game state for nightmare mode
+      // Reset game state completely
       gameState = {
-        player: { x: 400, y: 500, health: 1, maxHealth: 1, lives: 1 },
+        player: { x: 400, y: 500, health: 1, maxHealth: 1, lives: 1, invincible: false, invincibleTimer: 0 },
         boss: { x: 400, y: 100, health: 1000, maxHealth: 1000, phase: 1 },
         bullets: [],
-        bulletPool: [], // Reset object pool
-        maxBullets: 150, // Optimized limit
+        bulletPool: [],
+        maxBullets: 150,
         score: 0,
         gameRunning: true,
         keys: {},
         lastTime: 0,
         lastUIUpdate: 0,
-        uiUpdateInterval: 200, // Optimized update interval
+        uiUpdateInterval: 200,
         difficulty: 3,
-        bulletSpeed: 12, // Fast bullet speed
-        bulletSpawnRate: 0.12, // High spawn rate for intensity
+        bulletSpeed: 12,
+        bulletSpawnRate: 0.12,
         patternIndex: 0,
         phaseTimer: 0,
-        frameCount: 0 // Reset frame counter
+        frameCount: 0,
+        konamiCode: false // Reset Konami code status
       };
-      
-      // Clear bullets
-      document.querySelectorAll('.bullet').forEach(bullet => bullet.remove());
-      document.querySelectorAll('.explosion').forEach(explosion => explosion.remove());
-      document.querySelectorAll('.warning').forEach(warning => warning.remove());
-      
-      // Hide game over and victory screens
+
+      // Reset UI elements
       document.getElementById('gameOver').style.display = 'none';
       document.getElementById('victory').style.display = 'none';
-      
-      // Restart game
-      initGame();
+      document.querySelector('.difficulty-indicator').textContent = 'CHALLENGING MODE - ONE HIT DEATH';
+      document.querySelector('.difficulty-indicator').style.color = '#ff8000';
+      document.querySelector('.difficulty-indicator').style.borderColor = '#ff8000';
+      document.querySelector('.lives').textContent = 'ONE HIT = DEATH';
+      document.querySelector('.lives').style.color = '#ff0000';
+      document.querySelector('.health-bar').style.display = 'none';
+      document.getElementById('player').classList.remove('invincible');
+
+
+      // Remove all bullets from DOM
+      const gameArea = document.getElementById('gameArea');
+      const bullets = gameArea.getElementsByClassName('bullet');
+      while (bullets.length > 0) {
+        bullets[0].parentNode.removeChild(bullets[0]);
+      }
+
+      // Reset player position
+      const player = document.getElementById('player');
+      player.style.left = gameState.player.x + 'px';
+      player.style.top = gameState.player.y + 'px';
+
+      // Restart music
+      const music = document.getElementById('backgroundMusic');
+      music.currentTime = 0;
+      music.play().catch(e => console.log('Music restart failed:', e));
+
+      // Restart game loop
+      gameState.lastTime = 0;
+      requestAnimationFrame(gameLoop);
     }
 
     function nextLayer() {
@@ -1326,7 +1464,7 @@
     console.log('%c🎯 OPTIMIZED BULLET HELL INITIALIZED', 'color: #ff0080; font-size: 16px; font-weight: bold;');
     console.log('%c🔥 ONE HIT DEATH MODE ENGAGED', 'color: #ff0000; font-size: 12px;');
     console.log('%c💥 PERFORMANCE OPTIMIZED + 16 PATTERNS', 'color: #ffff00; font-size: 12px;');
-    console.log('%c🏆 VICTORY AT 100,000 POINTS', 'color: #00ff00; font-size: 12px;');
+    console.log('%c🏆 VICTORY AT 25,000 POINTS', 'color: #00ff00; font-size: 12px;');
     console.log('%c⚡ HEAVILY PERFORMANCE OPTIMIZED', 'color: #00ffff; font-size: 12px;');
     console.log('%c🚀 60FPS TARGET WITH REDUCED EFFECTS', 'color: #ffaa00; font-size: 12px;');
   </script>
